@@ -55,6 +55,13 @@ class RequestHandlerTest {
                                 "Content-Length: 11" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 "Hello World"
+                ), Arguments.arguments(
+                        "GET /index2.html HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+                        "HTTP/1.1 404 NotFound" + System.lineSeparator()
                 )
         );
     }
