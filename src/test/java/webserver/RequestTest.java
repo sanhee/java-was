@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.stream.Stream;
 
@@ -14,7 +15,7 @@ class RequestTest {
 
     @ParameterizedTest
     @MethodSource("from")
-    void from(String inputMessage) {
+    void from(String inputMessage) throws IOException {
         InputStream inputStream = new ByteArrayInputStream(inputMessage.getBytes());
         Request request = Request.from(inputStream);
 
