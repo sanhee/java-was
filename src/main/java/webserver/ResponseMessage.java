@@ -14,6 +14,10 @@ public class ResponseMessage {
     public static ResponseMessage from(String responseMessage) {
         String[] splittedResponseMessage = responseMessage.split(System.lineSeparator() + System.lineSeparator());
 
+        if (splittedResponseMessage.length == 1) {
+            return new ResponseMessage(Header.responseHeaderFrom(splittedResponseMessage[0]), Body.from(""));
+        }
+
         return new ResponseMessage(Header.responseHeaderFrom(splittedResponseMessage[0]), Body.from(splittedResponseMessage[1]));
     }
 

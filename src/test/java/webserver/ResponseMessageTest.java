@@ -20,11 +20,20 @@ class ResponseMessageTest {
 
     static Stream<Arguments> getHeader() {
         return Stream.of(
-                Arguments.of("HTTP/1.1 200 OK" + System.lineSeparator() +
+                Arguments.of(
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
                                 "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
                                 System.lineSeparator() +
                                 "Hello World",
+                        Header.responseHeaderFrom("HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator())
+                ),
+                Arguments.of(
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator(),
                         Header.responseHeaderFrom("HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
                                 "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator())
@@ -42,7 +51,8 @@ class ResponseMessageTest {
 
     static Stream<Arguments> getBody() {
         return Stream.of(
-                Arguments.of("HTTP/1.1 200 OK" + System.lineSeparator() +
+                Arguments.of(
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
                                 "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
                                 System.lineSeparator() +
