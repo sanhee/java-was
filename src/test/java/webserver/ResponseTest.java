@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -12,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class ResponseTest {
     @ParameterizedTest
     @MethodSource("write")
-    void write(String message) {
+    void write(String message) throws IOException {
         Response response = Response.from(message);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         response.write(outputStream);
