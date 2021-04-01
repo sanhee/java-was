@@ -59,4 +59,12 @@ public class PostMessage implements RequestMessage {
     public int hashCode() {
         return Objects.hash(header, body);
     }
+
+    @Override
+    public String toString() {
+        return "PostMessage{" +
+                "header=" + header +
+                ", body=" + body +
+                '}';
+    }
 }

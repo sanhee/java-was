@@ -86,4 +86,12 @@ public abstract class Header {
     public int hashCode() {
         return Objects.hash(statusLineAttributes, attributes);
     }
+
+    @Override
+    public String toString() {
+        return "Header{" +
+                "statusLineAttributes=" + statusLineAttributes +
+                ", attributes=" + attributes +
+                '}';
+    }
 }
