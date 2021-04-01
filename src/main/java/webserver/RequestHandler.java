@@ -51,21 +51,30 @@ public class RequestHandler extends Thread {
             // TODO: Default Message를 설정할 수 있을 것 같다.
             String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
 
-            if (path.equals("/index.html")) {
-                byte[] body = Files.readAllBytes(new File("./webapp" + path).toPath());
 
-                responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + body.length + System.lineSeparator() +
-                        System.lineSeparator() +
-                        new String(body);
+            String[] splittedPath = path.split("/");
+            String extension = splittedPath[splittedPath.length - 1].split("\\.")[1];
+
+            if (extension.equals("html")) {
+
+                File htmlFile = new File("./webapp" + path);
+
+                if (htmlFile.exists()) {
+                    byte[] body = Files.readAllBytes(htmlFile.toPath());
+
+                    responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                            "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                            "Content-Length: " + body.length + System.lineSeparator() +
+                            System.lineSeparator() +
+                            new String(body);
+                }
             }
 
             Response response = Response.from(responseMessage);
             response.write(out);
 
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 }
