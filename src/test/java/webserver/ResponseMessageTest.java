@@ -58,6 +58,26 @@ class ResponseMessageTest {
                                 System.lineSeparator() +
                                 "Hello World",
                         Body.from("Hello World")
+                ), Arguments.of(
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator() +
+                                "Hello World" + System.lineSeparator() +
+                                "Bye World",
+                        Body.from("Hello World" + System.lineSeparator() +
+                                "Bye World")
+                ), Arguments.of(
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator() +
+                                "Hello World" + System.lineSeparator() +
+                                System.lineSeparator() +
+                                "Bye World",
+                        Body.from("Hello World" + System.lineSeparator() +
+                                System.lineSeparator() +
+                                "Bye World")
                 )
         );
     }
