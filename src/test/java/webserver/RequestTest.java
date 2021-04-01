@@ -4,9 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -16,8 +14,7 @@ class RequestTest {
     @ParameterizedTest
     @MethodSource("from")
     void from(String inputMessage) throws IOException {
-        InputStream inputStream = new ByteArrayInputStream(inputMessage.getBytes());
-        Request request = Request.from(inputStream);
+        Request request = Request.from(inputMessage);
 
         assertThat(request.getRequestMessage()).isEqualTo(RequestMessage.from(inputMessage));
     }
