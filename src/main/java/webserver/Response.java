@@ -1,6 +1,8 @@
 package webserver;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Objects;
 
 public class Response {
@@ -14,17 +16,14 @@ public class Response {
         return new Response(ResponseMessage.from(message));
     }
 
-    public void write(OutputStream outputStream) {
-        try (DataOutputStream dos = new DataOutputStream(outputStream)) {
-            byte[] header = responseMessage.getHeader().getBytes();
-            byte[] body = responseMessage.getBody().getBytes();
+    public void write(OutputStream outputStream) throws IOException {
+        DataOutputStream dos = new DataOutputStream(outputStream);
+        byte[] header = responseMessage.getHeader().getBytes();
+        byte[] body = responseMessage.getBody().getBytes();
 
-            dos.write(header);
-            dos.write(body);
-            dos.flush();
-        } catch (IOException e) {
-            throw new IllegalStateException("Response 출력오류", e);
-        }
+        dos.write(header);
+        dos.write(body);
+        dos.flush();
     }
 
     @Override

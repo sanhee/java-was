@@ -1,11 +1,13 @@
 package webserver;
 
-import java.io.*;
-import java.net.Socket;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.file.Files;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -21,36 +23,47 @@ public class RequestHandler extends Thread {
                 connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            StringJoiner requestMessages = new StringJoiner(System.lineSeparator());
 
-            log.debug("Request Message:"+ br.lines().collect(Collectors.joining(System.lineSeparator())));
+            String requestMessage = br.readLine();
 
-            // TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
-            DataOutputStream dos = new DataOutputStream(out);
-            byte[] body = "Hello World".getBytes();
-            response200Header(dos, body.length);
-            responseBody(dos, body);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
+            while (requestMessage != null && requestMessage.length() != 0) {
+                requestMessages.add(requestMessage);
+                requestMessage = br.readLine();
+            }
 
-    private void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
-        try {
-            dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
-            dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
-            dos.writeBytes("\r\n");
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
+            if (br.ready()) {
+                requestMessage = br.readLine();
 
-    private void responseBody(DataOutputStream dos, byte[] body) {
-        try {
-            dos.write(body, 0, body.length);
-            dos.flush();
+                while (requestMessage != null && requestMessage.length() != 0) {
+                    requestMessages.add(requestMessage);
+                    requestMessage = br.readLine();
+                }
+            }
+
+            Request request = Request.from(requestMessages.toString());
+
+            //TODO: StatusLine 대신 path에서 바로 뽑을 수 있을 것 같다.
+            Map<String, String> statusLine = request.getRequestMessage().getHeader().getStatusLineAttributes();
+            String path = statusLine.get(RequestHeader.PATH_KEY);
+
+            // TODO: Default Message를 설정할 수 있을 것 같다.
+            String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
+
+            if (path.equals("/index.html")) {
+                byte[] body = Files.readAllBytes(new File("./webapp" + path).toPath());
+
+                responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                        "Content-Length: " + body.length + System.lineSeparator() +
+                        System.lineSeparator() +
+                        new String(body);
+            }
+
+            Response response = Response.from(responseMessage);
+            response.write(out);
+
         } catch (IOException e) {
             log.error(e.getMessage());
         }
