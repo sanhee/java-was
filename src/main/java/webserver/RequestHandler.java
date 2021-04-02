@@ -1,5 +1,7 @@
 package webserver;
 
+import db.DataBase;
+import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +79,16 @@ public class RequestHandler extends Thread {
             }
 
             if (path.equals("/user/create")) {
+                Map<String, String> parameters = request.getRequestMessage().getParameters();
+
+                User newUser = new User(
+                        parameters.get("userId"),
+                        parameters.get("password"),
+                        parameters.get("name"),
+                        parameters.get("email")
+                );
+
+                DataBase.addUser(newUser);
 
                 responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                         "Location: http://localhost:8080/index.html";
