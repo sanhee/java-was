@@ -52,7 +52,14 @@ public class RequestHandler extends Thread {
 
 
             String[] splittedPath = path.split("/");
-            String extension = splittedPath[splittedPath.length - 1].split("\\.")[1];
+
+            String[] splittedDot = splittedPath[splittedPath.length - 1].split("\\.");
+
+            String extension = "";
+
+            if (1 < splittedDot.length) {
+                extension = splittedPath[splittedPath.length - 1].split("\\.")[1];
+            }
 
             if (extension.equals("html")) {
 
