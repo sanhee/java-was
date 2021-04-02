@@ -33,7 +33,7 @@ class RequestHandlerTest {
         browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
         browserStream.flush();
 
-        requestHandler.start();
+        requestHandler.run();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
 
