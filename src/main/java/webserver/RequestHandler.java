@@ -33,14 +33,13 @@ public class RequestHandler extends Thread {
                 requestMessage = br.readLine();
             }
 
-            if (br.ready()) {
-                requestMessage = br.readLine();
+            StringBuilder sb = new StringBuilder();
 
-                while (requestMessage != null && requestMessage.length() != 0) {
-                    requestMessages.add(requestMessage);
-                    requestMessage = br.readLine();
-                }
+            while (br.ready()) {
+                sb.append((char) br.read());
             }
+
+            requestMessages.add(System.lineSeparator() + sb);
 
             Request request = Request.from(requestMessages.toString());
 

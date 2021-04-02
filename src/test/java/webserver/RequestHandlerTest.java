@@ -69,7 +69,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 5168" + System.lineSeparator() +
+                                "Content-Length: 5276" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/user/form.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
