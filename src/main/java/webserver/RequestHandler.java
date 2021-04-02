@@ -76,6 +76,12 @@ public class RequestHandler extends Thread {
                 }
             }
 
+            if (path.equals("/user/create")) {
+
+                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                        "Location: http://localhost:8080/index.html";
+            }
+
             Response response = Response.from(responseMessage);
             response.write(out);
 
