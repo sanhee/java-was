@@ -53,7 +53,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 7051" + System.lineSeparator() +
+                                "Content-Length: 6903" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/index.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
@@ -72,7 +72,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 5276" + System.lineSeparator() +
+                                "Content-Length: 5169" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/user/form.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
@@ -133,7 +133,7 @@ class RequestHandlerTest {
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 48" + System.lineSeparator() +
+                                "Content-Length: 53" + System.lineSeparator() +
                                 "Cache-Control: max-age=0" + System.lineSeparator() +
                                 "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
                                 "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
@@ -151,8 +151,8 @@ class RequestHandlerTest {
                                 "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
                                 "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
-                                "userId=test&password=1234&name=test&email=test%40test",
-                        new User("test", "1234", "test", "test@test")
+                                "userId=test&password=test&name=test&email=test%40test",
+                        new User("test", "test", "test", "test@test")
                 ), Arguments.arguments(
                         "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
@@ -189,7 +189,8 @@ class RequestHandlerTest {
         return Stream.of(
                 Arguments.arguments(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
+                                "Content-Length: 3" + System.lineSeparator() +
+                                System.lineSeparator() +
                                 "a=b"
                 ));
     }

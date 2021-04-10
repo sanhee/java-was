@@ -4,6 +4,7 @@ import db.DataBase;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.IOUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -35,13 +36,12 @@ public class RequestHandler extends Thread {
                 requestMessage = br.readLine();
             }
 
-            StringBuilder sb = new StringBuilder();
+            RequestHeader requestHeader = Header.requestHeaderFrom(requestMessages.toString());
 
-            while (br.ready()) {
-                sb.append((char) br.read());
-            }
+            int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
+            String requestBody = IOUtils.readData(br, contentLength);
 
-            requestMessages.add(System.lineSeparator() + sb);
+            requestMessages.add(System.lineSeparator() + requestBody);
 
             Request request = Request.from(requestMessages.toString());
 
