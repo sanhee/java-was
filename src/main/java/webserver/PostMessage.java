@@ -19,8 +19,10 @@ public class PostMessage implements RequestMessage {
 
     public static PostMessage from(String postMessage) {
         String[] splittedPostMessage = postMessage.split(System.lineSeparator() + System.lineSeparator());
-        //TODO body가 비어서 들어오는 경우 실제 form으로 테스트 해서 확인해볼 필요 있음
-        return new PostMessage(Header.requestHeaderFrom(splittedPostMessage[0]), Body.from(splittedPostMessage[1]));
+
+        Body body = Body.from(splittedPostMessage.length!= 1 ? splittedPostMessage[1] : "");
+
+        return new PostMessage(Header.requestHeaderFrom(splittedPostMessage[0]), body);
     }
 
     @Override
