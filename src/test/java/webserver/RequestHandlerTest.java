@@ -1,21 +1,22 @@
 package webserver;
 
+import db.DataBase;
+import model.User;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class RequestHandlerTest {
     @ParameterizedTest
@@ -35,14 +36,14 @@ class RequestHandlerTest {
         browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
         browserStream.flush();
 
-        requestHandler.start();
+        requestHandler.run();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
 
         assertThat(br.lines().collect(Collectors.joining(System.lineSeparator()))).isEqualTo(expectedResponseMessage);
     }
 
-    static Stream<Arguments> run() {
+    static Stream<Arguments> run() throws IOException {
         return Stream.of(
                 Arguments.arguments(
                         "GET /index.html HTTP/1.1" + System.lineSeparator() +
@@ -52,156 +53,10 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 7051" + System.lineSeparator() +
+                                "Content-Length: 6903" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
-                                "<!DOCTYPE html>" + System.lineSeparator() +
-                                "<html lang=\"kr\">" + System.lineSeparator() +
-                                "\t<head>" + System.lineSeparator() +
-                                "\t\t<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">" + System.lineSeparator() +
-                                "\t\t<meta charset=\"utf-8\">" + System.lineSeparator() +
-                                "\t\t<title>SLiPP Java Web Programming</title>" + System.lineSeparator() +
-                                "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">" + System.lineSeparator() +
-                                "\t\t<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">" + System.lineSeparator() +
-                                "\t\t<!--[if lt IE 9]>" + System.lineSeparator() +
-                                "\t\t\t<script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>" + System.lineSeparator() +
-                                "\t\t<![endif]-->" + System.lineSeparator() +
-                                "\t\t<link href=\"css/styles.css\" rel=\"stylesheet\">" + System.lineSeparator() +
-                                "\t</head>" + System.lineSeparator() +
-                                "\t" + System.lineSeparator() +
-                                "\t<body>" + System.lineSeparator() +
-                                "<nav class=\"navbar navbar-fixed-top header\">" + System.lineSeparator() +
-                                " \t<div class=\"col-md-12\">" + System.lineSeparator() +
-                                "        <div class=\"navbar-header\">" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "            <a href=\"index.html\" class=\"navbar-brand\">SLiPP</a>" + System.lineSeparator() +
-                                "          <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse1\">" + System.lineSeparator() +
-                                "          <i class=\"glyphicon glyphicon-search\"></i>" + System.lineSeparator() +
-                                "          </button>" + System.lineSeparator() +
-                                "      " + System.lineSeparator() +
-                                "        </div>" + System.lineSeparator() +
-                                "        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse1\">" + System.lineSeparator() +
-                                "          <form class=\"navbar-form pull-left\">" + System.lineSeparator() +
-                                "              <div class=\"input-group\" style=\"max-width:470px;\">" + System.lineSeparator() +
-                                "                <input type=\"text\" class=\"form-control\" placeholder=\"Search\" name=\"srch-term\" id=\"srch-term\">" + System.lineSeparator() +
-                                "                <div class=\"input-group-btn\">" + System.lineSeparator() +
-                                "                  <button class=\"btn btn-default btn-primary\" type=\"submit\"><i class=\"glyphicon glyphicon-search\"></i></button>" + System.lineSeparator() +
-                                "                </div>" + System.lineSeparator() +
-                                "              </div>" + System.lineSeparator() +
-                                "          </form>" + System.lineSeparator() +
-                                "          <ul class=\"nav navbar-nav navbar-right\">             " + System.lineSeparator() +
-                                "             <li>" + System.lineSeparator() +
-                                "                <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><i class=\"glyphicon glyphicon-bell\"></i></a>" + System.lineSeparator() +
-                                "                <ul class=\"dropdown-menu\">" + System.lineSeparator() +
-                                "                  <li><a href=\"https://slipp.net\" target=\"_blank\">SLiPP</a></li>" + System.lineSeparator() +
-                                "                  <li><a href=\"https://facebook.com\" target=\"_blank\">Facebook</a></li>" + System.lineSeparator() +
-                                "                </ul>" + System.lineSeparator() +
-                                "             </li>" + System.lineSeparator() +
-                                "             <li><a href=\"./user/list.html\"><i class=\"glyphicon glyphicon-user\"></i></a></li>" + System.lineSeparator() +
-                                "           </ul>" + System.lineSeparator() +
-                                "        </div>\t" + System.lineSeparator() +
-                                "     </div>\t" + System.lineSeparator() +
-                                "</nav>" + System.lineSeparator() +
-                                "<div class=\"navbar navbar-default\" id=\"subnav\">" + System.lineSeparator() +
-                                "    <div class=\"col-md-12\">" + System.lineSeparator() +
-                                "        <div class=\"navbar-header\">" + System.lineSeparator() +
-                                "            <a href=\"#\" style=\"margin-left:15px;\" class=\"navbar-btn btn btn-default btn-plus dropdown-toggle\" data-toggle=\"dropdown\"><i class=\"glyphicon glyphicon-home\" style=\"color:#dd1111;\"></i> Home <small><i class=\"glyphicon glyphicon-chevron-down\"></i></small></a>" + System.lineSeparator() +
-                                "            <ul class=\"nav dropdown-menu\">" + System.lineSeparator() +
-                                "                <li><a href=\"user/profile.html\"><i class=\"glyphicon glyphicon-user\" style=\"color:#1111dd;\"></i> Profile</a></li>" + System.lineSeparator() +
-                                "                <li class=\"nav-divider\"></li>" + System.lineSeparator() +
-                                "                <li><a href=\"#\"><i class=\"glyphicon glyphicon-cog\" style=\"color:#dd1111;\"></i> Settings</a></li>" + System.lineSeparator() +
-                                "            </ul>" + System.lineSeparator() +
-                                "            " + System.lineSeparator() +
-                                "            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse2\">" + System.lineSeparator() +
-                                "            \t<span class=\"sr-only\">Toggle navigation</span>" + System.lineSeparator() +
-                                "            \t<span class=\"icon-bar\"></span>" + System.lineSeparator() +
-                                "            \t<span class=\"icon-bar\"></span>" + System.lineSeparator() +
-                                "            \t<span class=\"icon-bar\"></span>" + System.lineSeparator() +
-                                "            </button>            " + System.lineSeparator() +
-                                "        </div>" + System.lineSeparator() +
-                                "        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse2\">" + System.lineSeparator() +
-                                "            <ul class=\"nav navbar-nav navbar-right\">" + System.lineSeparator() +
-                                "                <li class=\"active\"><a href=\"index.html\">Posts</a></li>" + System.lineSeparator() +
-                                "                <li><a href=\"user/login.html\" role=\"button\">로그인</a></li>" + System.lineSeparator() +
-                                "                <li><a href=\"user/form.html\" role=\"button\">회원가입</a></li>" + System.lineSeparator() +
-                                "                <!--" + System.lineSeparator() +
-                                "                <li><a href=\"#loginModal\" role=\"button\" data-toggle=\"modal\">로그인</a></li>" + System.lineSeparator() +
-                                "                <li><a href=\"#registerModal\" role=\"button\" data-toggle=\"modal\">회원가입</a></li>" + System.lineSeparator() +
-                                "                -->" + System.lineSeparator() +
-                                "                <li><a href=\"#\" role=\"button\">로그아웃</a></li>" + System.lineSeparator() +
-                                "                <li><a href=\"#\" role=\"button\">개인정보수정</a></li>" + System.lineSeparator() +
-                                "            </ul>" + System.lineSeparator() +
-                                "        </div>" + System.lineSeparator() +
-                                "    </div>" + System.lineSeparator() +
-                                "</div>" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "<div class=\"container\" id=\"main\">" + System.lineSeparator() +
-                                "   <div class=\"col-md-12 col-sm-12 col-lg-10 col-lg-offset-1\">" + System.lineSeparator() +
-                                "      <div class=\"panel panel-default qna-list\">" + System.lineSeparator() +
-                                "          <ul class=\"list\">" + System.lineSeparator() +
-                                "              <li>" + System.lineSeparator() +
-                                "                  <div class=\"wrap\">" + System.lineSeparator() +
-                                "                      <div class=\"main\">" + System.lineSeparator() +
-                                "                          <strong class=\"subject\">" + System.lineSeparator() +
-                                "                              <a href=\"./qna/show.html\">국내에서 Ruby on Rails와 Play가 활성화되기 힘든 이유는 뭘까?</a>" + System.lineSeparator() +
-                                "                          </strong>" + System.lineSeparator() +
-                                "                          <div class=\"auth-info\">" + System.lineSeparator() +
-                                "                              <i class=\"icon-add-comment\"></i>" + System.lineSeparator() +
-                                "                              <span class=\"time\">2016-01-15 18:47</span>" + System.lineSeparator() +
-                                "                              <a href=\"./user/profile.html\" class=\"author\">자바지기</a>" + System.lineSeparator() +
-                                "                          </div>" + System.lineSeparator() +
-                                "                          <div class=\"reply\" title=\"댓글\">" + System.lineSeparator() +
-                                "                              <i class=\"icon-reply\"></i>" + System.lineSeparator() +
-                                "                              <span class=\"point\">8</span>" + System.lineSeparator() +
-                                "                          </div>" + System.lineSeparator() +
-                                "                      </div>" + System.lineSeparator() +
-                                "                  </div>" + System.lineSeparator() +
-                                "              </li>" + System.lineSeparator() +
-                                "              <li>" + System.lineSeparator() +
-                                "                  <div class=\"wrap\">" + System.lineSeparator() +
-                                "                      <div class=\"main\">" + System.lineSeparator() +
-                                "                          <strong class=\"subject\">" + System.lineSeparator() +
-                                "                              <a href=\"./qna/show.html\">runtime 에 reflect 발동 주체 객체가 뭔지 알 방법이 있을까요?</a>" + System.lineSeparator() +
-                                "                          </strong>" + System.lineSeparator() +
-                                "                          <div class=\"auth-info\">" + System.lineSeparator() +
-                                "                              <i class=\"icon-add-comment\"></i>" + System.lineSeparator() +
-                                "                              <span class=\"time\">2016-01-05 18:47</span>" + System.lineSeparator() +
-                                "                              <a href=\"./user/profile.html\" class=\"author\">김문수</a>" + System.lineSeparator() +
-                                "                          </div>" + System.lineSeparator() +
-                                "                          <div class=\"reply\" title=\"댓글\">" + System.lineSeparator() +
-                                "                              <i class=\"icon-reply\"></i>" + System.lineSeparator() +
-                                "                              <span class=\"point\">12</span>" + System.lineSeparator() +
-                                "                          </div>" + System.lineSeparator() +
-                                "                      </div>" + System.lineSeparator() +
-                                "                  </div>" + System.lineSeparator() +
-                                "              </li>" + System.lineSeparator() +
-                                "          </ul>" + System.lineSeparator() +
-                                "          <div class=\"row\">" + System.lineSeparator() +
-                                "              <div class=\"col-md-3\"></div>" + System.lineSeparator() +
-                                "              <div class=\"col-md-6 text-center\">" + System.lineSeparator() +
-                                "                  <ul class=\"pagination center-block\" style=\"display:inline-block;\">" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">«</a></li>" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">1</a></li>" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">2</a></li>" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">3</a></li>" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">4</a></li>" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">5</a></li>" + System.lineSeparator() +
-                                "                      <li><a href=\"#\">»</a></li>" + System.lineSeparator() +
-                                "                </ul>" + System.lineSeparator() +
-                                "              </div>" + System.lineSeparator() +
-                                "              <div class=\"col-md-3 qna-write\">" + System.lineSeparator() +
-                                "                  <a href=\"./qna/form.html\" class=\"btn btn-primary pull-right\" role=\"button\">질문하기</a>" + System.lineSeparator() +
-                                "              </div>" + System.lineSeparator() +
-                                "          </div>" + System.lineSeparator() +
-                                "        </div>" + System.lineSeparator() +
-                                "    </div>" + System.lineSeparator() +
-                                "</div>" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "<!-- script references -->" + System.lineSeparator() +
-                                "<script src=\"js/jquery-2.2.0.min.js\"></script>" + System.lineSeparator() +
-                                "<script src=\"js/bootstrap.min.js\"></script>" + System.lineSeparator() +
-                                "<script src=\"js/scripts.js\"></script>" + System.lineSeparator() +
-                                "\t</body>" + System.lineSeparator() +
-                                "</html>"
+                                Files.lines(new File("./webapp/index.html").toPath())
+                                        .collect(Collectors.joining(System.lineSeparator()))
                 ), Arguments.arguments(
                         "GET /index2.html HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
@@ -209,7 +64,134 @@ class RequestHandlerTest {
                                 "Accept: */*" + System.lineSeparator() +
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 404 NotFound" + System.lineSeparator()
+                ), Arguments.arguments(
+                        "GET /user/form.html HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: 5169" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                Files.lines(new File("./webapp/user/form.html").toPath())
+                                        .collect(Collectors.joining(System.lineSeparator()))
+                ), Arguments.arguments(
+                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Content-Length: 48" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "Origin: http://localhost:8080" + System.lineSeparator() +
+                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                "userId=dae&password=dae&name=dae&email=dae%40dae",
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/index.html" + System.lineSeparator()
                 )
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("runWithCheckUserCreated")
+    void runWithCheckUserCreated(String message, User expectedUser) throws IOException {
+        int port = ThreadLocalRandom.current().nextInt(50000, 60000);
+        ServerSocket server = new ServerSocket(port);
+
+        Socket browser = new Socket("localhost", port);
+
+        RequestHandler requestHandler = new RequestHandler(server.accept());
+
+        BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
+
+
+        browserStream.write(message.getBytes(StandardCharsets.UTF_8));
+        browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
+        browserStream.flush();
+
+        requestHandler.run();
+
+        assertThat(DataBase.findUserById("test")).isEqualTo(expectedUser);
+    }
+
+    static Stream<Arguments> runWithCheckUserCreated() {
+        return Stream.of(
+                Arguments.arguments(
+                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Content-Length: 53" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "Origin: http://localhost:8080" + System.lineSeparator() +
+                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                "userId=test&password=test&name=test&email=test%40test",
+                        new User("test", "test", "test", "test@test")
+                ), Arguments.arguments(
+                        "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator(),
+                        new User("test", "1234", "test", "test@test")
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("runWithFailToCreateUser")
+    void runWithFailToCreateUser(String message) throws IOException {
+        int port = ThreadLocalRandom.current().nextInt(50000, 60000);
+        ServerSocket server = new ServerSocket(port);
+
+        Socket browser = new Socket("localhost", port);
+
+        RequestHandler requestHandler = new RequestHandler(server.accept());
+
+        BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
+
+
+        browserStream.write(message.getBytes(StandardCharsets.UTF_8));
+        browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
+        browserStream.flush();
+
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(requestHandler::run);
+    }
+
+    static Stream<Arguments> runWithFailToCreateUser() {
+        return Stream.of(
+                Arguments.arguments(
+                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                                "Content-Length: 3" + System.lineSeparator() +
+                                System.lineSeparator() +
+                                "a=b"
+                ));
     }
 }
