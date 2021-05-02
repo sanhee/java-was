@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class RequestHandler extends Thread {
@@ -109,6 +110,19 @@ public class RequestHandler extends Thread {
                 } else {
                     log.debug("login fail!");
                     responseMessage += "Location: /user/login_failed.html";
+                }
+            }
+
+            if (path.equals("/user/list")) {
+                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator();
+
+                String isLogined = request.getRequestMessage().getHeader().getAttributes().get("Cookie");
+                isLogined = Objects.toString(isLogined, "");
+
+                if (isLogined.contains("logined=true")) {
+                    responseMessage += "Location: /user/list.html";
+                } else {
+                    responseMessage += "Location: /user/login.html";
                 }
             }
 
