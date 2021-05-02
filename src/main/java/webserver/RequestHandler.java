@@ -91,7 +91,25 @@ public class RequestHandler extends Thread {
                 DataBase.addUser(newUser);
 
                 responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                        "Location: http://localhost:8080/index.html";
+                        "Location: /index.html";
+            }
+
+            if (path.equals("/user/login")) {
+                Map<String, String> parameters = request.getRequestMessage().getParameters();
+                User user = DataBase.findUserById(parameters.get("userId"));
+
+                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator();
+
+                if (user == null) {
+                    log.debug("User Not Found!");
+                    responseMessage += "Location: /user/login_failed.html";
+                } else if (user.getPassword().equals(parameters.get("password"))) {
+                    log.debug("login success!!");
+                    responseMessage += "Location: /index.html" + System.lineSeparator() + "Set-Cookie: logined=true";
+                } else {
+                    log.debug("login fail!");
+                    responseMessage += "Location: /user/login_failed.html";
+                }
             }
 
             Response response = Response.from(responseMessage);
