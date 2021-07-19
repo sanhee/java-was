@@ -89,9 +89,23 @@ public class RequestHandler extends Thread {
                 );
 
                 DataBase.addUser(newUser);
+                log.debug("가입한 User : {}", newUser);
 
                 responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                         "Location: http://localhost:8080/index.html";
+            }else if (path.equals("/user/login")){
+                Map<String, String> parameters = request.getRequestMessage().getParameters();
+                User findUser = DataBase.findUserById(parameters.get("userId"));
+                log.debug("찾은 User : {}", findUser);
+
+                if(findUser == null){
+                    log.debug("찾은 유저 없음");
+                }
+                else if(findUser.getPassword().equals(parameters.get("password"))){
+                    log.debug("로그인 성공");
+                }else{
+                    log.debug("로그인 실패");
+                }
             }
 
             Response response = Response.from(responseMessage);
