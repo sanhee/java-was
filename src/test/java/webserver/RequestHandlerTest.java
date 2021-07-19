@@ -289,6 +289,6 @@ class RequestHandlerTest {
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
                                 "Location: http://localhost:8080/index.html" + System.lineSeparator()
-                ));
+                ));// TODO: 실패하는 경우 추가
     }
 }

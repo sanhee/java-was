@@ -94,6 +94,19 @@ public class RequestHandler extends Thread {
                         "Location: http://localhost:8080/index.html";
             }
 
+            if (path.equals("/user/login")) {
+                Map<String, String> parameters = request.getRequestMessage().getParameters();
+
+                User user = DataBase.findUserById(parameters.get("userId"));
+                // TODO: 없는 경우 예외처리
+
+                if(user.getPassword().equals(parameters.get("password"))) {
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
+                            "Location: http://localhost:8080/index.html";
+                }
+            }
+
             Response response = Response.from(responseMessage);
             response.write(out);
 
