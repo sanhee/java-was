@@ -100,19 +100,22 @@ public class RequestHandler extends Thread {
                 log.debug("찾은 User : {}", findUser);
 
                 if(findUser == null){
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Location: http://localhost:8080/index.html" + System.lineSeparator();
+
                     log.debug("찾은 유저 없음");
-                    responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() +
-                            "Location: http://localhost:8080/login_failed.html" + System.lineSeparator();
                 }
                 else if(findUser.getPassword().equals(parameters.get("password"))){
-                    responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                            "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Content-Type: text/html" + System.lineSeparator() +
+                            "Location: http://localhost:8080/user/list.html" + System.lineSeparator() +
                             "Set-Cookie: logined=true" + System.lineSeparator();
 
                     log.debug("로그인 성공");
                 }else{
-                    responseMessage = "HTTP/1.1 401 Unauthorized" + System.lineSeparator() +
-                            "Location: http://localhost:8080/login_failed.html" + System.lineSeparator() +
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Content-Type: text/html" + System.lineSeparator() +
+                            "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
                             "Set-Cookie: logined=false" + System.lineSeparator();
 
                     log.debug("로그인 실패");
