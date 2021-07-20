@@ -89,36 +89,18 @@ public class RequestHandler extends Thread {
                 );
 
                 DataBase.addUser(newUser);
-                log.debug("가입한 User : {}", newUser);
+                responseMessage = response302Header();
 
-                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                        "Location: http://localhost:8080/index.html";
-
-            }else if (path.equals("/user/login")){
+            } else if (path.equals("/user/login")) {
                 Map<String, String> parameters = request.getRequestMessage().getParameters();
                 User findUser = DataBase.findUserById(parameters.get("userId"));
-                log.debug("찾은 User : {}", findUser);
 
-                if(findUser == null){
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: http://localhost:8080/index.html" + System.lineSeparator();
-
-                    log.debug("찾은 유저 없음");
-                }
-                else if(findUser.getPassword().equals(parameters.get("password"))){
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Content-Type: text/html" + System.lineSeparator() +
-                            "Location: http://localhost:8080/user/list.html" + System.lineSeparator() +
-                            "Set-Cookie: logined=true" + System.lineSeparator();
-
-                    log.debug("로그인 성공");
-                }else{
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Content-Type: text/html" + System.lineSeparator() +
-                            "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
-                            "Set-Cookie: logined=false" + System.lineSeparator();
-
-                    log.debug("로그인 실패");
+                if (findUser == null) {
+                    responseMessage = response302Header();
+                } else if (findUser.getPassword().equals(parameters.get("password"))) {
+                    responseMessage = response302HeaderWithCookie("/user/list.html","logined=true");
+                } else {
+                    responseMessage = response302HeaderWithCookie("/user/login_failed.html","logined=false");
                 }
             }
 
@@ -129,4 +111,18 @@ public class RequestHandler extends Thread {
             log.error(e.getMessage(), e);
         }
     }
+
+    private String response302Header() {
+        String responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                "Location: /index.html" + System.lineSeparator();
+        return responseMessage;
+    }
+
+    private String response302HeaderWithCookie(String location, String cookie) {
+        String responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                "Location: "+location+ System.lineSeparator()+
+                "Set-Cookie: "+cookie+"; Path=/";
+        return responseMessage;
+    }
+
 }
