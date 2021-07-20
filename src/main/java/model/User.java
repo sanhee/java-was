@@ -15,6 +15,12 @@ public class User {
         this.email = email;
     }
 
+    public void checkPassword(String password) {
+        if (!this.password.equals(password)) {
+            throw new PasswordNotMatchException();
+        }
+    }
+
     public String getUserId() {
         return userId;
     }
