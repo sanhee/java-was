@@ -215,9 +215,6 @@ class RequestHandlerTest {
         registRequestHandler.run();
 
 
-        /**
-         * 선수조건으로 회원가입 필요
-         */
         Socket loginBrowser = new Socket("localhost", port);
 
         RequestHandler loginRequestHandler = new RequestHandler(server.accept());
