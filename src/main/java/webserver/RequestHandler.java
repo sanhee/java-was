@@ -104,6 +104,9 @@ public class RequestHandler extends Thread {
                     responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                             "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
                             "Location: http://localhost:8080/index.html";
+                } else {
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Location: http://localhost:8080/login_failed.html";
                 }
             }
 
