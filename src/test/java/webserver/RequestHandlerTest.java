@@ -337,7 +337,55 @@ class RequestHandlerTest {
                                 "userId=dae&password=dae2",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/login_failed.html" + System.lineSeparator()
-                )// TODO: 실패하는 경우 - null, id, pw
+                ), Arguments.arguments(
+                        "로그인 실패-id다름",
+                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Content-Length: 48" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "Origin: http://localhost:8080" + System.lineSeparator() +
+                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                "userId=dae&password=dae&name=dae&email=dae%40dae",
+                        "POST /user/login HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Content-Length: 48" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "Origin: http://localhost:8080" + System.lineSeparator() +
+                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                "userId=dae2&password=dae",
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/login_failed.html" + System.lineSeparator()
+                )
         );
     }
 }
