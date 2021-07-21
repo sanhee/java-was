@@ -1,6 +1,7 @@
 package webserver;
 
 import db.DataBase;
+import model.PasswordNotMatchException;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,23 +94,30 @@ public class RequestHandler extends Thread {
                 responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                         "Location: http://localhost:8080/index.html";
             }
+            try {
+                try {
+                    if (path.equals("/user/login")) {
+                        Map<String, String> parameters = request.getRequestMessage().getParameters();
 
-            if (path.equals("/user/login")) {
-                Map<String, String> parameters = request.getRequestMessage().getParameters();
+                        User user = DataBase.findUserById(parameters.get("userId"));
 
-                User user = DataBase.findUserById(parameters.get("userId"));
+                        if (user == null) {
+                            throw new LoginFailedException();
+                        }
+                        user.checkPassword(parameters.get("password"));
 
-                if (user == null) {
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: http://localhost:8080/login_failed.html";
-                } else if (user.getPassword().equals(parameters.get("password"))) {
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
-                            "Location: http://localhost:8080/index.html";
-                } else {
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: http://localhost:8080/login_failed.html";
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
+                                "Location: http://localhost:8080/index.html";
+                    }
+                } catch (PasswordNotMatchException passwordNotMatchException) {
+                    throw new LoginFailedException(passwordNotMatchException);
                 }
+            } catch (LoginFailedException loginFailedException) {
+                log.debug("login failed", loginFailedException);
+
+                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                        "Location: http://localhost:8080/login_failed.html";
             }
 
             Response response = Response.from(responseMessage);
