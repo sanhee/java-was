@@ -117,11 +117,8 @@ public class RequestHandler extends Thread {
     }
 
     public String loginHandler(Map<String, String> parameters) {
-        User user = DataBase.findUserById(parameters.get("userId"));
-
-        if (user == null) {
-            throw new LoginFailedException();
-        }
+        User user = DataBase.findUserById(parameters.get("userId"))
+                .orElseThrow(LoginFailedException::new);
 
         try {
             user.checkPassword(parameters.get("password"));
