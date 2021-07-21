@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -382,6 +384,37 @@ class RequestHandlerTest {
                                 "userId=dae2&password=dae",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/login_failed.html" + System.lineSeparator()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("loginHandler")
+    void loginHandler(User user, Map<String, String> parameters, String expectedResponseMessage) {
+        DataBase.addUser(user);
+        RequestHandler requestHandler = new RequestHandler(null);
+
+        String actualResponseMessage = requestHandler.loginHandler(parameters);
+
+        assertThat(actualResponseMessage).isEqualTo(expectedResponseMessage);
+    }
+
+    static Stream<Arguments> loginHandler() {
+        return Stream.of(
+                Arguments.arguments(
+                        new User(
+                                "dae",
+                                "dae",
+                                "dae",
+                                "dae@dae"
+                        ),
+                        new HashMap() {{
+                            put("userId", "dae");
+                            put("password", "dae");
+                        }},
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
+                                "Location: http://localhost:8080/index.html"
                 )
         );
     }

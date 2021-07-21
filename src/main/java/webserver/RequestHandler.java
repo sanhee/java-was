@@ -95,23 +95,10 @@ public class RequestHandler extends Thread {
                         "Location: http://localhost:8080/index.html";
             }
             try {
-                try {
-                    if (path.equals("/user/login")) {
-                        Map<String, String> parameters = request.getRequestMessage().getParameters();
+                if (path.equals("/user/login")) {
+                    Map<String, String> parameters = request.getRequestMessage().getParameters();
 
-                        User user = DataBase.findUserById(parameters.get("userId"));
-
-                        if (user == null) {
-                            throw new LoginFailedException();
-                        }
-                        user.checkPassword(parameters.get("password"));
-
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html";
-                    }
-                } catch (PasswordNotMatchException passwordNotMatchException) {
-                    throw new LoginFailedException(passwordNotMatchException);
+                    responseMessage = loginHandler(parameters);
                 }
             } catch (LoginFailedException loginFailedException) {
                 log.debug("login failed", loginFailedException);
@@ -120,11 +107,32 @@ public class RequestHandler extends Thread {
                         "Location: http://localhost:8080/login_failed.html";
             }
 
+            // TODO: 리스폰스 status에 따라 리턴해주는 모듈 작성해볼 수 있을 듯
             Response response = Response.from(responseMessage);
             response.write(out);
 
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public String loginHandler(Map<String, String> parameters) {
+        User user = DataBase.findUserById(parameters.get("userId"));
+
+        if (user == null) {
+            throw new LoginFailedException();
+        }
+
+        try {
+            user.checkPassword(parameters.get("password"));
+        } catch (PasswordNotMatchException passwordNotMatchException) {
+            throw new LoginFailedException(passwordNotMatchException);
+        }
+
+        // TODO: 주소 리턴하면 인식하도록
+        String responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
+                "Location: http://localhost:8080/index.html";
+        return responseMessage;
     }
 }
