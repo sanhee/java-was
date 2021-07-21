@@ -125,8 +125,8 @@ class RequestHandlerTest {
         browserStream.flush();
 
         requestHandler.run();
-
-        assertThat(DataBase.findUserById("test")).isEqualTo(expectedUser);
+        // FIXME: 잘못 된 테스트
+        assertThat(DataBase.findUserById("test").get()).isEqualTo(expectedUser);
     }
 
     static Stream<Arguments> runWithCheckUserCreated() {
