@@ -4,6 +4,7 @@ import db.DataBase;
 import model.User;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -22,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RequestHandlerTest {
-
     @ParameterizedTest
     @MethodSource("run")
     void run(String message, String expectedResponseMessage) throws IOException {
@@ -57,7 +57,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 7051" + System.lineSeparator() +
+                                "Content-Length: 6903" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/index.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
@@ -76,7 +76,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 5276" + System.lineSeparator() +
+                                "Content-Length: 5169" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/user/form.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
@@ -200,10 +200,10 @@ class RequestHandlerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("로그인_성공_테스트")
-    void 로그인_성공_테스트(String message, String expectedResponseMessage) throws IOException {
+    @MethodSource("로그인_테스트")
+    void 로그인_테스트(String 테스트설명, String message, String expectedResponseMessage) throws IOException {
 
-        DataBase.addUser(new User("1234","1234","1234","1234@1234"));
+        DataBase.addUser(new User("1234", "1234", "1234", "1234@1234"));
 
         int port = ThreadLocalRandom.current().nextInt(50000, 60000);
         ServerSocket server = new ServerSocket(port);
@@ -223,12 +223,13 @@ class RequestHandlerTest {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
 
-        assertThat(br.lines().collect(Collectors.joining(System.lineSeparator()))).isEqualTo(expectedResponseMessage);
+        assertThat(br.lines().collect(Collectors.joining(System.lineSeparator()))).describedAs(테스트설명).isEqualTo(expectedResponseMessage);
     }
 
-    static Stream<Arguments> 로그인_성공_테스트() {
+    static Stream<Arguments> 로그인_테스트() {
         return Stream.of(
                 Arguments.arguments(
+                        "로그인성공",
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
@@ -252,42 +253,12 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=1234&password=1234",
 
-                                "HTTP/1.1 302 Found" + System.lineSeparator() +
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: /user/list.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=true; Path=/" + System.lineSeparator()
-
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("로그인_실패_테스트")
-    void 로그인_실패_테스트(String message, String expectedResponseMessage) throws IOException {
-
-        int port = ThreadLocalRandom.current().nextInt(50000, 60000);
-        ServerSocket server = new ServerSocket(port);
-
-        Socket browser = new Socket("localhost", port);
-
-        RequestHandler requestHandler = new RequestHandler(server.accept());
-
-        BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
-
-        browserStream.write(message.getBytes(StandardCharsets.UTF_8));
-        browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
-        browserStream.flush();
-
-        requestHandler.run();
-
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
-
-        assertThat(br.lines().collect(Collectors.joining(System.lineSeparator()))).isEqualTo(expectedResponseMessage);
-    }
-
-    static Stream<Arguments> 로그인_실패_테스트() {
-        return Stream.of(
+                ),
                 Arguments.arguments(
+                        "올바르지 않은 비밀번호 테스트",
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
@@ -314,7 +285,9 @@ class RequestHandlerTest {
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: /user/login_failed.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
-                ),Arguments.arguments(
+                ),
+                Arguments.arguments(
+                        "유효하지 않은 계정 로그인 테스트",
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
@@ -341,7 +314,9 @@ class RequestHandlerTest {
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: /index.html" + System.lineSeparator()
                 )
+
         );
     }
+
 
 }
