@@ -101,10 +101,7 @@ public class RequestHandler extends Thread {
                     responseMessage = loginHandler(parameters);
                 }
             } catch (LoginFailedException loginFailedException) {
-                log.debug("login failed", loginFailedException);
-
-                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                        "Location: http://localhost:8080/login_failed.html";
+                responseMessage = loginFailedExceptionHandler(loginFailedException);
             }
 
             // TODO: 리스폰스 status에 따라 리턴해주는 모듈 작성해볼 수 있을 듯
@@ -131,5 +128,12 @@ public class RequestHandler extends Thread {
                 "Set-Cookie: logined=true; Path=/" + System.lineSeparator() +
                 "Location: http://localhost:8080/index.html";
         return responseMessage;
+    }
+
+    private String loginFailedExceptionHandler(LoginFailedException loginFailedException) {
+        log.debug("login failed", loginFailedException);
+
+        return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                "Location: http://localhost:8080/login_failed.html";
     }
 }
