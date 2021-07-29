@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class UserTest {
 
@@ -14,9 +14,7 @@ class UserTest {
     @MethodSource
     void checkPassword(User user, String password) {
 
-        boolean expected = user.checkPassword(password);
-
-        assertThat(expected).isTrue();
+        user.checkPassword(password);
     }
 
     static Stream<Arguments> checkPassword() {
@@ -37,9 +35,8 @@ class UserTest {
     @MethodSource
     void checkPasswordWithFailed(User user, String password) {
 
-        boolean expected = user.checkPassword(password);
-
-        assertThat(expected).isFalse();
+        assertThatExceptionOfType(PasswordNotMatchException.class)
+                .isThrownBy(() -> user.checkPassword(password));
     }
 
     static Stream<Arguments> checkPasswordWithFailed() {

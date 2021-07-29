@@ -108,7 +108,9 @@ public class RequestHandler extends Thread {
                         break;
                     }
 
-                    if (!findUser.checkPassword(parameters.get("password"))) {
+                    try {
+                        findUser.checkPassword(parameters.get("password"));
+                    } catch (PasswordNotMatchException passwordNotMatchException) {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html";
                         break;

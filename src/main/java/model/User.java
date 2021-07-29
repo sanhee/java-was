@@ -23,8 +23,10 @@ public class User {
         return UserBuilder.create();
     }
 
-    public boolean checkPassword(String expectedPassword) {
-        return password.equals(expectedPassword);
+    public void checkPassword(String expectedPassword) {
+        if (!password.equals(expectedPassword)) {
+            throw new PasswordNotMatchException();
+        }
     }
 
     public String getUserId() {
