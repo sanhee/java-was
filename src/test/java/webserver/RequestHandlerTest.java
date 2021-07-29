@@ -152,13 +152,21 @@ class RequestHandlerTest {
                                 "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 "userId=test&password=test&name=test&email=test%40test",
-                        new User("test", "test", "test", "test@test")
+                        User.builder()
+                                .setUserId("test")
+                                .setPassword("test")
+                                .setName("test")
+                                .setEmail("test@test")
                 ), Arguments.arguments(
                         "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
                                 "Accept: */*" + System.lineSeparator(),
-                        new User("test", "1234", "test", "test@test")
+                        User.builder()
+                                .setUserId("test")
+                                .setPassword("1234")
+                                .setName("test")
+                                .setEmail("test@test")
                 )
         );
     }

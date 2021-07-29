@@ -81,12 +81,12 @@ public class RequestHandler extends Thread {
             if (path.equals("/user/create")) {
                 Map<String, String> parameters = request.getRequestMessage().getParameters();
 
-                User newUser = new User(
-                        parameters.get("userId"),
-                        parameters.get("password"),
-                        parameters.get("name"),
-                        parameters.get("email")
-                );
+                User newUser = User.builder()
+                        .setUserId(parameters.get("userId"))
+                        .setPassword(parameters.get("password"))
+                        .setName(parameters.get("name"))
+                        .setEmail(parameters.get("email"))
+                        .build();
 
                 DataBase.addUser(newUser);
 
