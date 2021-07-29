@@ -245,7 +245,7 @@ class RequestHandlerTest {
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 48" + System.lineSeparator() +
+                                "Content-Length: 53" + System.lineSeparator() +
                                 "Cache-Control: max-age=0" + System.lineSeparator() +
                                 "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
                                 "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
