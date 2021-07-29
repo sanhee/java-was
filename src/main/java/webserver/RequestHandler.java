@@ -97,34 +97,33 @@ public class RequestHandler extends Thread {
                             "Location: http://localhost:8080/index.html";
                     break;
                 }
-
                 case "/user/login": {
-
-                    Map<String, String> parameters = request.getRequestMessage().getParameters();
-
-                    User findUser;
-
                     try {
-                        findUser = DataBase.findUserById(parameters.get("userId"))
-                                .orElseThrow(UserNotFoundException::new);
-                    } catch (UserNotFoundException userNotFoundException) {
+                        Map<String, String> parameters = request.getRequestMessage().getParameters();
+
+                        User findUser;
+
+                        try {
+                            findUser = DataBase.findUserById(parameters.get("userId"))
+                                    .orElseThrow(UserNotFoundException::new);
+                        } catch (UserNotFoundException userNotFoundException) {
+                            throw new LoginFailedException();
+                        }
+
+                        try {
+                            findUser.checkPassword(parameters.get("password"));
+                        } catch (PasswordNotMatchException passwordNotMatchException) {
+                            throw new LoginFailedException();
+                        }
+
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/index.html";
+
+                        break;
+                    } catch (LoginFailedException loginFailedException) {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html";
-                        break;
                     }
-
-                    try {
-                        findUser.checkPassword(parameters.get("password"));
-                    } catch (PasswordNotMatchException passwordNotMatchException) {
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html";
-                        break;
-                    }
-
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: http://localhost:8080/index.html";
-
-                    break;
                 }
             }
 
