@@ -124,7 +124,7 @@ class RequestHandlerTest {
 
         requestHandler.run();
 
-        assertThat(DataBase.findUserById("test")).isEqualTo(expectedUser);
+        assertThat(DataBase.findUserById("test").get()).isEqualTo(expectedUser);
     }
 
     static Stream<Arguments> runWithCheckUserCreated() {

@@ -1,7 +1,9 @@
 package webserver;
 
 import db.DataBase;
+import model.PasswordNotMatchException;
 import model.User;
+import model.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.IOUtils;
@@ -99,10 +101,13 @@ public class RequestHandler extends Thread {
                 case "/user/login": {
 
                     Map<String, String> parameters = request.getRequestMessage().getParameters();
-                    User findUser = DataBase.findUserById(parameters.get("userId"));
 
+                    User findUser;
 
-                    if (findUser == null) {
+                    try {
+                        findUser = DataBase.findUserById(parameters.get("userId"))
+                                .orElseThrow(UserNotFoundException::new);
+                    } catch (UserNotFoundException userNotFoundException) {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html";
                         break;
