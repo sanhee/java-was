@@ -78,20 +78,23 @@ public class RequestHandler extends Thread {
                 }
             }
 
-            if (path.equals("/user/create")) {
-                Map<String, String> parameters = request.getRequestMessage().getParameters();
+            switch (path) {
+                case "/user/create": {
+                    Map<String, String> parameters = request.getRequestMessage().getParameters();
 
-                User newUser = User.builder()
-                        .setUserId(parameters.get("userId"))
-                        .setPassword(parameters.get("password"))
-                        .setName(parameters.get("name"))
-                        .setEmail(parameters.get("email"))
-                        .build();
+                    User newUser = User.builder()
+                            .setUserId(parameters.get("userId"))
+                            .setPassword(parameters.get("password"))
+                            .setName(parameters.get("name"))
+                            .setEmail(parameters.get("email"))
+                            .build();
 
-                DataBase.addUser(newUser);
+                    DataBase.addUser(newUser);
 
-                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                        "Location: http://localhost:8080/index.html";
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Location: http://localhost:8080/index.html";
+                    break;
+                }
             }
 
             Response response = Response.from(responseMessage);
