@@ -32,4 +32,27 @@ class UserTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource
+    void checkPasswordWithFailed(User user, String password) {
+
+        boolean expected = user.checkPassword(password);
+
+        assertThat(expected).isFalse();
+    }
+
+    static Stream<Arguments> checkPasswordWithFailed() {
+        return Stream.of(
+                Arguments.arguments(
+                        User.builder()
+                                .setUserId("test")
+                                .setPassword("test")
+                                .setName("test")
+                                .setEmail("test@test")
+                                .build(),
+                        "test2"
+                )
+        );
+    }
 }
