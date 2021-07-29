@@ -206,8 +206,8 @@ class RequestHandlerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("runWithLoginSuccess")
-    void runWithLoginSuccess(User user, String message, String expectedResponseMessage) throws IOException {
+    @MethodSource("runWithLogin")
+    void runWithLogin(String desc, User user, String message, String expectedResponseMessage) throws IOException {
         // 회원가입
         DataBase.addUser(user);
 
@@ -230,12 +230,14 @@ class RequestHandlerTest {
 
         // index.html로 이동
         assertThat(actualResponseMessage)
+                .as("runWithLogin : %s", desc)
                 .isEqualTo(expectedResponseMessage);
     }
 
-    static Stream<Arguments> runWithLoginSuccess() throws IOException {
+    static Stream<Arguments> runWithLogin() throws IOException {
         return Stream.of(
                 Arguments.arguments(
+                        "로그인 성공",
                         User.builder()
                                 .setUserId("test")
                                 .setPassword("test")
@@ -267,6 +269,7 @@ class RequestHandlerTest {
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/index.html" + System.lineSeparator()
                 ), Arguments.arguments(
+                        "로그인 실패 - 잘못된 아이디",
                         User.builder()
                                 .setUserId("test")
                                 .setPassword("test")
@@ -298,6 +301,7 @@ class RequestHandlerTest {
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator()
                 ), Arguments.arguments(
+                        "로그인 실패 - 잘못된 비밀번호",
                         User.builder()
                                 .setUserId("test")
                                 .setPassword("test")
