@@ -95,6 +95,13 @@ public class RequestHandler extends Thread {
                             "Location: http://localhost:8080/index.html";
                     break;
                 }
+
+                case "/user/login": {
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Location: http://localhost:8080/index.html";
+
+                    break;
+                }
             }
 
             Response response = Response.from(responseMessage);
