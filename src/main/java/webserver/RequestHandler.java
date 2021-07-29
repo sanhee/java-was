@@ -97,6 +97,16 @@ public class RequestHandler extends Thread {
                 }
 
                 case "/user/login": {
+
+                    Map<String, String> parameters = request.getRequestMessage().getParameters();
+                    User findUser = DataBase.findUserById(parameters.get("userId"));
+
+                    if(findUser == null){
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/user/login_failed.html";
+                        break;
+                    }
+
                     responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                             "Location: http://localhost:8080/index.html";
 
