@@ -102,15 +102,13 @@ public class RequestHandler extends Thread {
                     User findUser = DataBase.findUserById(parameters.get("userId"));
 
 
-                    if(findUser == null){
+                    if (findUser == null) {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html";
                         break;
                     }
 
-                    String findPassword = findUser.getPassword();
-
-                    if(!parameters.get("password").equals(findPassword)){
+                    if (!findUser.checkPassword(parameters.get("password"))) {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html";
                         break;
