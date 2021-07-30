@@ -98,32 +98,7 @@ public class RequestHandler extends Thread {
                     break;
                 }
                 case "/user/login": {
-                    try {
-                        Map<String, String> parameters = request.getRequestMessage().getParameters();
-
-                        User findUser;
-
-                        try {
-                            findUser = DataBase.findUserById(parameters.get("userId"))
-                                    .orElseThrow(UserNotFoundException::new);
-                        } catch (UserNotFoundException userNotFoundException) {
-                            throw new LoginFailedException();
-                        }
-
-                        try {
-                            findUser.checkPassword(parameters.get("password"));
-                        } catch (PasswordNotMatchException passwordNotMatchException) {
-                            throw new LoginFailedException();
-                        }
-
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html";
-
-                        break;
-                    } catch (LoginFailedException loginFailedException) {
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html";
-                    }
+                    responseMessage = loginHandler(request.getRequestMessage().getParameters());
                 }
             }
 
@@ -132,6 +107,31 @@ public class RequestHandler extends Thread {
 
         } catch (IOException e) {
             log.error(e.getMessage(), e);
+        }
+    }
+
+    public String loginHandler(Map<String, String> parameters) {
+        try {
+            User findUser;
+
+            try {
+                findUser = DataBase.findUserById(parameters.get("userId"))
+                        .orElseThrow(UserNotFoundException::new);
+            } catch (UserNotFoundException userNotFoundException) {
+                throw new LoginFailedException();
+            }
+
+            try {
+                findUser.checkPassword(parameters.get("password"));
+            } catch (PasswordNotMatchException passwordNotMatchException) {
+                throw new LoginFailedException();
+            }
+
+            return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                    "Location: http://localhost:8080/index.html";
+        } catch (LoginFailedException loginFailedException) {
+            return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                    "Location: http://localhost:8080/user/login_failed.html";
         }
     }
 }

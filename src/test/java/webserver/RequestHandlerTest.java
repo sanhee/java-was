@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -332,6 +334,71 @@ class RequestHandlerTest {
                                 "userId=test&password=wrongPw&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("loginHandler")
+    void loginHandler(String desc, User user, Map<String, String> parameters, String expectedResponseMessage) {
+        DataBase.addUser(user);
+        RequestHandler requestHandler = new RequestHandler(new Socket());
+
+        String actualResponseMessage = requestHandler.loginHandler(parameters);
+
+        assertThat(actualResponseMessage).isEqualTo(expectedResponseMessage);
+    }
+
+    static Stream<Arguments> loginHandler() {
+        return Stream.of(
+                Arguments.arguments(
+                        "로그인 성공",
+                        User.builder()
+                                .setUserId("test")
+                                .setPassword("test")
+                                .setName("test")
+                                .setEmail("test@test")
+                                .build(),
+                        new HashMap() {{
+                            put("userId", "test");
+                            put("password", "test");
+                            put("name", "test");
+                            put("email", "test@test");
+                        }},
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/index.html"
+                ), Arguments.arguments(
+                        "로그인 실패 - 잘못된 ID",
+                        User.builder()
+                                .setUserId("test")
+                                .setPassword("test")
+                                .setName("test")
+                                .setEmail("test@test")
+                                .build(),
+                        new HashMap() {{
+                            put("userId", "wrongId");
+                            put("password", "test");
+                            put("name", "test");
+                            put("email", "test@test");
+                        }},
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/user/login_failed.html"
+                ), Arguments.arguments(
+                        "로그인 실패 - 잘못된 비밀번호",
+                        User.builder()
+                                .setUserId("test")
+                                .setPassword("test")
+                                .setName("test")
+                                .setEmail("test@test")
+                                .build(),
+                        new HashMap() {{
+                            put("userId", "test");
+                            put("password", "wrongPassword");
+                            put("name", "test");
+                            put("email", "test@test");
+                        }},
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: http://localhost:8080/user/login_failed.html"
                 )
         );
     }
