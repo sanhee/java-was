@@ -302,7 +302,8 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=wrongId&password=test&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator()
+                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 비밀번호",
                         User.builder()
@@ -334,7 +335,8 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=test&password=wrongPw&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator()
+                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
                 )
         );
     }
@@ -384,7 +386,8 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html"
+                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Set-Cookie: logined=false; Path=/"
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 비밀번호",
                         User.builder()
@@ -400,7 +403,8 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html"
+                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Set-Cookie: logined=false; Path=/"
                 )
         );
     }
