@@ -128,7 +128,8 @@ public class RequestHandler extends Thread {
             }
 
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                    "Location: http://localhost:8080/index.html";
+                    "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                    "Set-Cookie: logined=true; Path=/";
         } catch (LoginFailedException loginFailedException) {
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
                     "Location: http://localhost:8080/user/login_failed.html";

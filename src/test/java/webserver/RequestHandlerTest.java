@@ -269,7 +269,8 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=test&password=test&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html" + System.lineSeparator()
+                                "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                                "Set-Cookie: logined=true; Path=/" + System.lineSeparator()
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 아이디",
                         User.builder()
@@ -366,7 +367,8 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html"
+                                "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                                "Set-Cookie: logined=true; Path=/"
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 ID",
                         User.builder()
