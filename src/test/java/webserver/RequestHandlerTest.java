@@ -349,7 +349,9 @@ class RequestHandlerTest {
 
         String actualResponseMessage = requestHandler.loginHandler(parameters);
 
-        assertThat(actualResponseMessage).isEqualTo(expectedResponseMessage);
+        assertThat(actualResponseMessage)
+                .as("loginHandler : %s", desc)
+                .isEqualTo(expectedResponseMessage);
     }
 
     static Stream<Arguments> loginHandler() {
