@@ -1,7 +1,9 @@
 package webserver;
 
 import db.DataBase;
+import model.PasswordNotMatchException;
 import model.User;
+import model.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.IOUtils;
@@ -92,8 +94,11 @@ public class RequestHandler extends Thread {
                     DataBase.addUser(newUser);
 
                     responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: http://localhost:8080/index.html";
+                            "Location: /index.html";
                     break;
+                }
+                case "/user/login": {
+                    responseMessage = loginHandler(request.getRequestMessage().getParameters());
                 }
             }
 
@@ -102,6 +107,33 @@ public class RequestHandler extends Thread {
 
         } catch (IOException e) {
             log.error(e.getMessage(), e);
+        }
+    }
+
+    public String loginHandler(Map<String, String> parameters) {
+        try {
+            User findUser;
+
+            try {
+                findUser = DataBase.findUserById(parameters.get("userId"))
+                        .orElseThrow(UserNotFoundException::new);
+            } catch (UserNotFoundException userNotFoundException) {
+                throw new LoginFailedException();
+            }
+
+            try {
+                findUser.checkPassword(parameters.get("password"));
+            } catch (PasswordNotMatchException passwordNotMatchException) {
+                throw new LoginFailedException();
+            }
+
+            return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                    "Location: /index.html" + System.lineSeparator() +
+                    "Set-Cookie: logined=true; Path=/";
+        } catch (LoginFailedException loginFailedException) {
+            return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                    "Location: /user/login_failed.html" + System.lineSeparator() +
+                    "Set-Cookie: logined=false; Path=/";
         }
     }
 }
