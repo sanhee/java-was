@@ -2,11 +2,16 @@ package webserver;
 
 import db.DataBase;
 import model.User;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -21,14 +26,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class RequestHandlerTest {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    ServerSocket server;
+    Socket browser;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        server = createServerWithRandomPortBetween(30000, 40000);
+        browser = new Socket("localhost", server.getLocalPort());
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        server.close();
+        browser.close();
+    }
+
+    private ServerSocket createServerWithRandomPortBetween(int origin, int bound) throws IOException {
+        int port = ThreadLocalRandom.current().nextInt(origin, bound);
+
+        ServerSocket server = null;
+
+        try {
+            server = new ServerSocket(port);
+        } catch (BindException bindException) {
+            logger.debug("port [" + port + "] already exists", bindException);
+            return createServerWithRandomPortBetween(origin, bound);
+        }
+
+        return server;
+    }
+
     @ParameterizedTest
     @MethodSource("run")
     void run(String message, String expectedResponseMessage) throws IOException {
-        int port = ThreadLocalRandom.current().nextInt(50000, 60000);
-        ServerSocket server = new ServerSocket(port);
-
-        Socket browser = new Socket("localhost", port);
-
         RequestHandler requestHandler = new RequestHandler(server.accept());
 
         BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
@@ -110,11 +142,6 @@ class RequestHandlerTest {
     @ParameterizedTest
     @MethodSource("runWithCheckUserCreated")
     void runWithCheckUserCreated(String message, User expectedUser) throws IOException {
-        int port = ThreadLocalRandom.current().nextInt(50000, 60000);
-        ServerSocket server = new ServerSocket(port);
-
-        Socket browser = new Socket("localhost", port);
-
         RequestHandler requestHandler = new RequestHandler(server.accept());
 
         BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
@@ -178,11 +205,6 @@ class RequestHandlerTest {
     @ParameterizedTest
     @MethodSource("runWithFailToCreateUser")
     void runWithFailToCreateUser(String message) throws IOException {
-        int port = ThreadLocalRandom.current().nextInt(50000, 60000);
-        ServerSocket server = new ServerSocket(port);
-
-        Socket browser = new Socket("localhost", port);
-
         RequestHandler requestHandler = new RequestHandler(server.accept());
 
         BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
@@ -214,9 +236,6 @@ class RequestHandlerTest {
         DataBase.addUser(user);
 
         // 로그인
-        int port = ThreadLocalRandom.current().nextInt(30000, 60000);
-        ServerSocket server = new ServerSocket(port);
-        Socket browser = new Socket("localhost", port);
         RequestHandler requestHandler = new RequestHandler(server.accept());
 
         BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
