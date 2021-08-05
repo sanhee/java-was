@@ -94,7 +94,7 @@ public class RequestHandler extends Thread {
                     DataBase.addUser(newUser);
 
                     responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: http://localhost:8080/index.html";
+                            "Location: /index.html";
                     break;
                 }
                 case "/user/login": {
@@ -128,11 +128,11 @@ public class RequestHandler extends Thread {
             }
 
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                    "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                    "Location: /index.html" + System.lineSeparator() +
                     "Set-Cookie: logined=true; Path=/";
         } catch (LoginFailedException loginFailedException) {
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                    "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                    "Location: /user/login_failed.html" + System.lineSeparator() +
                     "Set-Cookie: logined=false; Path=/";
         }
     }

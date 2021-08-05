@@ -102,7 +102,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=dae&password=dae&name=dae&email=dae%40dae",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html" + System.lineSeparator()
+                                "Location: /index.html" + System.lineSeparator()
                 )
         );
     }
@@ -269,7 +269,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=test&password=test&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                                "Location: /index.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=true; Path=/" + System.lineSeparator()
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 아이디",
@@ -302,7 +302,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=wrongId&password=test&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Location: /user/login_failed.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 비밀번호",
@@ -335,7 +335,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator() +
                                 "userId=test&password=wrongPw&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Location: /user/login_failed.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
                 )
         );
@@ -371,7 +371,7 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/index.html" + System.lineSeparator() +
+                                "Location: /index.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=true; Path=/"
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 ID",
@@ -388,7 +388,7 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Location: /user/login_failed.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=false; Path=/"
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 비밀번호",
@@ -405,7 +405,7 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: http://localhost:8080/user/login_failed.html" + System.lineSeparator() +
+                                "Location: /user/login_failed.html" + System.lineSeparator() +
                                 "Set-Cookie: logined=false; Path=/"
                 )
         );
