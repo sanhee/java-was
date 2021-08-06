@@ -10,7 +10,7 @@ import java.util.Objects;
 public class GetMessage implements RequestMessage {
     private RequestHeader header;
 
-    private GetMessage(RequestHeader header) {
+    protected GetMessage(RequestHeader header) {
         this.header = header;
     }
 
