@@ -33,8 +33,17 @@ class RequestHandlerTest {
 
     @BeforeEach
     void setUp() throws IOException {
+        setUpServer();
+        cleanUpDataBase();
+    }
+
+    private void setUpServer() throws IOException {
         server = createServerWithRandomPortBetween(30000, 40000);
         browser = new Socket("localhost", server.getLocalPort());
+    }
+
+    private void cleanUpDataBase() {
+        DataBase.deleteAll();
     }
 
     @AfterEach
@@ -153,7 +162,7 @@ class RequestHandlerTest {
 
         requestHandler.run();
 
-        assertThat(DataBase.findUserById("test").get()).isEqualTo(expectedUser);
+        assertThat(DataBase.findUserById(expectedUser.getUserId()).get()).isEqualTo(expectedUser);
     }
 
     static Stream<Arguments> runWithCheckUserCreated() {
@@ -193,10 +202,10 @@ class RequestHandlerTest {
                                 "Connection: keep-alive" + System.lineSeparator() +
                                 "Accept: */*" + System.lineSeparator(),
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("1234")
+                                .setUserId("javajigi")
+                                .setPassword("password")
                                 .setName("test")
-                                .setEmail("test@test")
+                                .setEmail("javajigi@40slipp.net")
                                 .build()
                 )
         );
