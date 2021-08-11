@@ -49,7 +49,7 @@ public class RequestHandler extends Thread {
 
             //TODO: StatusLine 대신 path에서 바로 뽑을 수 있을 것 같다.
             Map<String, String> statusLine = request.getRequestMessage().getHeader().getStatusLineAttributes();
-            String path = statusLine.get(RequestHeader.PATH_KEY);
+            String path = statusLine.get(RequestHeader.PATH_KEY).split("\\?")[0];
 
             // TODO: Default Message를 설정할 수 있을 것 같다.
             String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
