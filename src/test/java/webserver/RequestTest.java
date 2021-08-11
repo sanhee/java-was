@@ -4,6 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -34,7 +35,7 @@ class RequestTest {
                         new GetMessage(RequestHeader.of(
                                 Arrays.asList(
                                         "GET",
-                                        "/user/create",
+                                        "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
                                 new HashMap() {{
@@ -44,7 +45,6 @@ class RequestTest {
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
                                 }}
-                                // TODO: 쿼리스트링 저장소가 추가로 들어가야 함. 혹은 PATH를 가져올때 주소와 쿼리스트링 구분 필요
                         ))
                 ), Arguments.of(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
