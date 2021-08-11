@@ -192,4 +192,38 @@ class RequestHeaderTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("path")
+    void path(String desc, Map<String, String> statusLine, String expectedPath) {
+        RequestHeader requestHeader = new RequestHeader(statusLine, new HashMap<>());
+
+        String actualPath = requestHeader.path();
+
+        assertThat(actualPath).as("리퀘스트 헤더에서 path 가져오기 : %s", desc)
+                .isEqualTo(expectedPath);
+    }
+
+    static Stream<Arguments> path() {
+        return Stream.of(
+                Arguments.of(
+                        "쿼리스트링이 없는 GET 메세지",
+                        new HashMap() {{
+                            put("path", "/user/create");
+                            put("method", "GET");
+                            put("protocolVersion", "HTTP/1.1");
+                        }},
+                        "/user/create"
+                ),
+                Arguments.of(
+                        "쿼리스트링이 포함된 GET 메세지 path를 출력할때도 쿼리스트링이 포함되지 않아야 함",
+                        new HashMap() {{
+                            put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
+                            put("method", "GET");
+                            put("protocolVersion", "HTTP/1.1");
+                        }},
+                        "/user/create"
+                )
+        );
+    }
 }
