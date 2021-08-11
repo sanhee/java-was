@@ -47,8 +47,7 @@ public class RequestHandler extends Thread {
 
             Request request = Request.from(requestMessages.toString());
 
-            //TODO: request에서 바로 path를 가져오는 방법은?.
-            String path = request.getRequestMessage().getHeader().path();
+            String path = request.path();
 
             // TODO: Default Message를 설정할 수 있을 것 같다.
             String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
