@@ -37,7 +37,7 @@ class RequestTest {
                                         "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap<String, String>() {{
+                                new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
@@ -61,7 +61,7 @@ class RequestTest {
                                                 "/user/create",
                                                 "HTTP/1.1"
                                         ),
-                                        new HashMap<String, String>() {{
+                                        new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
                                             put("Content-Length", "59");
@@ -94,7 +94,7 @@ class RequestTest {
                                         "/user/create",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap<String, String>() {{
+                                new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
@@ -111,7 +111,7 @@ class RequestTest {
                                         "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap<String, String>() {{
+                                new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");

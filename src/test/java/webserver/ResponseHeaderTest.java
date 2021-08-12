@@ -50,7 +50,7 @@ class ResponseHeaderTest {
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
                                 "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
                                 System.lineSeparator(),
-                        new HashMap<String, String>() {{
+                        new HashMap() {{
                             put("protocolVersion", "HTTP/1.1");
                             put("statusText", "OK");
                             put("statusCode", "200");

@@ -392,7 +392,7 @@ class RequestHandlerTest {
                                 .setName("test")
                                 .setEmail("test@test")
                                 .build(),
-                        new HashMap<String, String>() {{
+                        new HashMap() {{
                             put("userId", "test");
                             put("password", "test");
                             put("name", "test");
@@ -409,7 +409,7 @@ class RequestHandlerTest {
                                 .setName("test")
                                 .setEmail("test@test")
                                 .build(),
-                        new HashMap<String, String>() {{
+                        new HashMap() {{
                             put("userId", "wrongId");
                             put("password", "test");
                             put("name", "test");
@@ -426,7 +426,7 @@ class RequestHandlerTest {
                                 .setName("test")
                                 .setEmail("test@test")
                                 .build(),
-                        new HashMap<String, String>() {{
+                        new HashMap() {{
                             put("userId", "test");
                             put("password", "wrongPassword");
                             put("name", "test");
