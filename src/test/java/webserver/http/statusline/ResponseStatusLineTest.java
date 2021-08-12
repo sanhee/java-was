@@ -34,4 +34,28 @@ class ResponseStatusLineTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("statusText")
+    void statusText(String desc, ResponseStatusLine requestStatusLineAttributes, String expectedStatusText) {
+        assertThat(requestStatusLineAttributes.statusText())
+                .as("status line에서 status text 가져오기 : %s", desc)
+                .isEqualTo(expectedStatusText);
+    }
+
+    static Stream<Arguments> statusText() {
+        return Stream.of(
+                Arguments.of(
+                        "200 OK",
+                        new ResponseStatusLine(
+                                new HashMap<String, String>() {{
+                                    put("protocolVersion", "HTTP/1.1");
+                                    put("statusCode", "200");
+                                    put("statusText", "OK");
+                                }}
+                        ),
+                        "OK"
+                )
+        );
+    }
 }
