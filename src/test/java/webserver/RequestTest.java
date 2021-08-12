@@ -16,7 +16,7 @@ class RequestTest {
     @MethodSource("from")
     void from(String inputMessage, RequestMessage expectedRequestMessage) {
         Request request = Request.from(inputMessage);
-        //TODO: Path 체크 이후 Parameter 불러오는 곳 테스트 추가로 필요
+
         assertThat(request.getRequestMessage())
                 .isEqualToComparingFieldByFieldRecursively(expectedRequestMessage);
     }
