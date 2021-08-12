@@ -1,4 +1,6 @@
-package webserver;
+package webserver.http.statusline;
+
+import webserver.http.header.RequestHeader;
 
 import java.util.Map;
 
