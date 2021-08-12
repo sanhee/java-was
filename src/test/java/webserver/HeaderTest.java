@@ -1,4 +1,0 @@
-package webserver;
-
-class HeaderTest {
-}

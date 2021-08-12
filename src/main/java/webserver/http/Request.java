@@ -1,4 +1,6 @@
-package webserver;
+package webserver.http;
+
+import webserver.http.message.RequestMessage;
 
 public class Request {
     private RequestMessage requestMessage;

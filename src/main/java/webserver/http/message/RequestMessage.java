@@ -1,4 +1,7 @@
-package webserver;
+package webserver.http.message;
+
+import webserver.http.header.Header;
+import webserver.http.header.RequestHeader;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package webserver;
+package webserver.http;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

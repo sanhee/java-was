@@ -1,6 +1,8 @@
-package webserver;
+package webserver.http.message;
 
 import util.HttpRequestUtils;
+import webserver.http.header.Header;
+import webserver.http.header.RequestHeader;
 
 import java.net.URI;
 import java.net.URISyntaxException;
