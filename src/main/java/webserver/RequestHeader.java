@@ -23,6 +23,10 @@ public class RequestHeader extends Header {
         return new RequestHeader(statusLineAttributes, attributes);
     }
 
+    public String path() {
+        return statusLineAttributes.get(RequestHeader.PATH_KEY).split("\\?")[0];
+    }
+
     public String getMethod() {
         return getStatusLineAttributes().get(METHOD_KEY);
     }
