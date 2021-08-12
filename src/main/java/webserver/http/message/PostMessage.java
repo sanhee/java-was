@@ -1,6 +1,9 @@
-package webserver;
+package webserver.http.message;
 
 import util.HttpRequestUtils;
+import webserver.http.Body;
+import webserver.http.header.Header;
+import webserver.http.header.RequestHeader;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -12,7 +15,7 @@ public class PostMessage implements RequestMessage {
     private RequestHeader header;
     private Body body;
 
-    protected PostMessage(RequestHeader header, Body body) {
+    public PostMessage(RequestHeader header, Body body) {
         this.header = header;
         this.body = body;
     }

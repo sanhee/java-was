@@ -1,4 +1,4 @@
-package webserver;
+package webserver.http.header;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

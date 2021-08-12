@@ -1,6 +1,8 @@
-package webserver;
+package webserver.http.message;
 
 import util.HttpRequestUtils;
+import webserver.http.header.Header;
+import webserver.http.header.RequestHeader;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,7 +12,7 @@ import java.util.Objects;
 public class GetMessage implements RequestMessage {
     private RequestHeader header;
 
-    protected GetMessage(RequestHeader header) {
+    public GetMessage(RequestHeader header) {
         this.header = header;
     }
 
