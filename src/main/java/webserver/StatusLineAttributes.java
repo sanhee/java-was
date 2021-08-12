@@ -19,4 +19,8 @@ public class StatusLineAttributes {
                 .split("\\?")[0];
 
     }
+
+    public String protocol() {
+        return statusLineAttributes.get(RequestHeader.PROTOCOL_VERSION_KEY);
+    }
 }

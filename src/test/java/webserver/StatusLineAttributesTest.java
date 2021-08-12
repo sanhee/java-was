@@ -68,4 +68,28 @@ class StatusLineAttributesTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("protocol")
+    void protocol(String desc, StatusLineAttributes statusLineAttributes, String expectedMethod) {
+        assertThat(statusLineAttributes.protocol())
+                .as("status line에서 protocol 가져오기 : %s", desc)
+                .isEqualTo(expectedMethod);
+    }
+
+    static Stream<Arguments> protocol() {
+        return Stream.of(
+                Arguments.of(
+                        "HTTP/1.1",
+                        new StatusLineAttributes(
+                                new HashMap<String, String>() {{
+                                    put("path", "/user/create");
+                                    put("method", "GET");
+                                    put("protocolVersion", "HTTP/1.1");
+                                }}
+                        ),
+                        "HTTP/1.1"
+                )
+        );
+    }
 }
