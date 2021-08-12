@@ -4,8 +4,8 @@ import webserver.http.header.RequestHeader;
 
 import java.util.Map;
 
-public class RequestStatusLineAttributes extends StatusLine {
-    public RequestStatusLineAttributes(Map<String, String> statusLineAttributes) {
+public class RequestStatusLine extends StatusLine {
+    public RequestStatusLine(Map<String, String> statusLineAttributes) {
         super(statusLineAttributes);
     }
 

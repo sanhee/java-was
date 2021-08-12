@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestStatusLineAttributesTest {
+class RequestStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("method")
-    void method(String desc, RequestStatusLineAttributes requestStatusLineAttributes, String expectedMethod) {
-        assertThat(requestStatusLineAttributes.method())
+    void method(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
+        assertThat(requestStatusLine.method())
                 .as("status line에서 method 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
@@ -23,7 +23,7 @@ class RequestStatusLineAttributesTest {
         return Stream.of(
                 Arguments.of(
                         "GET 메소드",
-                        new RequestStatusLineAttributes(
+                        new RequestStatusLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
@@ -37,8 +37,8 @@ class RequestStatusLineAttributesTest {
 
     @ParameterizedTest
     @MethodSource("path")
-    void path(String desc, RequestStatusLineAttributes requestStatusLineAttributes, String expectedPath) {
-        assertThat(requestStatusLineAttributes.path())
+    void path(String desc, RequestStatusLine requestStatusLine, String expectedPath) {
+        assertThat(requestStatusLine.path())
                 .as("status line에서 path 가져오기 : %s", desc)
                 .isEqualTo(expectedPath);
     }
@@ -47,7 +47,7 @@ class RequestStatusLineAttributesTest {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 path",
-                        new RequestStatusLineAttributes(
+                        new RequestStatusLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
@@ -57,7 +57,7 @@ class RequestStatusLineAttributesTest {
                         "/user/create"
                 ), Arguments.of(
                         "쿼리스트링이 있는 path",
-                        new RequestStatusLineAttributes(
+                        new RequestStatusLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
                                     put("method", "GET");
@@ -71,8 +71,8 @@ class RequestStatusLineAttributesTest {
 
     @ParameterizedTest
     @MethodSource("protocol")
-    void protocol(String desc, RequestStatusLineAttributes requestStatusLineAttributes, String expectedMethod) {
-        assertThat(requestStatusLineAttributes.protocol())
+    void protocol(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
+        assertThat(requestStatusLine.protocol())
                 .as("status line에서 protocol 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
@@ -81,7 +81,7 @@ class RequestStatusLineAttributesTest {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1",
-                        new RequestStatusLineAttributes(
+                        new RequestStatusLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
