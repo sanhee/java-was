@@ -13,8 +13,8 @@ class ResponseStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("statusCode")
-    void statusCode(String desc, ResponseStatusLine requestStatusLineAttributes, String expectedStatusCode) {
-        assertThat(requestStatusLineAttributes.statusCode())
+    void statusCode(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusCode) {
+        assertThat(responseStatusLineAttributes.statusCode())
                 .as("status line에서 status code 가져오기 : %s", desc)
                 .isEqualTo(expectedStatusCode);
     }
@@ -37,8 +37,8 @@ class ResponseStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("statusText")
-    void statusText(String desc, ResponseStatusLine requestStatusLineAttributes, String expectedStatusText) {
-        assertThat(requestStatusLineAttributes.statusText())
+    void statusText(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusText) {
+        assertThat(responseStatusLineAttributes.statusText())
                 .as("status line에서 status text 가져오기 : %s", desc)
                 .isEqualTo(expectedStatusText);
     }
@@ -61,8 +61,8 @@ class ResponseStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("protocol")
-    void protocol(String desc, ResponseStatusLine requestStatusLine, String expectedMethod) {
-        assertThat(requestStatusLine.protocol())
+    void protocol(String desc, ResponseStatusLine responseStatusLine, String expectedMethod) {
+        assertThat(responseStatusLine.protocol())
                 .as("status line에서 protocol 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
