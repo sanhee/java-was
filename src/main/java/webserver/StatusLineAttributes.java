@@ -13,4 +13,10 @@ public class StatusLineAttributes {
     public String method() {
         return statusLineAttributes.get(RequestHeader.METHOD_KEY);
     }
+
+    public String path() {
+        return statusLineAttributes.get(RequestHeader.PATH_KEY)
+                .split("\\?")[0];
+
+    }
 }
