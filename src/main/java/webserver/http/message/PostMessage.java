@@ -15,7 +15,7 @@ public class PostMessage implements RequestMessage {
     private RequestHeader header;
     private Body body;
 
-    protected PostMessage(RequestHeader header, Body body) {
+    public PostMessage(RequestHeader header, Body body) {
         this.header = header;
         this.body = body;
     }
