@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public abstract class Header {
-    protected static final String PROTOCOL_VERSION_KEY = "protocolVersion";
+    public static final String PROTOCOL_VERSION_KEY = "protocolVersion";
 
     protected Map<String, String> statusLineAttributes;
     private Map<String, String> attributes;

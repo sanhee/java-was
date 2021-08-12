@@ -7,7 +7,7 @@ import java.util.Map;
 public class RequestHeader extends Header {
     public static final String PATH_KEY = "path";
 
-    protected static final String METHOD_KEY = "method";
+    public static final String METHOD_KEY = "method";
 
     protected RequestHeader(Map<String, String> statusLineAttributes, Map<String, String> attributes) {
         super(statusLineAttributes, attributes);
