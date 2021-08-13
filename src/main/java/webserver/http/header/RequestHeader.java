@@ -1,38 +1,40 @@
 package webserver.http.header;
 
-import java.util.HashMap;
+import util.HttpRequestUtils;
+import webserver.http.statusline.RequestStatusLine;
+
 import java.util.List;
 import java.util.Map;
 
 public class RequestHeader extends Header {
-    public static final String PATH_KEY = "path";
+    private RequestStatusLine statusLine;
 
-    public static final String METHOD_KEY = "method";
-
-    protected RequestHeader(Map<String, String> statusLineAttributes, Map<String, String> attributes) {
-        super(statusLineAttributes, attributes);
+    protected RequestHeader(RequestStatusLine statusLine, Map<String, String> attributes) {
+        super(attributes);
+        this.statusLine = statusLine;
     }
 
     public static RequestHeader of(List<String> statusLine, Map<String, String> attributes) {
-        Map<String, String> statusLineAttributes = new HashMap<>();
+        return new RequestHeader(RequestStatusLine.from(statusLine), attributes);
+    }
 
-        statusLineAttributes.put(METHOD_KEY, statusLine.get(0));
-        statusLineAttributes.put(PATH_KEY, statusLine.get(1));
-        statusLineAttributes.put(PROTOCOL_VERSION_KEY, statusLine.get(2));
+    public static RequestHeader from(String headerText) {
+        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
+        List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return new RequestHeader(statusLineAttributes, attributes);
+        return RequestHeader.of(statusLine, attributeFrom(headerText));
     }
 
     public String path() {
-        return statusLineAttributes.get(RequestHeader.PATH_KEY).split("\\?")[0];
+        return statusLine.path();
     }
 
     public String getMethod() {
-        return getStatusLineAttributes().get(METHOD_KEY);
+        return statusLine.method();
     }
 
     @Override
     protected String statusLine() {
-        return statusLineAttributes.get(METHOD_KEY) + " " + statusLineAttributes.get(PATH_KEY) + " " + statusLineAttributes.get(PROTOCOL_VERSION_KEY);
+        return statusLine.toString();
     }
 }

@@ -2,7 +2,6 @@ package webserver.http.message;
 
 import util.HttpRequestUtils;
 import webserver.http.Body;
-import webserver.http.header.Header;
 import webserver.http.header.RequestHeader;
 
 import java.io.UnsupportedEncodingException;
@@ -25,7 +24,7 @@ public class PostMessage implements RequestMessage {
 
         Body body = Body.from(splittedPostMessage.length!= 1 ? splittedPostMessage[1] : "");
 
-        return new PostMessage(Header.requestHeaderFrom(splittedPostMessage[0]), body);
+        return new PostMessage(RequestHeader.from(splittedPostMessage[0]), body);
     }
 
     @Override

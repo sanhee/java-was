@@ -1,7 +1,6 @@
 package webserver.http.message;
 
 import util.HttpRequestUtils;
-import webserver.http.header.Header;
 import webserver.http.header.RequestHeader;
 
 import java.net.URI;
@@ -17,7 +16,7 @@ public class GetMessage implements RequestMessage {
     }
 
     public static GetMessage from(String getMessage) {
-        return new GetMessage(Header.requestHeaderFrom(getMessage));
+        return new GetMessage(RequestHeader.from(getMessage));
     }
 
     @Override
@@ -32,14 +31,14 @@ public class GetMessage implements RequestMessage {
 
     @Override
     public Map<String, String> getParameters() {
-        Map<String, String> statusLine = header.getStatusLineAttributes();
+        String path = header.path();
 
         try {
-            URI uri = new URI(statusLine.get(RequestHeader.PATH_KEY));
+            URI uri = new URI(path);
             return HttpRequestUtils.parseQueryString(uri.getQuery());
 
         } catch (URISyntaxException e) {
-            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + statusLine.get(RequestHeader.PATH_KEY), e);
+            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + path, e);
         }
     }
 

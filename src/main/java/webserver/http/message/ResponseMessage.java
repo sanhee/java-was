@@ -1,7 +1,6 @@
 package webserver.http.message;
 
 import webserver.http.Body;
-import webserver.http.header.Header;
 import webserver.http.header.ResponseHeader;
 
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class ResponseMessage {
             body.add(splittedResponseMessage[i]);
         }
 
-        return new ResponseMessage(Header.responseHeaderFrom(splittedResponseMessage[0]), Body.from(body.toString()));
+        return new ResponseMessage(ResponseHeader.from(splittedResponseMessage[0]), Body.from(body.toString()));
     }
 
     public ResponseHeader getHeader() {

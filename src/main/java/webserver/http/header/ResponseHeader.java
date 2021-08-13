@@ -1,29 +1,33 @@
 package webserver.http.header;
 
-import java.util.HashMap;
+import util.HttpRequestUtils;
+import webserver.http.statusline.ResponseStatusLine;
+
 import java.util.List;
 import java.util.Map;
 
 public class ResponseHeader extends Header {
-    protected static final String STATUS_CODE_KEY = "statusCode";
-    protected static final String STATUS_TEXT_KEY = "statusText";
 
-    protected ResponseHeader(Map<String, String> statusLineAttributes, Map<String, String> attributes) {
-        super(statusLineAttributes, attributes);
+    private ResponseStatusLine statusLine;
+
+    protected ResponseHeader(ResponseStatusLine statusLine, Map<String, String> attributes) {
+        super(attributes);
+        this.statusLine = statusLine;
     }
 
     public static ResponseHeader of(List<String> statusLine, Map<String, String> attributes) {
-        Map<String, String> statusLineAttributes = new HashMap<>();
+        return new ResponseHeader(ResponseStatusLine.from(statusLine), attributes);
+    }
 
-        statusLineAttributes.put(PROTOCOL_VERSION_KEY, statusLine.get(0));
-        statusLineAttributes.put(STATUS_CODE_KEY, statusLine.get(1));
-        statusLineAttributes.put(STATUS_TEXT_KEY, statusLine.get(2));
+    public static ResponseHeader from(String headerText) {
+        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
+        List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return new ResponseHeader(statusLineAttributes, attributes);
+        return ResponseHeader.of(statusLine, attributeFrom(headerText));
     }
 
     @Override
     protected String statusLine() {
-        return statusLineAttributes.get(PROTOCOL_VERSION_KEY) + " " + statusLineAttributes.get(STATUS_CODE_KEY) + " " + statusLineAttributes.get(STATUS_TEXT_KEY);
+        return statusLine.toString();
     }
 }

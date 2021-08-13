@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import util.IOUtils;
 import webserver.http.Request;
 import webserver.http.Response;
-import webserver.http.header.Header;
 import webserver.http.header.RequestHeader;
 
 import java.io.*;
@@ -42,7 +41,7 @@ public class RequestHandler extends Thread {
                 requestMessage = br.readLine();
             }
 
-            RequestHeader requestHeader = Header.requestHeaderFrom(requestMessages.toString());
+            RequestHeader requestHeader = RequestHeader.from(requestMessages.toString());
 
             int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
             String requestBody = IOUtils.readData(br, contentLength);
