@@ -1,9 +1,8 @@
 package webserver.http.statusline;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 public class RequestStatusLine extends StatusLine {
 
@@ -28,16 +27,20 @@ public class RequestStatusLine extends StatusLine {
         return statusLineAttributeBy(METHOD_KEY);
     }
 
+    private URI uri() {
+        try {
+            return new URI(statusLineAttributeBy(PATH_KEY));
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + path(), e);
+        }
+    }
+
     public String path() {
-        return statusLineAttributeBy(PATH_KEY)
-                .split("\\?")[0];
+        return uri().getPath();
     }
 
     public String queryString() {
-        String[] splitPath = statusLineAttributeBy(PATH_KEY)
-                .split("\\?");
-
-        return splitPath.length == 2 ? splitPath[1] : "";
+        return Objects.toString(uri().getQuery(), "");
     }
 
     @Override
