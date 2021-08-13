@@ -92,4 +92,38 @@ class RequestStatusLineTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("queryString")
+    void queryString(String desc, RequestStatusLine requestStatusLine, String expectedQueryString) {
+        assertThat(requestStatusLine.queryString())
+                .as("status line에서 쿼리스트링 가져오기 : %s", desc)
+                .isEqualTo(expectedQueryString);
+    }
+
+    static Stream<Arguments> queryString() {
+        return Stream.of(
+                Arguments.of(
+                        "쿼리스트링이 없는 path",
+                        new RequestStatusLine(
+                                new HashMap<String, String>() {{
+                                    put("path", "/user/create");
+                                    put("method", "GET");
+                                    put("protocolVersion", "HTTP/1.1");
+                                }}
+                        ),
+                        ""
+                ), Arguments.of(
+                        "쿼리스트링이 있는 path",
+                        new RequestStatusLine(
+                                new HashMap<String, String>() {{
+                                    put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
+                                    put("method", "GET");
+                                    put("protocolVersion", "HTTP/1.1");
+                                }}
+                        ),
+                        "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net"
+                )
+        );
+    }
 }

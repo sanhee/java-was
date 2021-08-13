@@ -33,6 +33,13 @@ public class RequestStatusLine extends StatusLine {
                 .split("\\?")[0];
     }
 
+    public String queryString() {
+        String[] splitPath = statusLineAttributeBy(PATH_KEY)
+                .split("\\?");
+
+        return splitPath.length == 2 ? splitPath[1] : "";
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(" ").add(method())
