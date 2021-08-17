@@ -11,7 +11,7 @@ public interface RequestMessage {
         if (header.getMethod().equalsIgnoreCase("post")) {
             return PostMessage.from(message);
         }
-        
+
         return GetMessage.from(message);
     }
 
@@ -20,4 +20,8 @@ public interface RequestMessage {
     String getMethod();
 
     Map<String, String> getParameters();
+
+    default String pathExtension() {
+        return getHeader().pathExtension();
+    }
 }

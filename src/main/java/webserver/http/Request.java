@@ -20,4 +20,8 @@ public class Request {
     public RequestMessage getRequestMessage() {
         return requestMessage;
     }
+
+    public String pathExtension() {
+        return requestMessage.pathExtension();
+    }
 }
