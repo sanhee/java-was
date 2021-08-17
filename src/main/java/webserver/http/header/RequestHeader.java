@@ -37,4 +37,8 @@ public class RequestHeader extends Header {
     protected String statusLine() {
         return statusLine.toString();
     }
+
+    public String queryString() {
+        return statusLine.queryString();
+    }
 }
