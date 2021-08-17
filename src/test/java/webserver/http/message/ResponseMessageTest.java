@@ -18,7 +18,8 @@ class ResponseMessageTest {
     void getHeader(String messageText, Header expectedRequestHeader) {
         ResponseMessage responseMessage = ResponseMessage.from(messageText);
 
-        assertThat(responseMessage.getHeader()).isEqualTo(expectedRequestHeader);
+        assertThat(responseMessage.getHeader())
+                .isEqualToComparingFieldByFieldRecursively(expectedRequestHeader);
     }
 
     static Stream<Arguments> getHeader() {
@@ -88,5 +89,4 @@ class ResponseMessageTest {
                 )
         );
     }
-
 }

@@ -34,17 +34,4 @@ public class ResponseMessage {
     public Body getBody() {
         return body;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ResponseMessage that = (ResponseMessage) o;
-        return Objects.equals(header, that.header) && Objects.equals(body, that.body);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(header, body);
-    }
 }

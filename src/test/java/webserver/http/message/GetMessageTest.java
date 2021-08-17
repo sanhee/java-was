@@ -17,14 +17,17 @@ class GetMessageTest {
     void getHeader(String messageText, RequestHeader expectedRequestHeader) {
         GetMessage getMessage = GetMessage.from(messageText);
 
-        assertThat(getMessage.getHeader()).isEqualTo(expectedRequestHeader);
+        assertThat(getMessage)
+                .extracting("header")
+                .usingRecursiveFieldByFieldElementComparator()
+                .contains(expectedRequestHeader);
     }
 
     static Stream<Arguments> getHeader() {
         return Stream.of(
                 //TODO getMessage인데 POST가  성공하는 테스트케이스로 들어가 있음!
                 Arguments.of(
-                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                        "GET /user/create HTTP/1.1" + System.lineSeparator() +
                         "Host: localhost:8080" + System.lineSeparator() +
                         "Connection: keep-alive" + System.lineSeparator() +
                         "Content-Length: 59" + System.lineSeparator() +
@@ -32,7 +35,7 @@ class GetMessageTest {
                         "Accept: */*" + System.lineSeparator() +
                         "" + System.lineSeparator(),
                         RequestHeader.from(
-                                "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                                "GET /user/create HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
                                 "Content-Length: 59" + System.lineSeparator() +
