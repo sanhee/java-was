@@ -20,8 +20,4 @@ public interface RequestMessage {
     String getMethod();
 
     Map<String, String> getParameters();
-
-    default String pathExtension() {
-        return getHeader().pathExtension();
-    }
 }

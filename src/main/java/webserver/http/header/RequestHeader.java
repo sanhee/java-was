@@ -41,8 +41,4 @@ public class RequestHeader extends Header {
     public String queryString() {
         return statusLine.queryString();
     }
-
-    public String pathExtension() {
-        return statusLine.pathExtension();
-    }
 }
