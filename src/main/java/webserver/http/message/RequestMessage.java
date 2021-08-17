@@ -20,4 +20,8 @@ public interface RequestMessage {
     String getMethod();
 
     Map<String, String> getParameters();
+
+    default String path() {
+        return getHeader().path();
+    }
 }

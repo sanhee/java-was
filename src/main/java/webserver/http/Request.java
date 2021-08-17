@@ -14,7 +14,7 @@ public class Request {
     }
 
     public String path() {
-        return requestMessage.getHeader().path();
+        return requestMessage.path();
     }
 
     public RequestMessage getRequestMessage() {
