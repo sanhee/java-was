@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import util.IOUtils;
 import webserver.http.Request;
 import webserver.http.Response;
-import webserver.http.header.Header;
 import webserver.http.header.RequestHeader;
 
 import java.io.*;
@@ -42,7 +41,7 @@ public class RequestHandler extends Thread {
                 requestMessage = br.readLine();
             }
 
-            RequestHeader requestHeader = Header.requestHeaderFrom(requestMessages.toString());
+            RequestHeader requestHeader = RequestHeader.from(requestMessages.toString());
 
             int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
             String requestBody = IOUtils.readData(br, contentLength);
@@ -51,22 +50,11 @@ public class RequestHandler extends Thread {
 
             Request request = Request.from(requestMessages.toString());
 
-            String path = request.path();
-
             // TODO: Default Message를 설정할 수 있을 것 같다.
             String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
 
-
-            String[] splittedPath = path.split("/");
-
-            String[] splittedDot = splittedPath[splittedPath.length - 1].split("\\.");
-
-            String extension = "";
-
-            if (1 < splittedDot.length) {
-                extension = splittedPath[splittedPath.length - 1].split("\\.")[1];
-            }
-
+            String path = request.path();
+            String extension = request.pathExtension();
             if (extension.equals("html")) {
 
                 File htmlFile = new File("./webapp" + path);

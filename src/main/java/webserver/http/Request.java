@@ -14,10 +14,30 @@ public class Request {
     }
 
     public String path() {
-        return requestMessage.getHeader().path();
+        return requestMessage.path();
     }
 
     public RequestMessage getRequestMessage() {
         return requestMessage;
+    }
+
+    public String pathExtension() {
+        String path = path();
+
+        String[] splitPath = path.split("/");
+
+        if (splitPath.length == 0) {
+            return "";
+        }
+
+        String[] splitDot = splitPath[splitPath.length - 1].split("\\.");
+
+        String extension = "";
+
+        if (1 < splitDot.length) {
+            extension = splitPath[splitPath.length - 1].split("\\.")[1];
+        }
+
+        return extension;
     }
 }

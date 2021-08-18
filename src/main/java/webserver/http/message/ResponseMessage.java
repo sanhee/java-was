@@ -1,7 +1,6 @@
 package webserver.http.message;
 
 import webserver.http.Body;
-import webserver.http.header.Header;
 import webserver.http.header.ResponseHeader;
 
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class ResponseMessage {
             body.add(splittedResponseMessage[i]);
         }
 
-        return new ResponseMessage(Header.responseHeaderFrom(splittedResponseMessage[0]), Body.from(body.toString()));
+        return new ResponseMessage(ResponseHeader.from(splittedResponseMessage[0]), Body.from(body.toString()));
     }
 
     public ResponseHeader getHeader() {
@@ -34,18 +33,5 @@ public class ResponseMessage {
 
     public Body getBody() {
         return body;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ResponseMessage that = (ResponseMessage) o;
-        return Objects.equals(header, that.header) && Objects.equals(body, that.body);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(header, body);
     }
 }

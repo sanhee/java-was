@@ -11,36 +11,54 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class RequestMessageTest {
     @ParameterizedTest
     @MethodSource("fromGetMessage")
-    void fromGetMessage(String messageText) {
+    void fromGetMessage(String messageText, GetMessage expectedGetMessage) {
         assertThat(RequestMessage.from(messageText))
-                .isEqualTo(GetMessage.from(messageText));
+                .isEqualToComparingFieldByFieldRecursively(expectedGetMessage);
     }
 
     static Stream<Arguments> fromGetMessage() {
         return Stream.of(
                 Arguments.of(
                         "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 59" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
+                        GetMessage.from(
+                                "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
                                 "Content-Length: 59" + System.lineSeparator() +
                                 "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
                                 "Accept: */*" + System.lineSeparator() +
                                 "" + System.lineSeparator()
+                        )
                 )
         );
     }
 
     @ParameterizedTest
     @MethodSource("fromPostMessage")
-    void fromPostMessage(String messageText) {
+    void fromPostMessage(String messageText, PostMessage expectedPostMessage) {
         assertThat(RequestMessage.from(messageText))
-                .isEqualTo(PostMessage.from(messageText));
+                .isEqualToComparingFieldByFieldRecursively(expectedPostMessage);
     }
 
     static Stream<Arguments> fromPostMessage() {
         return Stream.of(
                 Arguments.of(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 59" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
+                        PostMessage.from(
+                                "POST /user/create HTTP/1.1" + System.lineSeparator() +
                                 "Host: localhost:8080" + System.lineSeparator() +
                                 "Connection: keep-alive" + System.lineSeparator() +
                                 "Content-Length: 59" + System.lineSeparator() +
@@ -48,6 +66,7 @@ class RequestMessageTest {
                                 "Accept: */*" + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net"
+                        )
                 )
         );
     }
