@@ -4,7 +4,6 @@ import util.HttpRequestUtils;
 import webserver.http.header.RequestHeader;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class GetMessage implements RequestMessage {
     private RequestHeader header;
@@ -30,18 +29,5 @@ public class GetMessage implements RequestMessage {
     @Override
     public Map<String, String> getParameters() {
         return HttpRequestUtils.parseQueryString(header.getQueryString());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GetMessage that = (GetMessage) o;
-        return Objects.equals(header, that.header);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(header);
     }
 }

@@ -13,6 +13,7 @@ class BodyTest {
 
         Body body = Body.from(data);
 
-        assertThat(body).isEqualTo(expectedBody);
+        assertThat(body)
+                .isEqualToComparingFieldByFieldRecursively(expectedBody);
     }
 }

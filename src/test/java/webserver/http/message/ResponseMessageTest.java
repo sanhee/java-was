@@ -54,7 +54,8 @@ class ResponseMessageTest {
     void getBody(String messageText, Body expectedBody) {
         ResponseMessage responseMessage = ResponseMessage.from(messageText);
 
-        assertThat(responseMessage.getBody()).isEqualTo(expectedBody);
+        assertThat(responseMessage.getBody())
+                .isEqualToComparingFieldByFieldRecursively(expectedBody);
     }
 
     static Stream<Arguments> getBody() {

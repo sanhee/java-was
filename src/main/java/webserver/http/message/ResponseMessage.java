@@ -3,7 +3,6 @@ package webserver.http.message;
 import webserver.http.Body;
 import webserver.http.header.ResponseHeader;
 
-import java.util.Objects;
 import java.util.StringJoiner;
 
 public class ResponseMessage {
