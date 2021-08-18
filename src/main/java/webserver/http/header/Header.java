@@ -35,7 +35,7 @@ public abstract class Header {
     public byte[] getBytes() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(statusLine()).append(System.lineSeparator());
+        sb.append(getStatusLine()).append(System.lineSeparator());
 
         for (Map.Entry<String, String> entry : getAttributes().entrySet()) {
             sb.append(entry.getKey() + ": " + entry.getValue() + System.lineSeparator());
@@ -46,5 +46,5 @@ public abstract class Header {
         return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 
-    protected abstract String statusLine();
+    protected abstract String getStatusLine();
 }

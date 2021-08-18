@@ -23,31 +23,31 @@ public class RequestStatusLine extends StatusLine {
         return new RequestStatusLine(statusLineAttributes);
     }
 
-    public String method() {
-        return statusLineAttributeBy(METHOD_KEY);
+    public String getMethod() {
+        return getStatusLineAttributeBy(METHOD_KEY);
     }
 
-    private URI uri() {
+    private URI getUri() {
         try {
-            return new URI(statusLineAttributeBy(PATH_KEY));
+            return new URI(getStatusLineAttributeBy(PATH_KEY));
         } catch (URISyntaxException e) {
-            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + path(), e);
+            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + getPath(), e);
         }
     }
 
-    public String path() {
-        return uri().getPath();
+    public String getPath() {
+        return getUri().getPath();
     }
 
-    public String queryString() {
-        return Objects.toString(uri().getQuery(), "");
+    public String getQueryString() {
+        return Objects.toString(getUri().getQuery(), "");
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(" ").add(method())
-                                    .add(path())
-                                    .add(protocol())
+        return new StringJoiner(" ").add(getMethod())
+                                    .add(getPath())
+                                    .add(getProtocol())
                                     .toString();
     }
 }

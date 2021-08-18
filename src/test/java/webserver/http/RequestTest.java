@@ -82,14 +82,14 @@ class RequestTest {
 
     @ParameterizedTest
     @MethodSource
-    void path(String desc, GetMessage getMessage, String expectedPath) {
-        String actualPath = new Request(getMessage).path();
+    void getPath(String desc, GetMessage getMessage, String expectedPath) {
+        String actualPath = new Request(getMessage).getPath();
 
         assertThat(actualPath).as(desc)
                               .isEqualTo(expectedPath);
     }
 
-    static Stream<Arguments> path() {
+    static Stream<Arguments> getPath() {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 GET 메세지",
@@ -131,14 +131,14 @@ class RequestTest {
 
 
     @ParameterizedTest
-    @MethodSource("pathExtension")
-    void pathExtension(String desc, Request request, String expectedExtension) {
-        Assertions.assertThat(request.pathExtension())
+    @MethodSource("getPathExtension")
+    void getPathExtension(String desc, Request request, String expectedExtension) {
+        Assertions.assertThat(request.getPathExtension())
                   .as("status line에서 path의 확장자 가져오기 : %s", desc)
                   .isEqualTo(expectedExtension);
     }
 
-    static Stream<Arguments> pathExtension() {
+    static Stream<Arguments> getPathExtension() {
         return Stream.of(
                 Arguments.of(
                         "확장자가 있는 path",

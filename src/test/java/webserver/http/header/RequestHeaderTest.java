@@ -199,17 +199,17 @@ class RequestHeaderTest {
     }
 
     @ParameterizedTest
-    @MethodSource("path")
-    void path(String desc, RequestStatusLine statusLine, String expectedPath) {
+    @MethodSource("getPath")
+    void getPath(String desc, RequestStatusLine statusLine, String expectedPath) {
         RequestHeader requestHeader = new RequestHeader(statusLine, new HashMap<>());
 
-        String actualPath = requestHeader.path();
+        String actualPath = requestHeader.getPath();
 
         assertThat(actualPath).as("리퀘스트 헤더에서 path 가져오기 : %s", desc)
                               .isEqualTo(expectedPath);
     }
 
-    static Stream<Arguments> path() {
+    static Stream<Arguments> getPath() {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 GET 메세지",

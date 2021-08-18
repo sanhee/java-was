@@ -13,16 +13,16 @@ public class Request {
         return new Request(RequestMessage.from(message));
     }
 
-    public String path() {
-        return requestMessage.path();
+    public String getPath() {
+        return requestMessage.getPath();
     }
 
     public RequestMessage getRequestMessage() {
         return requestMessage;
     }
 
-    public String pathExtension() {
-        String path = path();
+    public String getPathExtension() {
+        String path = getPath();
 
         String[] splitPath = path.split("/");
 
