@@ -23,19 +23,19 @@ public class ResponseStatusLine extends StatusLine {
         return new ResponseStatusLine(statusLineAttributes);
     }
 
-    public String statusCode() {
-        return statusLineAttributeBy(STATUS_CODE_KEY);
+    public String getStatusCode() {
+        return getStatusLineAttributeBy(STATUS_CODE_KEY);
     }
 
-    public String statusText() {
-        return statusLineAttributeBy(STATUS_TEXT_KEY);
+    public String getStatusText() {
+        return getStatusLineAttributeBy(STATUS_TEXT_KEY);
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(" ").add(protocol())
-                                    .add(statusCode())
-                                    .add(statusText())
+        return new StringJoiner(" ").add(getProtocol())
+                                    .add(getStatusCode())
+                                    .add(getStatusText())
                                     .toString();
     }
 }

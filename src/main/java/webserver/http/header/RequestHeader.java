@@ -25,20 +25,20 @@ public class RequestHeader extends Header {
         return RequestHeader.of(statusLine, attributeFrom(headerText));
     }
 
-    public String path() {
-        return statusLine.path();
+    public String getPath() {
+        return statusLine.getPath();
     }
 
     public String getMethod() {
-        return statusLine.method();
+        return statusLine.getMethod();
     }
 
     @Override
-    protected String statusLine() {
+    protected String getStatusLine() {
         return statusLine.toString();
     }
 
-    public String queryString() {
-        return statusLine.queryString();
+    public String getQueryString() {
+        return statusLine.getQueryString();
     }
 }

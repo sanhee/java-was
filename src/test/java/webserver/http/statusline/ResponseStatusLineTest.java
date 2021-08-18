@@ -12,14 +12,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ResponseStatusLineTest {
 
     @ParameterizedTest
-    @MethodSource("statusCode")
-    void statusCode(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusCode) {
-        assertThat(responseStatusLineAttributes.statusCode())
+    @MethodSource("getStatusCode")
+    void getStatusCode(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusCode) {
+        assertThat(responseStatusLineAttributes.getStatusCode())
                 .as("status line에서 status code 가져오기 : %s", desc)
                 .isEqualTo(expectedStatusCode);
     }
 
-    static Stream<Arguments> statusCode() {
+    static Stream<Arguments> getStatusCode() {
         return Stream.of(
                 Arguments.of(
                         "200 OK",
@@ -36,14 +36,14 @@ class ResponseStatusLineTest {
     }
 
     @ParameterizedTest
-    @MethodSource("statusText")
-    void statusText(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusText) {
-        assertThat(responseStatusLineAttributes.statusText())
+    @MethodSource("getStatusText")
+    void getStatusText(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusText) {
+        assertThat(responseStatusLineAttributes.getStatusText())
                 .as("status line에서 status text 가져오기 : %s", desc)
                 .isEqualTo(expectedStatusText);
     }
 
-    static Stream<Arguments> statusText() {
+    static Stream<Arguments> getStatusText() {
         return Stream.of(
                 Arguments.of(
                         "200 OK",
@@ -60,14 +60,14 @@ class ResponseStatusLineTest {
     }
 
     @ParameterizedTest
-    @MethodSource("protocol")
-    void protocol(String desc, ResponseStatusLine responseStatusLine, String expectedMethod) {
-        assertThat(responseStatusLine.protocol())
+    @MethodSource("getProtocol")
+    void getProtocol(String desc, ResponseStatusLine responseStatusLine, String expectedMethod) {
+        assertThat(responseStatusLine.getProtocol())
                 .as("status line에서 protocol 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
 
-    static Stream<Arguments> protocol() {
+    static Stream<Arguments> getProtocol() {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1",

@@ -21,7 +21,7 @@ public interface RequestMessage {
 
     Map<String, String> getParameters();
 
-    default String path() {
-        return getHeader().path();
+    default String getPath() {
+        return getHeader().getPath();
     }
 }

@@ -11,11 +11,11 @@ public abstract class StatusLine {
         this.statusLineAttributes = statusLineAttributes;
     }
 
-    public String protocol() {
+    public String getProtocol() {
         return statusLineAttributes.get(PROTOCOL_VERSION_KEY);
     }
 
-    protected String statusLineAttributeBy(String key) {
+    protected String getStatusLineAttributeBy(String key) {
         return statusLineAttributes.get(key);
     }
 }

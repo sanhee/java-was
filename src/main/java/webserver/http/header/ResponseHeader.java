@@ -27,7 +27,7 @@ public class ResponseHeader extends Header {
     }
 
     @Override
-    protected String statusLine() {
+    protected String getStatusLine() {
         return statusLine.toString();
     }
 }

@@ -53,8 +53,8 @@ public class RequestHandler extends Thread {
             // TODO: Default Message를 설정할 수 있을 것 같다.
             String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
 
-            String path = request.path();
-            String extension = request.pathExtension();
+            String path = request.getPath();
+            String extension = request.getPathExtension();
             if (extension.equals("html")) {
 
                 File htmlFile = new File("./webapp" + path);

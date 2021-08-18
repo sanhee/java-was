@@ -29,7 +29,7 @@ public class GetMessage implements RequestMessage {
 
     @Override
     public Map<String, String> getParameters() {
-        return HttpRequestUtils.parseQueryString(header.queryString());
+        return HttpRequestUtils.parseQueryString(header.getQueryString());
     }
 
     @Override

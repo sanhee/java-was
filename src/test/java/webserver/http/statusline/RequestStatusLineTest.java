@@ -12,14 +12,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RequestStatusLineTest {
 
     @ParameterizedTest
-    @MethodSource("method")
-    void method(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
-        assertThat(requestStatusLine.method())
+    @MethodSource("getMethod")
+    void getMethod(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
+        assertThat(requestStatusLine.getMethod())
                 .as("status line에서 method 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
 
-    static Stream<Arguments> method() {
+    static Stream<Arguments> getMethod() {
         return Stream.of(
                 Arguments.of(
                         "GET 메소드",
@@ -36,14 +36,14 @@ class RequestStatusLineTest {
     }
 
     @ParameterizedTest
-    @MethodSource("path")
-    void path(String desc, RequestStatusLine requestStatusLine, String expectedPath) {
-        assertThat(requestStatusLine.path())
+    @MethodSource("getPath")
+    void getPath(String desc, RequestStatusLine requestStatusLine, String expectedPath) {
+        assertThat(requestStatusLine.getPath())
                 .as("status line에서 path 가져오기 : %s", desc)
                 .isEqualTo(expectedPath);
     }
 
-    static Stream<Arguments> path() {
+    static Stream<Arguments> getPath() {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 path",
@@ -70,14 +70,14 @@ class RequestStatusLineTest {
     }
 
     @ParameterizedTest
-    @MethodSource("protocol")
-    void protocol(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
-        assertThat(requestStatusLine.protocol())
+    @MethodSource("getProtocol")
+    void getProtocol(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
+        assertThat(requestStatusLine.getProtocol())
                 .as("status line에서 protocol 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
 
-    static Stream<Arguments> protocol() {
+    static Stream<Arguments> getProtocol() {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1",
@@ -94,14 +94,14 @@ class RequestStatusLineTest {
     }
 
     @ParameterizedTest
-    @MethodSource("queryString")
-    void queryString(String desc, RequestStatusLine requestStatusLine, String expectedQueryString) {
-        assertThat(requestStatusLine.queryString())
+    @MethodSource("getQueryString")
+    void getQueryString(String desc, RequestStatusLine requestStatusLine, String expectedQueryString) {
+        assertThat(requestStatusLine.getQueryString())
                 .as("status line에서 쿼리스트링 가져오기 : %s", desc)
                 .isEqualTo(expectedQueryString);
     }
 
-    static Stream<Arguments> queryString() {
+    static Stream<Arguments> getQueryString() {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 path",
