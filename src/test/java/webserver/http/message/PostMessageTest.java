@@ -55,7 +55,8 @@ class PostMessageTest {
     void getBody(String messageText, Body expectedBody) {
         PostMessage postMessage = PostMessage.from(messageText);
 
-        assertThat(postMessage.getBody()).isEqualTo(expectedBody);
+        assertThat(postMessage.getBody())
+                .isEqualToComparingFieldByFieldRecursively(expectedBody);
     }
 
     static Stream<Arguments> getBody() {
