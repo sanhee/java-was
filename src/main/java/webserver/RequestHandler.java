@@ -6,6 +6,7 @@ import model.User;
 import model.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.HttpRequestUtils;
 import util.IOUtils;
 import webserver.http.Request;
 import webserver.http.Response;
@@ -92,17 +93,26 @@ public class RequestHandler extends Thread {
                     break;
                 }
                 case "/user/list": {
-                    path = "/user/list.html";
-                    File htmlFile = new File("./webapp" + path);
+                    Map<String, String> attributes = request.getRequestMessage().getHeader().getAttributes();
+                    String cookieRaw = attributes.get("Cookie");
+                    Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieRaw);
 
-                    if (htmlFile.exists()) {
-                        byte[] body = Files.readAllBytes(htmlFile.toPath());
+                    if(cookies.getOrDefault("logined", "").equals("true")) {
+                        path = "/user/list.html";
+                        File htmlFile = new File("./webapp" + path);
 
-                        responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                          "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                          "Content-Length: " + body.length + System.lineSeparator() +
-                                          System.lineSeparator() +
-                                          new String(body);
+                        if (htmlFile.exists()) {
+                            byte[] body = Files.readAllBytes(htmlFile.toPath());
+
+                            responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                              "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                              "Content-Length: " + body.length + System.lineSeparator() +
+                                              System.lineSeparator() +
+                                              new String(body);
+                        }
+                    } else {
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                          "Location: /user/login.html";
                     }
 
                     break;
