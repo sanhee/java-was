@@ -97,7 +97,7 @@ public class RequestHandler extends Thread {
                     String cookieRaw = attributes.get("Cookie");
                     Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieRaw);
 
-                    if(cookies.getOrDefault("logined", "").equals("true")) {
+                    if (cookies.getOrDefault("logined", "").equals("true")) {
                         path = "/user/list.html";
                         File htmlFile = new File("./webapp" + path);
 
@@ -105,14 +105,14 @@ public class RequestHandler extends Thread {
                             byte[] body = Files.readAllBytes(htmlFile.toPath());
 
                             responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                              "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                              "Content-Length: " + body.length + System.lineSeparator() +
-                                              System.lineSeparator() +
-                                              new String(body);
+                                    "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                    "Content-Length: " + body.length + System.lineSeparator() +
+                                    System.lineSeparator() +
+                                    new String(body);
                         }
                     } else {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                          "Location: /user/login.html";
+                                "Location: /user/login.html";
                     }
 
                     break;
