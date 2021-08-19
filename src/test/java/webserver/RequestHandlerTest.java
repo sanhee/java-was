@@ -90,60 +90,60 @@ class RequestHandlerTest {
         return Stream.of(
                 Arguments.arguments(
                         "GET /index.html HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Accept: */*" + System.lineSeparator() +
-                                "" + System.lineSeparator(),
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 6903" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                Files.lines(new File("./webapp/index.html").toPath())
-                                        .collect(Collectors.joining(System.lineSeparator()))
+                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                        "Content-Length: 6903" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        Files.lines(new File("./webapp/index.html").toPath())
+                             .collect(Collectors.joining(System.lineSeparator()))
                 ), Arguments.arguments(
                         "GET /index2.html HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Accept: */*" + System.lineSeparator() +
-                                "" + System.lineSeparator(),
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
                         "HTTP/1.1 404 NotFound" + System.lineSeparator()
                 ), Arguments.arguments(
                         "GET /user/form.html HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Accept: */*" + System.lineSeparator() +
-                                "" + System.lineSeparator(),
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 5169" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                Files.lines(new File("./webapp/user/form.html").toPath())
-                                        .collect(Collectors.joining(System.lineSeparator()))
+                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                        "Content-Length: 5169" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        Files.lines(new File("./webapp/user/form.html").toPath())
+                             .collect(Collectors.joining(System.lineSeparator()))
                 ), Arguments.arguments(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 48" + System.lineSeparator() +
-                                "Cache-Control: max-age=0" + System.lineSeparator() +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
-                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
-                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
-                                "Origin: http://localhost:8080" + System.lineSeparator() +
-                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
-                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
-                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
-                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
-                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
-                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
-                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
-                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "userId=dae&password=dae&name=dae&email=dae%40dae",
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 48" + System.lineSeparator() +
+                        "Cache-Control: max-age=0" + System.lineSeparator() +
+                        "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                        "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                        "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                        "Origin: http://localhost:8080" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                        "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                        "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                        "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                        "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                        "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                        "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                        "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                        "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        "userId=dae&password=dae&name=dae&email=dae%40dae",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /index.html" + System.lineSeparator()
+                        "Location: /index.html" + System.lineSeparator()
                 )
         );
     }
@@ -169,44 +169,44 @@ class RequestHandlerTest {
         return Stream.of(
                 Arguments.arguments(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 53" + System.lineSeparator() +
-                                "Cache-Control: max-age=0" + System.lineSeparator() +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
-                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
-                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
-                                "Origin: http://localhost:8080" + System.lineSeparator() +
-                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
-                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
-                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
-                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
-                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
-                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
-                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
-                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "userId=test&password=test&name=test&email=test%40test",
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 53" + System.lineSeparator() +
+                        "Cache-Control: max-age=0" + System.lineSeparator() +
+                        "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                        "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                        "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                        "Origin: http://localhost:8080" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                        "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                        "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                        "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                        "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                        "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                        "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                        "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                        "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        "userId=test&password=test&name=test&email=test%40test",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build()
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build()
                 ), Arguments.arguments(
                         "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Accept: */*" + System.lineSeparator(),
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator(),
                         User.builder()
-                                .setUserId("javajigi")
-                                .setPassword("password")
-                                .setName("test")
-                                .setEmail("javajigi@40slipp.net")
-                                .build()
+                            .setUserId("javajigi")
+                            .setPassword("password")
+                            .setName("test")
+                            .setEmail("javajigi@40slipp.net")
+                            .build()
                 )
         );
     }
@@ -232,9 +232,9 @@ class RequestHandlerTest {
         return Stream.of(
                 Arguments.arguments(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
-                                "Content-Length: 3" + System.lineSeparator() +
-                                System.lineSeparator() +
-                                "a=b"
+                        "Content-Length: 3" + System.lineSeparator() +
+                        System.lineSeparator() +
+                        "a=b"
                 ));
     }
 
@@ -269,102 +269,102 @@ class RequestHandlerTest {
                 Arguments.arguments(
                         "로그인 성공",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build(),
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build(),
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 53" + System.lineSeparator() +
-                                "Cache-Control: max-age=0" + System.lineSeparator() +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
-                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
-                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
-                                "Origin: http://localhost:8080" + System.lineSeparator() +
-                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
-                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
-                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
-                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
-                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
-                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
-                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
-                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "userId=test&password=test&name=test&email=test%40test",
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 53" + System.lineSeparator() +
+                        "Cache-Control: max-age=0" + System.lineSeparator() +
+                        "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                        "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                        "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                        "Origin: http://localhost:8080" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                        "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                        "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                        "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                        "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                        "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                        "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                        "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                        "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        "userId=test&password=test&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /index.html" + System.lineSeparator() +
-                                "Set-Cookie: logined=true; Path=/" + System.lineSeparator()
+                        "Location: /index.html" + System.lineSeparator() +
+                        "Set-Cookie: logined=true; Path=/" + System.lineSeparator()
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 아이디",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build(),
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build(),
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 53" + System.lineSeparator() +
-                                "Cache-Control: max-age=0" + System.lineSeparator() +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
-                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
-                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
-                                "Origin: http://localhost:8080" + System.lineSeparator() +
-                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
-                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
-                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
-                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
-                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
-                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
-                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
-                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "userId=wrongId&password=test&name=test&email=test%40test",
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 53" + System.lineSeparator() +
+                        "Cache-Control: max-age=0" + System.lineSeparator() +
+                        "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                        "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                        "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                        "Origin: http://localhost:8080" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                        "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                        "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                        "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                        "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                        "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                        "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                        "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                        "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        "userId=wrongId&password=test&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /user/login_failed.html" + System.lineSeparator() +
-                                "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
+                        "Location: /user/login_failed.html" + System.lineSeparator() +
+                        "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 비밀번호",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build(),
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build(),
                         "POST /user/login HTTP/1.1" + System.lineSeparator() +
-                                "Host: localhost:8080" + System.lineSeparator() +
-                                "Connection: keep-alive" + System.lineSeparator() +
-                                "Content-Length: 53" + System.lineSeparator() +
-                                "Cache-Control: max-age=0" + System.lineSeparator() +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
-                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
-                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
-                                "Origin: http://localhost:8080" + System.lineSeparator() +
-                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
-                                "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
-                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
-                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
-                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
-                                "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
-                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
-                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
-                                "" + System.lineSeparator() +
-                                "userId=test&password=wrongPw&name=test&email=test%40test",
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 53" + System.lineSeparator() +
+                        "Cache-Control: max-age=0" + System.lineSeparator() +
+                        "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                        "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                        "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                        "Origin: http://localhost:8080" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                        "Sec-Fetch-Site: same-origin" + System.lineSeparator() +
+                        "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                        "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                        "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                        "Referer: http://localhost:8080/user/form.html" + System.lineSeparator() +
+                        "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                        "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                        "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
+                        "userId=test&password=wrongPw&name=test&email=test%40test",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /user/login_failed.html" + System.lineSeparator() +
-                                "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
+                        "Location: /user/login_failed.html" + System.lineSeparator() +
+                        "Set-Cookie: logined=false; Path=/" + System.lineSeparator()
                 )
         );
     }
@@ -387,11 +387,11 @@ class RequestHandlerTest {
                 Arguments.arguments(
                         "로그인 성공",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build(),
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build(),
                         new HashMap() {{
                             put("userId", "test");
                             put("password", "test");
@@ -399,16 +399,16 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /index.html" + System.lineSeparator() +
-                                "Set-Cookie: logined=true; Path=/"
+                        "Location: /index.html" + System.lineSeparator() +
+                        "Set-Cookie: logined=true; Path=/"
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 ID",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build(),
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build(),
                         new HashMap() {{
                             put("userId", "wrongId");
                             put("password", "test");
@@ -416,16 +416,16 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /user/login_failed.html" + System.lineSeparator() +
-                                "Set-Cookie: logined=false; Path=/"
+                        "Location: /user/login_failed.html" + System.lineSeparator() +
+                        "Set-Cookie: logined=false; Path=/"
                 ), Arguments.arguments(
                         "로그인 실패 - 잘못된 비밀번호",
                         User.builder()
-                                .setUserId("test")
-                                .setPassword("test")
-                                .setName("test")
-                                .setEmail("test@test")
-                                .build(),
+                            .setUserId("test")
+                            .setPassword("test")
+                            .setName("test")
+                            .setEmail("test@test")
+                            .build(),
                         new HashMap() {{
                             put("userId", "test");
                             put("password", "wrongPassword");
@@ -433,9 +433,64 @@ class RequestHandlerTest {
                             put("email", "test@test");
                         }},
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /user/login_failed.html" + System.lineSeparator() +
-                                "Set-Cookie: logined=false; Path=/"
+                        "Location: /user/login_failed.html" + System.lineSeparator() +
+                        "Set-Cookie: logined=false; Path=/"
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("리스트_페이지")
+    void 리스트_페이지(String desc, String message, String expectedResponseMessage) throws IOException {
+
+
+        RequestHandler requestHandler = new RequestHandler(server.accept());
+
+        BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
+        browserStream.write(message.getBytes(StandardCharsets.UTF_8));
+        browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
+        browserStream.flush();
+
+        requestHandler.run();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
+        String actualResponseMessage = br.lines().collect(Collectors.joining(System.lineSeparator()));
+
+
+        assertThat(actualResponseMessage)
+                .as("리스트_페이지 : %s", desc)
+                .isEqualTo(expectedResponseMessage);
+    }
+
+    static Stream<Arguments> 리스트_페이지() throws IOException {
+        return Stream.of(
+                Arguments.arguments(
+                        "Cookie: logined=true가 있을 경우 리스트 페이지 접속",
+
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "Cookie: logined=true" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
+
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                        "Location: /user/list.html" + System.lineSeparator()
+
+                ), Arguments.arguments(
+                        "Cookie: logined=true가 없을 경우 로그인 페이지 이동",
+
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
+
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                        "Location: /user/login.html" + System.lineSeparator()
+                )
+        );
+
+    }
+
 }

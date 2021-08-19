@@ -28,7 +28,7 @@ public class RequestHandler extends Thread {
 
     public void run() {
         log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(),
-                connection.getPort());
+                  connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -63,10 +63,10 @@ public class RequestHandler extends Thread {
                     byte[] body = Files.readAllBytes(htmlFile.toPath());
 
                     responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                            "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                            "Content-Length: " + body.length + System.lineSeparator() +
-                            System.lineSeparator() +
-                            new String(body);
+                                      "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                      "Content-Length: " + body.length + System.lineSeparator() +
+                                      System.lineSeparator() +
+                                      new String(body);
                 }
             }
 
@@ -75,20 +75,34 @@ public class RequestHandler extends Thread {
                     Map<String, String> parameters = request.getRequestMessage().getParameters();
 
                     User newUser = User.builder()
-                            .setUserId(parameters.get("userId"))
-                            .setPassword(parameters.get("password"))
-                            .setName(parameters.get("name"))
-                            .setEmail(parameters.get("email"))
-                            .build();
+                                       .setUserId(parameters.get("userId"))
+                                       .setPassword(parameters.get("password"))
+                                       .setName(parameters.get("name"))
+                                       .setEmail(parameters.get("email"))
+                                       .build();
 
                     DataBase.addUser(newUser);
 
                     responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                            "Location: /index.html";
+                                      "Location: /index.html";
                     break;
                 }
                 case "/user/login": {
                     responseMessage = loginHandler(request.getRequestMessage().getParameters());
+
+                    break;
+                }
+                case "/user/list": {
+                    Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
+
+                    if (parameters.containsKey("Cookie") && parameters.get("Cookie").equals("logined=true")) {
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                          "Location: /user/list.html";
+
+                    } else {
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                          "Location: /user/login.html";
+                    }
                 }
             }
 
@@ -106,7 +120,7 @@ public class RequestHandler extends Thread {
 
             try {
                 findUser = DataBase.findUserById(parameters.get("userId"))
-                        .orElseThrow(UserNotFoundException::new);
+                                   .orElseThrow(UserNotFoundException::new);
             } catch (UserNotFoundException userNotFoundException) {
                 throw new LoginFailedException();
             }
@@ -118,12 +132,12 @@ public class RequestHandler extends Thread {
             }
 
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                    "Location: /index.html" + System.lineSeparator() +
-                    "Set-Cookie: logined=true; Path=/";
+                   "Location: /index.html" + System.lineSeparator() +
+                   "Set-Cookie: logined=true; Path=/";
         } catch (LoginFailedException loginFailedException) {
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                    "Location: /user/login_failed.html" + System.lineSeparator() +
-                    "Set-Cookie: logined=false; Path=/";
+                   "Location: /user/login_failed.html" + System.lineSeparator() +
+                   "Set-Cookie: logined=false; Path=/";
         }
     }
 }
