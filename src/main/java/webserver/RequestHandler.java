@@ -89,6 +89,23 @@ public class RequestHandler extends Thread {
                 }
                 case "/user/login": {
                     responseMessage = loginHandler(request.getRequestMessage().getParameters());
+                    break;
+                }
+                case "/user/list": {
+                    path = "/user/list.html";
+                    File htmlFile = new File("./webapp" + path);
+
+                    if (htmlFile.exists()) {
+                        byte[] body = Files.readAllBytes(htmlFile.toPath());
+
+                        responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                          "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                          "Content-Length: " + body.length + System.lineSeparator() +
+                                          System.lineSeparator() +
+                                          new String(body);
+                    }
+
+                    break;
                 }
             }
 
