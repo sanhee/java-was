@@ -55,18 +55,23 @@ public class RequestHandler extends Thread {
 
             String path = request.getPath();
             String extension = request.getPathExtension();
+
             if (extension.equals("html")) {
 
-                File htmlFile = new File("./webapp" + path);
-
-                if (htmlFile.exists()) {
-                    byte[] body = Files.readAllBytes(htmlFile.toPath());
-
-                    responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                      "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                      "Content-Length: " + body.length + System.lineSeparator() +
-                                      System.lineSeparator() +
-                                      new String(body);
+                Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
+                String Cookie = parameters.getOrDefault("Cookie","empty");
+                
+                if(loginRequired(path)){
+                    switch (Cookie){
+                        case "logined=true":
+                            responseMessage = viewResolver(path);
+                            break;
+                        default:
+                            responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                    "Location: /user/login.html";
+                    }
+                }else{
+                    responseMessage = viewResolver(path);
                 }
             }
 
@@ -95,10 +100,10 @@ public class RequestHandler extends Thread {
                 case "/user/list": {
                     Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
 
-                    if (parameters.containsKey("Cookie") && parameters.get("Cookie").equals("logined=true")) {
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                          "Location: /user/list.html";
+                    String Cookie = parameters.getOrDefault("Cookie","empty");
 
+                    if (Cookie.equals("logined=true")) {
+                        responseMessage = viewResolver(path+".html");
                     } else {
                         responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                                           "Location: /user/login.html";
@@ -112,6 +117,27 @@ public class RequestHandler extends Thread {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    private String viewResolver(String path) throws IOException {
+        File htmlFile = new File("./webapp" + path);
+        String responseMessage = "";
+
+        if (htmlFile.exists()) {
+            byte[] body = Files.readAllBytes(htmlFile.toPath());
+
+            responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                    "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                    "Content-Length: " + body.length + System.lineSeparator() +
+                    System.lineSeparator() +
+                    new String(body);
+        }
+
+        return responseMessage;
+    }
+
+    private boolean loginRequired(String path) {
+        return path.equals("/user/list.html");
     }
 
     public String loginHandler(Map<String, String> parameters) {
