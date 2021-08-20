@@ -6,7 +6,6 @@ import model.User;
 import model.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestUtils;
 import util.IOUtils;
 import webserver.http.Request;
 import webserver.http.Response;
@@ -93,11 +92,7 @@ public class RequestHandler extends Thread {
                     break;
                 }
                 case "/user/list": {
-                    Map<String, String> attributes = request.getRequestMessage().getHeader().getAttributes();
-                    String cookieRaw = attributes.get("Cookie");
-                    Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieRaw);
-
-                    responseMessage = userListHandler(cookies);
+                    responseMessage = userListHandler(request.getCookies());
                 }
             }
 
