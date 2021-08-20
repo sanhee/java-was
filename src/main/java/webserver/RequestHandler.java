@@ -97,25 +97,7 @@ public class RequestHandler extends Thread {
                     String cookieRaw = attributes.get("Cookie");
                     Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieRaw);
 
-                    if (cookies.getOrDefault("logined", "").equals("true")) {
-                        path = "/user/list.html";
-                        File htmlFile = new File("./webapp" + path);
-
-                        if (htmlFile.exists()) {
-                            byte[] body = Files.readAllBytes(htmlFile.toPath());
-
-                            responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                    "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                    "Content-Length: " + body.length + System.lineSeparator() +
-                                    System.lineSeparator() +
-                                    new String(body);
-                        }
-                    } else {
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                "Location: /user/login.html";
-                    }
-
-                    break;
+                    responseMessage = userListHandler(cookies);
                 }
             }
 
@@ -152,5 +134,26 @@ public class RequestHandler extends Thread {
                     "Location: /user/login_failed.html" + System.lineSeparator() +
                     "Set-Cookie: logined=false; Path=/";
         }
+    }
+
+    String userListHandler(Map<String, String> cookies) throws IOException {
+        if (cookies.getOrDefault("logined", "").equals("true")) {
+            String path = "/user/list.html";
+            File htmlFile = new File("./webapp" + path);
+
+            if (htmlFile.exists()) {
+                byte[] body = Files.readAllBytes(htmlFile.toPath());
+
+                return "HTTP/1.1 200 OK" + System.lineSeparator() +
+                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                        "Content-Length: " + body.length + System.lineSeparator() +
+                        System.lineSeparator() +
+                        new String(body);
+            }
+        }
+
+        return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                "Location: /user/login.html";
+
     }
 }
