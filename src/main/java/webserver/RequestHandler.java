@@ -56,18 +56,7 @@ public class RequestHandler extends Thread {
             String path = request.getPath();
             String extension = request.getPathExtension();
             if (extension.equals("html")) {
-
-                File htmlFile = new File("./webapp" + path);
-
-                if (htmlFile.exists()) {
-                    byte[] body = Files.readAllBytes(htmlFile.toPath());
-
-                    responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
-                            "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                            "Content-Length: " + body.length + System.lineSeparator() +
-                            System.lineSeparator() +
-                            new String(body);
-                }
+                responseMessage = htmlHandler(path);
             }
 
             switch (path) {
@@ -134,21 +123,28 @@ public class RequestHandler extends Thread {
     String userListHandler(Map<String, String> cookies) throws IOException {
         if (cookies.getOrDefault("logined", "").equals("true")) {
             String path = "/user/list.html";
-            File htmlFile = new File("./webapp" + path);
-
-            if (htmlFile.exists()) {
-                byte[] body = Files.readAllBytes(htmlFile.toPath());
-
-                return "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + body.length + System.lineSeparator() +
-                        System.lineSeparator() +
-                        new String(body);
-            }
+            return htmlHandler(path);
         }
 
         return "HTTP/1.1 302 Found" + System.lineSeparator() +
                 "Location: /user/login.html";
 
+    }
+
+    String htmlHandler(String path) {
+        File htmlFile = new File("./webapp" + path);
+
+        try {
+            byte[] body = Files.readAllBytes(htmlFile.toPath());
+            return "HTTP/1.1 200 OK" + System.lineSeparator() +
+                    "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                    "Content-Length: " + body.length + System.lineSeparator() +
+                    System.lineSeparator() +
+                    new String(body);
+        } catch (IOException e) {
+            log.error("htmlHandler: 존재하지 않거나 올바르지 않은 html 파일", e);
+        }
+
+        return "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
     }
 }
