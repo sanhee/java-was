@@ -47,4 +47,8 @@ public abstract class Header {
     }
 
     protected abstract String getStatusLine();
+
+    public Map<String, String> getCookies() {
+        return HttpRequestUtils.parseCookies(attributes.get("Cookie"));
+    }
 }

@@ -144,6 +144,37 @@ class RequestHandlerTest {
                                 "userId=dae&password=dae&name=dae&email=dae%40dae",
                         "HTTP/1.1 302 Found" + System.lineSeparator() +
                                 "Location: /index.html" + System.lineSeparator()
+                ), Arguments.arguments(
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec; logined=true" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: 4801" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                Files.lines(new File("./webapp/user/list.html").toPath())
+                                        .collect(Collectors.joining(System.lineSeparator()))
+                ), Arguments.arguments(
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec; logined=false" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: /user/login.html" + System.lineSeparator()
+                ), Arguments.arguments(
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "Cookie: _ga=GA1.1.773336800.1611186274; Idea-dc7ca9b6=ac856d6e-e872-46ac-b153-000bdad105ec;" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: /user/login.html" + System.lineSeparator()
                 )
         );
     }
