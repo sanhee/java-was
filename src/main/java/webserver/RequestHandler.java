@@ -28,90 +28,14 @@ public class RequestHandler extends Thread {
 
     public void run() {
         log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(),
-                  connection.getPort());
+                connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            StringJoiner requestMessages = new StringJoiner(System.lineSeparator());
+            Request request = getRequest(in); // Request
 
-            String requestMessage = br.readLine();
+            String responseMessage = requestController(request);
 
-            while (requestMessage != null && requestMessage.length() != 0) {
-                requestMessages.add(requestMessage);
-                requestMessage = br.readLine();
-            }
-
-            RequestHeader requestHeader = RequestHeader.from(requestMessages.toString());
-
-            int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
-            String requestBody = IOUtils.readData(br, contentLength);
-
-            requestMessages.add(System.lineSeparator() + requestBody);
-
-            Request request = Request.from(requestMessages.toString());
-
-            // TODO: Default Message를 설정할 수 있을 것 같다.
-            String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
-
-            String path = request.getPath();
-            String extension = request.getPathExtension();
-
-            if (extension.equals("html")) {
-
-                Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
-                String Cookie = parameters.getOrDefault("Cookie","empty");
-                
-                if(loginRequired(path)){
-                    switch (Cookie){
-                        case "logined=true":
-                            responseMessage = viewResolver(path);
-                            break;
-                        default:
-                            responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                    "Location: /user/login.html";
-                    }
-                }else{
-                    responseMessage = viewResolver(path);
-                }
-            }
-
-            switch (path) {
-                case "/user/create": {
-                    Map<String, String> parameters = request.getRequestMessage().getParameters();
-
-                    User newUser = User.builder()
-                                       .setUserId(parameters.get("userId"))
-                                       .setPassword(parameters.get("password"))
-                                       .setName(parameters.get("name"))
-                                       .setEmail(parameters.get("email"))
-                                       .build();
-
-                    DataBase.addUser(newUser);
-
-                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                      "Location: /index.html";
-                    break;
-                }
-                case "/user/login": {
-                    responseMessage = loginHandler(request.getRequestMessage().getParameters());
-
-                    break;
-                }
-                case "/user/list": {
-                    Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
-
-                    String Cookie = parameters.getOrDefault("Cookie","empty");
-
-                    if (Cookie.equals("logined=true")) {
-                        responseMessage = viewResolver(path+".html");
-                    } else {
-                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
-                                          "Location: /user/login.html";
-                    }
-                }
-            }
-
-            Response response = Response.from(responseMessage);
+            Response response = Response.from(responseMessage); // Response
             response.write(out);
 
         } catch (IOException e) {
@@ -119,7 +43,99 @@ public class RequestHandler extends Thread {
         }
     }
 
-    private String viewResolver(String path) throws IOException {
+    private Request getRequest(InputStream in) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        StringJoiner requestMessages = new StringJoiner(System.lineSeparator());
+
+        String requestMessage = br.readLine();
+
+        while (requestMessage != null && requestMessage.length() != 0) {
+            requestMessages.add(requestMessage);
+            requestMessage = br.readLine();
+        }
+
+        RequestHeader requestHeader = RequestHeader.from(requestMessages.toString());
+
+        int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
+        String requestBody = IOUtils.readData(br, contentLength);
+
+        requestMessages.add(System.lineSeparator() + requestBody);
+
+        Request request = Request.from(requestMessages.toString());
+        return request;
+    }
+
+    private String requestController(Request request) throws IOException {
+
+        String responseMessage = "";
+        String path = request.getPath();
+        String extension = request.getPathExtension();
+
+        switch (path) {
+            case "/user/create": {
+                Map<String, String> parameters = request.getRequestMessage().getParameters();
+
+                User newUser = User.builder()
+                        .setUserId(parameters.get("userId"))
+                        .setPassword(parameters.get("password"))
+                        .setName(parameters.get("name"))
+                        .setEmail(parameters.get("email"))
+                        .build();
+
+                DataBase.addUser(newUser);
+
+                responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                        "Location: /index.html";
+                break;
+            }
+            case "/user/login": {
+                responseMessage = loginHandler(request.getRequestMessage().getParameters());
+
+                break;
+            }
+            case "/user/list": {
+                Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
+
+                String Cookie = parameters.getOrDefault("Cookie", "empty");
+
+                if (Cookie.equals("logined=true")) {
+                    responseMessage = findHtmlFrom(path + ".html");
+                } else {
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                            "Location: /user/login.html";
+                }
+                break;
+            }
+            default: {
+                responseMessage = htmlController(request, responseMessage, path, extension);
+            }
+        }
+        return responseMessage;
+    }
+
+    private String htmlController(Request request, String responseMessage, String path, String extension) throws IOException {
+        if (extension.equals("html")) {
+
+            Map<String, String> parameters = request.getRequestMessage().getHeader().getAttributes();
+            String Cookie = parameters.getOrDefault("Cookie", "empty");
+
+            if (loginRequired(path)) {
+                switch (Cookie) {
+                    case "logined=true":
+                        responseMessage = findHtmlFrom(path);
+                        break;
+                    default:
+                        responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: /user/login.html";
+                }
+            } else {
+                responseMessage = findHtmlFrom(path);
+            }
+        }
+        return responseMessage;
+    }
+
+    private String findHtmlFrom(String path) throws IOException {
         File htmlFile = new File("./webapp" + path);
         String responseMessage = "";
 
@@ -131,6 +147,8 @@ public class RequestHandler extends Thread {
                     "Content-Length: " + body.length + System.lineSeparator() +
                     System.lineSeparator() +
                     new String(body);
+        } else {
+            responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
         }
 
         return responseMessage;
@@ -146,7 +164,7 @@ public class RequestHandler extends Thread {
 
             try {
                 findUser = DataBase.findUserById(parameters.get("userId"))
-                                   .orElseThrow(UserNotFoundException::new);
+                        .orElseThrow(UserNotFoundException::new);
             } catch (UserNotFoundException userNotFoundException) {
                 throw new LoginFailedException();
             }
@@ -158,12 +176,12 @@ public class RequestHandler extends Thread {
             }
 
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                   "Location: /index.html" + System.lineSeparator() +
-                   "Set-Cookie: logined=true; Path=/";
+                    "Location: /index.html" + System.lineSeparator() +
+                    "Set-Cookie: logined=true; Path=/";
         } catch (LoginFailedException loginFailedException) {
             return "HTTP/1.1 302 Found" + System.lineSeparator() +
-                   "Location: /user/login_failed.html" + System.lineSeparator() +
-                   "Set-Cookie: logined=false; Path=/";
+                    "Location: /user/login_failed.html" + System.lineSeparator() +
+                    "Set-Cookie: logined=false; Path=/";
         }
     }
 }
