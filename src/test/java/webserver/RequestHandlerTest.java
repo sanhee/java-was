@@ -438,4 +438,103 @@ class RequestHandlerTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("리스트_페이지")
+    void 리스트_페이지(String desc, String message, String expectedResponseMessage) throws IOException {
+
+
+        RequestHandler requestHandler = new RequestHandler(server.accept());
+
+        BufferedOutputStream browserStream = new BufferedOutputStream(browser.getOutputStream());
+        browserStream.write(message.getBytes(StandardCharsets.UTF_8));
+        browserStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
+        browserStream.flush();
+
+        requestHandler.run();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
+        String actualResponseMessage = br.lines().collect(Collectors.joining(System.lineSeparator()));
+
+
+        assertThat(actualResponseMessage)
+                .as("리스트_페이지 : %s", desc)
+                .isEqualTo(expectedResponseMessage);
+    }
+
+    static Stream<Arguments> 리스트_페이지() throws IOException {
+        return Stream.of(
+                Arguments.arguments(
+                        "Cookie: logined=true가 있을 경우 /user/list 접속 접근",
+
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "Cookie: logined=true" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: 4801" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                Files.lines(new File("./webapp/user/list.html").toPath())
+                                        .collect(Collectors.joining(System.lineSeparator()))
+
+
+                ), Arguments.arguments(
+                        "Cookie: logined=true가 없을 경우 /user/list 이동 접근",
+
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: /user/login.html" + System.lineSeparator()
+                ), Arguments.arguments(
+                        "Cookie: logined=true가 있을 경우 /user/list.html 접근",
+
+                        "GET /user/list.html HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "Cookie: logined=true" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: 4801" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
+                                Files.lines(new File("./webapp/user/list.html").toPath())
+                                        .collect(Collectors.joining(System.lineSeparator()))
+
+                ), Arguments.arguments(
+                        "Cookie: logined=true가 없을 경우 /user/list.html 접근",
+
+                        "GET /user/list.html HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: /user/login.html" + System.lineSeparator()
+                ), Arguments.arguments(
+                        "Cookie 없을 경우 /user/list 접근",
+
+                        "GET /user/list HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "" + System.lineSeparator(),
+
+                        "HTTP/1.1 302 Found" + System.lineSeparator() +
+                                "Location: /user/login.html" + System.lineSeparator()
+                )
+        );
+
+    }
+
 }
