@@ -96,7 +96,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 6903" + System.lineSeparator() +
+                                "Content-Length: " + new File("./webapp/index.html").length() + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/index.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
@@ -115,7 +115,7 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 5169" + System.lineSeparator() +
+                                "Content-Length: " + new File("./webapp/user/form.html").length() + System.lineSeparator() +
                                 "" + System.lineSeparator() +
                                 Files.lines(new File("./webapp/user/form.html").toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
