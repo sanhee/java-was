@@ -4,6 +4,7 @@ import db.DataBase;
 import model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -24,6 +25,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static webserver.FileForTest.*;
 
 class RequestHandlerTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -96,9 +98,9 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 6903" + System.lineSeparator() +
+                                "Content-Length: " + INDEX_HTML.length() + System.lineSeparator() +
                                 "" + System.lineSeparator() +
-                                Files.lines(new File("./webapp/index.html").toPath())
+                                Files.lines(INDEX_HTML.toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
                 ), Arguments.arguments(
                         "GET /index2.html HTTP/1.1" + System.lineSeparator() +
@@ -115,9 +117,9 @@ class RequestHandlerTest {
                                 "" + System.lineSeparator(),
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
                                 "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: 5169" + System.lineSeparator() +
+                                "Content-Length: " + FORM_HTML.length() + System.lineSeparator() +
                                 "" + System.lineSeparator() +
-                                Files.lines(new File("./webapp/user/form.html").toPath())
+                                Files.lines(FORM_HTML.toPath())
                                         .collect(Collectors.joining(System.lineSeparator()))
                 ), Arguments.arguments(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
