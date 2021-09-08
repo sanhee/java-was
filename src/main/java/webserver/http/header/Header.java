@@ -47,4 +47,8 @@ public abstract class Header {
     }
 
     protected abstract String getStatusLine();
+
+    public int getContentLength() {
+        return Integer.parseInt(attributes.getOrDefault("Content-Length", "0"));
+    }
 }

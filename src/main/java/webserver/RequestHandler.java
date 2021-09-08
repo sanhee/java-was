@@ -43,8 +43,7 @@ public class RequestHandler extends Thread {
 
             RequestHeader requestHeader = RequestHeader.from(requestMessages.toString());
 
-            int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
-            String requestBody = IOUtils.readData(br, contentLength);
+            String requestBody = IOUtils.readData(br, requestHeader.getContentLength());
 
             requestMessages.add(System.lineSeparator() + requestBody);
 
