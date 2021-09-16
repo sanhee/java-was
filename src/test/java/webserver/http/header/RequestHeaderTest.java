@@ -238,15 +238,18 @@ class RequestHeaderTest {
 
     @ParameterizedTest
     @MethodSource("getContentLength")
-    void getContentLength(RequestHeader requestHeader, int expectedContentLength) {
-        // rfc의 ContentLength 읽어보기(없을 경우는 어떻게 읽는지?)
-        // 헤더의 대소문자 가려서 읽어야 하는지 예를 들어 content-length
-        assertThat(requestHeader.getContentLength()).isEqualTo(expectedContentLength);
+    void getContentLength(String desc, RequestHeader requestHeader, int expectedContentLength) {
+        // TODO: rfc의 ContentLength 읽어보기(없을 경우는 어떻게 읽는지?)
+        //   헤더의 대소문자 가려서 읽어야 하는지 예를 들어 content-length
+        assertThat(requestHeader.getContentLength())
+                .as("리퀘스트 헤더에서 content length 가져오기 : %s", desc)
+                .isEqualTo(expectedContentLength);
     }
 
     static Stream<Arguments> getContentLength() {
         return Stream.of(
                 Arguments.of(
+                        "정상적인 헤더명",
                         new RequestHeader(
                                 null,
                                 new HashMap<String, String>() {{
@@ -255,6 +258,25 @@ class RequestHeaderTest {
                         ),
                         5
                 ), Arguments.of(
+                        "소문자인 헤더명",
+                        new RequestHeader(
+                                null,
+                                new HashMap<String, String>() {{
+                                    put("content-length", "5");
+                                }}
+                        ),
+                        5
+                ), Arguments.of(
+                        "대문자인 헤더명",
+                        new RequestHeader(
+                                null,
+                                new HashMap<String, String>() {{
+                                    put("CONTENT-LENGTH", "5");
+                                }}
+                        ),
+                        5
+                ), Arguments.of(
+                        "헤더에 Content-Length 없는 경우",
                         new RequestHeader(
                                 null,
                                 new HashMap<String, String>() {
