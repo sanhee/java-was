@@ -49,6 +49,12 @@ public abstract class Header {
     protected abstract String getStatusLine();
 
     public int getContentLength() {
+        /*
+         * TODO:Transfer-Encoding이 포함되면 Content-Length가 포함되지 않아야 한다고 함. 찾아보기
+         *  A sender MUST NOT send a Content-Length header field in any message that contains a Transfer-Encoding header field.
+         *  https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.2
+         *  만약 이 경우 body 읽는 로직 바뀌어야 할 수 있음(현재는 Content-length에 따라서 읽도록 되어있음)
+         */
         return Integer.parseInt(attributes.getOrDefault("Content-Length", "0"));
     }
 }
