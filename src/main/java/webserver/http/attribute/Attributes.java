@@ -29,6 +29,10 @@ public class Attributes {
         return attributes.get(key);
     }
 
+    public String getOrDefault(String key, String defaultValue) {
+        return attributes.getOrDefault(key, defaultValue);
+    }
+
     @Override
     public String toString() {
         StringJoiner attributesToString = new StringJoiner("\r\n");
@@ -51,4 +55,5 @@ public class Attributes {
     public int hashCode() {
         return Objects.hash(attributes);
     }
+
 }

@@ -1,8 +1,12 @@
 package webserver.http.attribute;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +36,30 @@ class AttributesTest {
         attributes.add("key", "value");
 
         assertThat(attributes.get("key")).isEqualTo("value");
+    }
+
+    @ParameterizedTest
+    @MethodSource("getOrDefault")
+    void getOrDefault(Attributes attributes, String defaultValue, String key, String expectedValue) {
+        String actualValue = attributes.getOrDefault(key, defaultValue);
+        assertThat(actualValue).isEqualTo(expectedValue);
+    }
+
+    static Stream<Arguments> getOrDefault() {
+        return Stream.of(
+                Arguments.of(
+                        new Attributes().add("key", "value"),
+                        "",
+                        "key",
+                        "value"
+                ),
+                Arguments.of(
+                        new Attributes(),
+                        "0",
+                        "key",
+                        "0"
+                )
+        );
     }
 
     @Test
