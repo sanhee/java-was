@@ -1,14 +1,16 @@
 package webserver.http.statusline;
 
+import webserver.http.attribute.Attributes;
+
 import java.util.Map;
 
 public abstract class StatusLine {
     protected static final String PROTOCOL_VERSION_KEY = "protocolVersion";
 
-    private Map<String, String> statusLineAttributes;
+    private Attributes statusLineAttributes;
 
     public StatusLine(Map<String, String> statusLineAttributes) {
-        this.statusLineAttributes = statusLineAttributes;
+        this.statusLineAttributes = Attributes.from(statusLineAttributes);
     }
 
     public String getProtocol() {
