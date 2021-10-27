@@ -3,6 +3,7 @@ package webserver.http.header;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import webserver.http.Attribute;
 import webserver.http.statusline.ResponseStatusLine;
 
 import java.nio.charset.StandardCharsets;
@@ -79,13 +80,37 @@ class ResponseHeaderTest {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator(),
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator(),
                         ("HTTP/1.1 200 OK" + System.lineSeparator() +
-                         "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                         "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                         System.lineSeparator()).getBytes(StandardCharsets.UTF_8)
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator()).getBytes(StandardCharsets.UTF_8)
+                )
+        );
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("getAttributesNew")
+    void getAttributesNew(String headerText, Attribute expectedAttributes) {
+        assertThat(ResponseHeader.newFrom(headerText).getAttributesNew())
+                .isEqualTo(expectedAttributes);
+    }
+
+    static Stream<Arguments> getAttributesNew() {
+        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>() {{
+            put("Content-Type", "text/html;charset=utf-8");
+            put("Content-Length", String.valueOf("Hello World".getBytes().length));
+        }};
+        return Stream.of(
+                Arguments.of(
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator(),
+                        Attribute.from(map)
                 )
         );
     }
