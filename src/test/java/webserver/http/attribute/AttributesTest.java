@@ -33,4 +33,13 @@ class AttributesTest {
 
         assertThat(attributes.get("key")).isEqualTo("value");
     }
+
+    @Test
+    void getBytes() {
+        Attributes attributes = new Attributes();
+        attributes.add("key", "value");
+
+        assertThat(attributes.getBytes()).isEqualTo("key: value".getBytes());
+
+    }
 }
