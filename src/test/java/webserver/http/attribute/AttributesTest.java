@@ -35,11 +35,12 @@ class AttributesTest {
     }
 
     @Test
-    void getBytes() {
+    void toStringTest() {
         Attributes attributes = new Attributes();
-        attributes.add("key", "value");
+        attributes.add("key1", "value1");
+        attributes.add("key2", "value2");
 
-        assertThat(attributes.getBytes()).isEqualTo("key: value".getBytes());
+        assertThat(attributes.toString()).isEqualTo("key1: value1\r\nkey2: value2");
 
     }
 }

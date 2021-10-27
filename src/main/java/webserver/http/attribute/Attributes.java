@@ -1,7 +1,5 @@
 package webserver.http.attribute;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,17 +29,14 @@ public class Attributes {
         return attributes.get(key);
     }
 
-    public byte[] getBytes() {
-        return getBytes(StandardCharsets.UTF_8);
-    }
-
-    private byte[] getBytes(Charset charset) {
+    @Override
+    public String toString() {
         StringJoiner attributesToString = new StringJoiner("\r\n");
         for (Map.Entry<String, String> each : attributes.entrySet()) {
             attributesToString.add(each.getKey() + ": " + each.getValue());
         }
 
-        return attributesToString.toString().getBytes(charset);
+        return attributesToString.toString();
     }
 
     @Override
