@@ -2,6 +2,7 @@ package webserver.http;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Attribute {
@@ -33,5 +34,18 @@ public class Attribute {
 
     public Set<Map.Entry<String, String>> entrySet() {
         return attributes.entrySet();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attribute attribute = (Attribute) o;
+        return Objects.equals(attributes, attribute.attributes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(attributes);
     }
 }
