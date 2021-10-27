@@ -9,4 +9,8 @@ public class Attributes {
         attributes.put(key, value);
         return this;
     }
+
+    public String get(String key) {
+        return attributes.get(key);
+    }
 }
