@@ -6,22 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public abstract class Header {
-    private Map<String, String> attributes;
     private Attribute attributesNew;
-
-    protected Header(Map<String, String> attributes) {
-        this.attributes = attributes;
-    }
 
     protected Header(Attribute attributes) {
         this.attributesNew = attributes;
     }
 
-    public Map<String, String> getAttributes() {
-        return attributes;
-    }
-
-    public Attribute getAttributesNew() {
+    public Attribute getAttributes() {
         return attributesNew;
     }
 

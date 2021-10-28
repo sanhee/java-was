@@ -35,22 +35,7 @@ public class Attribute {
         return attributes.entrySet();
     }
 
-    public static Map<String, String> attributeFrom(String headerText) {
-        Map<String, String> attributes = new LinkedHashMap<>();
-
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
-        for (String splittedHeaderText : splittedHeaderTexts) {
-            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
-
-            if (pair != null) {
-                attributes.put(pair.getKey(), pair.getValue());
-            }
-        }
-
-        return attributes;
-    }
-
-    public static Attribute attributeNewFrom(String headerText) {
+    public static Attribute attributeFrom(String headerText) {
         Map<String, String> attributes = new LinkedHashMap<>();
 
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
@@ -63,6 +48,10 @@ public class Attribute {
         }
 
         return Attribute.from(attributes);
+    }
+
+    public String getOrDefault(String key, String defaultValue) {
+        return attributes.getOrDefault(key, defaultValue);
     }
 
     @Override
