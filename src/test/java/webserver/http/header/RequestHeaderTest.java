@@ -203,7 +203,7 @@ class RequestHeaderTest {
     @ParameterizedTest
     @MethodSource("getPath")
     void getPath(String desc, RequestStatusLine statusLine, String expectedPath) {
-        RequestHeader requestHeader = new RequestHeader(statusLine, new HashMap<>());
+        RequestHeader requestHeader = new RequestHeader(statusLine, Attributes.from(new HashMap<>()));
 
         String actualPath = requestHeader.getPath();
 

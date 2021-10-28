@@ -1,20 +1,20 @@
 package webserver.http.header;
 
 import util.HttpRequestUtils;
+import webserver.http.attribute.Attributes;
 import webserver.http.statusline.RequestStatusLine;
 
 import java.util.List;
-import java.util.Map;
 
 public class RequestHeader extends Header {
     private RequestStatusLine statusLine;
 
-    protected RequestHeader(RequestStatusLine statusLine, Map<String, String> attributes) {
+    protected RequestHeader(RequestStatusLine statusLine, Attributes attributes) {
         super(attributes);
         this.statusLine = statusLine;
     }
 
-    public static RequestHeader of(List<String> statusLine, Map<String, String> attributes) {
+    public static RequestHeader of(List<String> statusLine, Attributes attributes) {
         return new RequestHeader(RequestStatusLine.from(statusLine), attributes);
     }
 
@@ -22,7 +22,7 @@ public class RequestHeader extends Header {
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
         List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return RequestHeader.of(statusLine, attributeFrom(headerText));
+        return RequestHeader.of(statusLine, Attributes.from(headerText));
     }
 
     public String getPath() {
