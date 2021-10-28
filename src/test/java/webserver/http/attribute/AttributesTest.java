@@ -25,6 +25,19 @@ class AttributesTest {
     }
 
     @Test
+    void fromHeaderText() {
+        Attributes expectedAttributes = new Attributes();
+        expectedAttributes.add("key1", "value1");
+        expectedAttributes.add("key2", "value2");
+
+        String headerText = "key1: value1\r\nkey2: value2";
+        //TODO: Header 명세 구현 시 key2:value2 와 같은 경우 확인 필요
+        Attributes actualAttributes = Attributes.from(headerText);
+
+        assertThat(actualAttributes).isEqualTo(expectedAttributes);
+    }
+
+    @Test
     void add() {
         Attributes attributes = new Attributes();
         attributes.add("key", "value");

@@ -1,9 +1,8 @@
 package webserver.http.attribute;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringJoiner;
+import util.HttpRequestUtils;
+
+import java.util.*;
 
 public class Attributes {
     private Map<String, String> attributes;
@@ -18,6 +17,21 @@ public class Attributes {
 
     public static Attributes from(Map<String, String> attributes) {
         return new Attributes(attributes);
+    }
+
+    public static Attributes from(String headerText) {
+        Map<String, String> attributes = new LinkedHashMap<>();
+
+        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
+        for (String splittedHeaderText : splittedHeaderTexts) {
+            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
+
+            if (pair != null) {
+                attributes.put(pair.getKey(), pair.getValue());
+            }
+        }
+
+        return from(attributes);
     }
 
     public Attributes add(String key, String value) {
