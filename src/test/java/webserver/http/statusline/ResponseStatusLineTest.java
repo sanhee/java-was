@@ -3,6 +3,7 @@ package webserver.http.statusline;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import webserver.http.Attribute;
 
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -24,11 +25,13 @@ class ResponseStatusLineTest {
                 Arguments.of(
                         "200 OK",
                         new ResponseStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("protocolVersion", "HTTP/1.1");
-                                    put("statusCode", "200");
-                                    put("statusText", "OK");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("protocolVersion", "HTTP/1.1");
+                                            put("statusCode", "200");
+                                            put("statusText", "OK");
+                                        }}
+                                )
                         ),
                         "200"
                 )
@@ -48,11 +51,13 @@ class ResponseStatusLineTest {
                 Arguments.of(
                         "200 OK",
                         new ResponseStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("protocolVersion", "HTTP/1.1");
-                                    put("statusCode", "200");
-                                    put("statusText", "OK");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("protocolVersion", "HTTP/1.1");
+                                            put("statusCode", "200");
+                                            put("statusText", "OK");
+                                        }}
+                                )
                         ),
                         "OK"
                 )
@@ -72,11 +77,13 @@ class ResponseStatusLineTest {
                 Arguments.of(
                         "HTTP/1.1",
                         new ResponseStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("protocolVersion", "HTTP/1.1");
-                                    put("statusCode", "200");
-                                    put("statusText", "OK");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("protocolVersion", "HTTP/1.1");
+                                            put("statusCode", "200");
+                                            put("statusText", "OK");
+                                        }}
+                                )
                         ),
                         "HTTP/1.1"
                 )

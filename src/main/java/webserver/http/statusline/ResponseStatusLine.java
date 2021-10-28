@@ -1,5 +1,7 @@
 package webserver.http.statusline;
 
+import webserver.http.Attribute;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,7 @@ public class ResponseStatusLine extends StatusLine {
     private static final String STATUS_CODE_KEY = "statusCode";
     private static final String STATUS_TEXT_KEY = "statusText";
 
-    public ResponseStatusLine(Map<String, String> statusLineAttributes) {
+    public ResponseStatusLine(Attribute statusLineAttributes) {
         super(statusLineAttributes);
     }
 
@@ -20,7 +22,7 @@ public class ResponseStatusLine extends StatusLine {
         statusLineAttributes.put(STATUS_CODE_KEY, statusLine.get(1));
         statusLineAttributes.put(STATUS_TEXT_KEY, statusLine.get(2));
 
-        return new ResponseStatusLine(statusLineAttributes);
+        return new ResponseStatusLine(Attribute.from(statusLineAttributes));
     }
 
     public String getStatusCode() {

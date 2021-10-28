@@ -3,6 +3,7 @@ package webserver.http.statusline;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import webserver.http.Attribute;
 
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -24,11 +25,13 @@ class RequestStatusLineTest {
                 Arguments.of(
                         "GET 메소드",
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("path", "/user/create");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("path", "/user/create");
+                                            put("method", "GET");
+                                            put("protocolVersion", "HTTP/1.1");
+                                        }}
+                                )
                         ),
                         "GET"
                 )
@@ -48,21 +51,25 @@ class RequestStatusLineTest {
                 Arguments.of(
                         "쿼리스트링이 없는 path",
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("path", "/user/create");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("path", "/user/create");
+                                            put("method", "GET");
+                                            put("protocolVersion", "HTTP/1.1");
+                                        }}
+                                )
                         ),
                         "/user/create"
                 ), Arguments.of(
                         "쿼리스트링이 있는 path",
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
+                                            put("method", "GET");
+                                            put("protocolVersion", "HTTP/1.1");
+                                        }}
+                                )
                         ),
                         "/user/create"
                 )
@@ -82,11 +89,13 @@ class RequestStatusLineTest {
                 Arguments.of(
                         "HTTP/1.1",
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("path", "/user/create");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("path", "/user/create");
+                                            put("method", "GET");
+                                            put("protocolVersion", "HTTP/1.1");
+                                        }}
+                                )
                         ),
                         "HTTP/1.1"
                 )
@@ -106,21 +115,25 @@ class RequestStatusLineTest {
                 Arguments.of(
                         "쿼리스트링이 없는 path",
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("path", "/user/create");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("path", "/user/create");
+                                            put("method", "GET");
+                                            put("protocolVersion", "HTTP/1.1");
+                                        }}
+                                )
                         ),
                         ""
                 ), Arguments.of(
                         "쿼리스트링이 있는 path",
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
-                                    put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
-                                }}
+                                Attribute.from(
+                                        new HashMap<String, String>() {{
+                                            put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
+                                            put("method", "GET");
+                                            put("protocolVersion", "HTTP/1.1");
+                                        }}
+                                )
                         ),
                         "userId=javajigi&password=password&name=박재성&email=javajigi@slipp.net"
                 )

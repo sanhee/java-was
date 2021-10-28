@@ -27,9 +27,9 @@ class ResponseHeaderTest {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator(),
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator(),
                         new LinkedHashMap<String, String>() {{
                             put("Content-Type", "text/html;charset=utf-8");
                             put("Content-Length", String.valueOf("Hello World".getBytes().length));
@@ -51,15 +51,17 @@ class ResponseHeaderTest {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator(),
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator(),
                         new ResponseStatusLine(
-                                new HashMap() {{
-                                    put("protocolVersion", "HTTP/1.1");
-                                    put("statusText", "OK");
-                                    put("statusCode", "200");
-                                }}
+                                Attribute.from(
+                                        new HashMap() {{
+                                            put("protocolVersion", "HTTP/1.1");
+                                            put("statusText", "OK");
+                                            put("statusCode", "200");
+                                        }}
+                                )
                         )
                 )
         );

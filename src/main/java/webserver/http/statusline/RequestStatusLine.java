@@ -1,5 +1,7 @@
 package webserver.http.statusline;
 
+import webserver.http.Attribute;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -9,7 +11,7 @@ public class RequestStatusLine extends StatusLine {
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
 
-    public RequestStatusLine(Map<String, String> statusLineAttributes) {
+    public RequestStatusLine(Attribute statusLineAttributes) {
         super(statusLineAttributes);
     }
 
@@ -20,7 +22,7 @@ public class RequestStatusLine extends StatusLine {
         statusLineAttributes.put(PATH_KEY, statusLine.get(1));
         statusLineAttributes.put(PROTOCOL_VERSION_KEY, statusLine.get(2));
 
-        return new RequestStatusLine(statusLineAttributes);
+        return new RequestStatusLine(Attribute.from(statusLineAttributes));
     }
 
     public String getMethod() {
