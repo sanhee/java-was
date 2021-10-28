@@ -33,14 +33,14 @@ public class ResponseHeader extends Header {
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
         List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return ResponseHeader.of(statusLine, attributeFrom(headerText));
+        return ResponseHeader.of(statusLine, Attribute.attributeFrom(headerText));
     }
 
     public static ResponseHeader newFrom(String headerText) {
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
         List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return ResponseHeader.of(statusLine, attributeNewFrom(headerText));
+        return ResponseHeader.of(statusLine, Attribute.attributeNewFrom(headerText));
     }
 
     @Override

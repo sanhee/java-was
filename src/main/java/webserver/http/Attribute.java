@@ -1,9 +1,8 @@
 package webserver.http;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import util.HttpRequestUtils;
+
+import java.util.*;
 
 public class Attribute {
     private Map<String, String> attributes;
@@ -34,6 +33,36 @@ public class Attribute {
 
     public Set<Map.Entry<String, String>> entrySet() {
         return attributes.entrySet();
+    }
+
+    public static Map<String, String> attributeFrom(String headerText) {
+        Map<String, String> attributes = new LinkedHashMap<>();
+
+        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
+        for (String splittedHeaderText : splittedHeaderTexts) {
+            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
+
+            if (pair != null) {
+                attributes.put(pair.getKey(), pair.getValue());
+            }
+        }
+
+        return attributes;
+    }
+
+    public static Attribute attributeNewFrom(String headerText) {
+        Map<String, String> attributes = new LinkedHashMap<>();
+
+        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
+        for (String splittedHeaderText : splittedHeaderTexts) {
+            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
+
+            if (pair != null) {
+                attributes.put(pair.getKey(), pair.getValue());
+            }
+        }
+
+        return Attribute.from(attributes);
     }
 
     @Override

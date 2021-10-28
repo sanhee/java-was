@@ -1,10 +1,8 @@
 package webserver.http.header;
 
-import util.HttpRequestUtils;
 import webserver.http.Attribute;
 
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class Header {
@@ -17,36 +15,6 @@ public abstract class Header {
 
     protected Header(Attribute attributes) {
         this.attributesNew = attributes;
-    }
-
-    protected static Map<String, String> attributeFrom(String headerText) {
-        Map<String, String> attributes = new LinkedHashMap<>();
-
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
-        for (String splittedHeaderText : splittedHeaderTexts) {
-            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
-
-            if (pair != null) {
-                attributes.put(pair.getKey(), pair.getValue());
-            }
-        }
-
-        return attributes;
-    }
-
-    protected static Attribute attributeNewFrom(String headerText) {
-        Map<String, String> attributes = new LinkedHashMap<>();
-
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
-        for (String splittedHeaderText : splittedHeaderTexts) {
-            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
-
-            if (pair != null) {
-                attributes.put(pair.getKey(), pair.getValue());
-            }
-        }
-
-        return Attribute.from(attributes);
     }
 
     public Map<String, String> getAttributes() {

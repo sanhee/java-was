@@ -32,14 +32,14 @@ public class RequestHeader extends Header {
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
         List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return RequestHeader.of(statusLine, attributeFrom(headerText));
+        return RequestHeader.of(statusLine, Attribute.attributeFrom(headerText));
     }
 
     public static RequestHeader newFrom(String headerText) {
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
         List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return RequestHeader.of(statusLine, attributeNewFrom(headerText));
+        return RequestHeader.of(statusLine, Attribute.attributeNewFrom(headerText));
     }
 
     public String getPath() {
