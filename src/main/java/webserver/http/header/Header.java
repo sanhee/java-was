@@ -3,14 +3,9 @@ package webserver.http.header;
 import webserver.http.attribute.Attributes;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 public abstract class Header {
     private Attributes attributes;
-
-    protected Header(Map<String, String> attributes) {
-        this.attributes = Attributes.from(attributes);
-    }
 
     protected Header(Attributes attributes) {
         this.attributes = attributes;
