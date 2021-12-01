@@ -20,9 +20,9 @@ public abstract class Header {
 
         sb.append(getStatusLine()).append(System.lineSeparator());
 
-        String attributesString = attributes.toString();
+        String attributesString = attributes.toHeaderText();
 
-        sb.append(attributesString + (!attributesString.isEmpty() ? "\r\n" : ""));
+        sb.append(attributes.toHeaderText() + (!attributesString.isEmpty() ? "\r\n" : ""));
 
         sb.append(System.lineSeparator());
 

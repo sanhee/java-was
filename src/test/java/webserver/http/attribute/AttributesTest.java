@@ -91,12 +91,12 @@ class AttributesTest {
     }
 
     @Test
-    void toStringTest() {
+    void toHeaderText() {
         Attributes attributes = new Attributes();
         attributes.add("key1", "value1");
         attributes.add("key2", "value2");
 
-        assertThat(attributes.toString()).isEqualTo("key1: value1\r\nkey2: value2");
+        assertThat(attributes.toHeaderText()).isEqualTo("key1: value1\r\nkey2: value2");
 
     }
 }

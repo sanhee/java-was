@@ -47,14 +47,13 @@ public class Attributes {
         return attributes.getOrDefault(key, defaultValue);
     }
 
-    @Override
-    public String toString() {
-        StringJoiner attributesToString = new StringJoiner("\r\n");
+    public String toHeaderText() {
+        StringJoiner headerText = new StringJoiner("\r\n");
         for (Map.Entry<String, String> each : attributes.entrySet()) {
-            attributesToString.add(each.getKey() + ": " + each.getValue());
+            headerText.add(each.getKey() + ": " + each.getValue());
         }
 
-        return attributesToString.toString();
+        return headerText.toString();
     }
 
     @Override
