@@ -39,6 +39,11 @@ public class Attributes {
         return this;
     }
 
+    public Attributes addAll(Map<String, String> attributes) {
+        this.attributes.putAll(attributes);
+        return this;
+    }
+
     public String get(String key) {
         return attributes.get(key);
     }

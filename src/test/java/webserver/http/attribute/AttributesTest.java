@@ -6,6 +6,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +43,19 @@ class AttributesTest {
     void add() {
         Attributes attributes = new Attributes();
         attributes.add("key", "value");
+    }
+
+    @Test
+    void addAll() {
+        Attributes attributes = new Attributes();
+        Map<String, String> attributeMap = new LinkedHashMap<>();
+        attributeMap.put("key", "value");
+        attributes.addAll(attributeMap);
+
+        Attributes expectedAttributes = new Attributes();
+        expectedAttributes.add("key", "value");
+
+        assertThat(attributes).isEqualTo(expectedAttributes);
     }
 
     @Test
