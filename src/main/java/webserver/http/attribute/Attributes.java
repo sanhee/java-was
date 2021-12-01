@@ -2,21 +2,16 @@ package webserver.http.attribute;
 
 import util.HttpRequestUtils;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Attributes {
-    private Map<String, String> attributes;
-
-    public Attributes() {
-        this(new HashMap<>());
-    }
-
-    private Attributes(Map<String, String> attributes) {
-        this.attributes = attributes;
-    }
+    private final Map<String, String> attributes = new LinkedHashMap<>();
 
     public static Attributes from(Map<String, String> attributes) {
-        return new Attributes(attributes);
+        return new Attributes().addAll(attributes);
     }
 
     public static Attributes from(String headerText) {
