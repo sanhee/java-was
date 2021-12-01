@@ -22,7 +22,7 @@ public abstract class Header {
 
         String attributesString = attributes.toHeaderText();
 
-        sb.append(attributes.toHeaderText() + (!attributesString.isEmpty() ? "\r\n" : ""));
+        sb.append(attributesString + (!attributesString.isEmpty() ? "\r\n" : ""));
 
         sb.append(System.lineSeparator());
 
