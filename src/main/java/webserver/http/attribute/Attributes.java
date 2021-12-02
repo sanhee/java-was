@@ -30,21 +30,27 @@ public class Attributes {
     }
 
     public Attributes add(String key, String value) {
-        attributes.put(key, value);
+        attributes.put(key.toUpperCase(), value);
         return this;
     }
 
     public Attributes addAll(Map<String, String> attributes) {
-        this.attributes.putAll(attributes);
+        Map<String, String> upperAttributes = new LinkedHashMap<>();
+
+        for (String key : attributes.keySet()) {
+            upperAttributes.put(key.toUpperCase(), attributes.get(key));
+        }
+
+        this.attributes.putAll(upperAttributes);
         return this;
     }
 
     public String get(String key) {
-        return attributes.get(key);
+        return attributes.get(key.toUpperCase());
     }
 
     public String getOrDefault(String key, String defaultValue) {
-        return attributes.getOrDefault(key, defaultValue);
+        return attributes.getOrDefault(key.toUpperCase(), defaultValue);
     }
 
     public String toHeaderText() {

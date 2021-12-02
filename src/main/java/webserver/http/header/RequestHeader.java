@@ -41,4 +41,8 @@ public class RequestHeader extends Header {
     public String getQueryString() {
         return statusLine.getQueryString();
     }
+
+    public int getContentLength() {
+        return Integer.parseInt(super.getAttributes().getOrDefault("Content-Length", "0"));
+    }
 }

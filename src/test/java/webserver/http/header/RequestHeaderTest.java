@@ -237,4 +237,54 @@ class RequestHeaderTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("getContentLength")
+    void getContentLength(String desc, RequestHeader requestHeader, int expectContentLength) {
+        int actualContentLength = requestHeader.getContentLength();
+
+        assertThat(actualContentLength).as(desc)
+                .isEqualTo(expectContentLength);
+    }
+
+    static Stream<Arguments> getContentLength() {
+        return Stream.of(
+                Arguments.of(
+                        "단일 헤더: Content-Length 파싱",
+                        new RequestHeader(null, new Attributes().add("Content-Length", "10")),
+                        10
+                ),
+                Arguments.of(
+                        "단일 헤더: CONTENT-LENGTH 파싱",
+                        new RequestHeader(null, new Attributes().add("CONTENT-LENGTH", "10")),
+                        10
+                ),
+                Arguments.of(
+                        "단일 헤더: content-length 파싱",
+                        new RequestHeader(null, new Attributes().add("content-length", "10")),
+                        10
+                ),
+                Arguments.of(
+                        "단일 헤더: CONTENT-length 파싱",
+                        new RequestHeader(null, new Attributes().add("CONTENT-length", "10")),
+                        10
+                ),
+                Arguments.of(
+                        "복수 헤더: CONTENT-LENGTH 파싱",
+                        new RequestHeader(null, new Attributes().addAll(new HashMap<String, String>() {{
+                            put("Host", "localhost:8080");
+                            put("CONTENT-length", "15");
+                        }})),
+                        15
+                ),
+                Arguments.of(
+                        "복수 헤더: Content-Length 파싱",
+                        new RequestHeader(null, new Attributes().addAll(new HashMap<String, String>() {{
+                            put("Host", "localhost:8080");
+                            put("Content-Length", "15");
+                        }})),
+                        15
+                )
+        );
+    }
 }

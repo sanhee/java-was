@@ -40,4 +40,8 @@ public class Request {
 
         return extension;
     }
+
+    public int getContentLength() {
+        return requestMessage.getHeader().getContentLength();
+    }
 }

@@ -43,7 +43,8 @@ public class RequestHandler extends Thread {
 
             RequestHeader requestHeader = RequestHeader.from(requestMessages.toString());
 
-            int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
+            // Request 에서 contentLength를 바로 가져올 수 있게는 못할까? 생각...
+            int contentLength = requestHeader.getContentLength();
             String requestBody = IOUtils.readData(br, contentLength);
 
             requestMessages.add(System.lineSeparator() + requestBody);
