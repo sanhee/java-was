@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import webserver.http.attribute.Attributes;
 import webserver.http.header.RequestHeader;
 import webserver.http.message.GetMessage;
 import webserver.http.message.PostMessage;
@@ -42,13 +43,13 @@ class RequestTest {
                                         "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))
                 ), Arguments.of(
                         "POST /user/create HTTP/1.1" + System.lineSeparator() +
@@ -66,13 +67,13 @@ class RequestTest {
                                                 "/user/create",
                                                 "HTTP/1.1"
                                         ),
-                                        new HashMap() {{
+                                        Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
                                             put("Content-Length", "59");
                                             put("Content-Type", "application/x-www-form-urlencoded");
                                             put("Accept", "*/*");
-                                        }}
+                                        }})
                                 ),
                                 Body.from("userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net")
                         )
@@ -99,13 +100,13 @@ class RequestTest {
                                         "/user/create",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         )),
                         "/user/create"
                 ), Arguments.of(
@@ -116,13 +117,13 @@ class RequestTest {
                                         "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         )),
                         "/user/create"
                 )
@@ -148,13 +149,13 @@ class RequestTest {
                                         "/user/create.html",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         "html"
                 ), Arguments.of(
@@ -165,13 +166,13 @@ class RequestTest {
                                         "/user/create.html/",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         "html"
                 ), Arguments.of(
@@ -182,13 +183,13 @@ class RequestTest {
                                         "/user/create.html?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         "html"
                 ), Arguments.of(
@@ -199,13 +200,13 @@ class RequestTest {
                                         "/user/create.html?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net/",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         "html"
                 ), Arguments.of(
@@ -216,13 +217,13 @@ class RequestTest {
                                         "/user/create",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         ""
                 ), Arguments.of(
@@ -233,13 +234,13 @@ class RequestTest {
                                         "/",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         ""
                 ), Arguments.of(
@@ -250,13 +251,13 @@ class RequestTest {
                                         "",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         ""
                 ), Arguments.of(
@@ -267,13 +268,13 @@ class RequestTest {
                                         "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                                         "HTTP/1.1"
                                 ),
-                                new HashMap() {{
+                                Attributes.from(new HashMap() {{
                                     put("Host", "localhost:8080");
                                     put("Connection", "keep-alive");
                                     put("Content-Length", "59");
                                     put("Content-Type", "application/x-www-form-urlencoded");
                                     put("Accept", "*/*");
-                                }}
+                                }})
                         ))),
                         ""
                 )

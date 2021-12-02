@@ -1,21 +1,21 @@
 package webserver.http.header;
 
 import util.HttpRequestUtils;
+import webserver.http.attribute.Attributes;
 import webserver.http.statusline.ResponseStatusLine;
 
 import java.util.List;
-import java.util.Map;
 
 public class ResponseHeader extends Header {
 
     private ResponseStatusLine statusLine;
 
-    protected ResponseHeader(ResponseStatusLine statusLine, Map<String, String> attributes) {
+    protected ResponseHeader(ResponseStatusLine statusLine, Attributes attributes) {
         super(attributes);
         this.statusLine = statusLine;
     }
 
-    public static ResponseHeader of(List<String> statusLine, Map<String, String> attributes) {
+    public static ResponseHeader of(List<String> statusLine, Attributes attributes) {
         return new ResponseHeader(ResponseStatusLine.from(statusLine), attributes);
     }
 
@@ -23,7 +23,7 @@ public class ResponseHeader extends Header {
         String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
         List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
 
-        return ResponseHeader.of(statusLine, attributeFrom(headerText));
+        return ResponseHeader.of(statusLine, Attributes.from(headerText));
     }
 
     @Override

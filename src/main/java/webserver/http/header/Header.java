@@ -1,34 +1,17 @@
 package webserver.http.header;
 
-import util.HttpRequestUtils;
+import webserver.http.attribute.Attributes;
 
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public abstract class Header {
-    private Map<String, String> attributes;
+    private Attributes attributes;
 
-    protected Header(Map<String, String> attributes) {
+    protected Header(Attributes attributes) {
         this.attributes = attributes;
     }
 
-    protected static Map<String, String> attributeFrom(String headerText) {
-        Map<String, String> attributes = new LinkedHashMap<>();
-
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
-        for (String splittedHeaderText : splittedHeaderTexts) {
-            HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
-
-            if (pair != null) {
-                attributes.put(pair.getKey(), pair.getValue());
-            }
-        }
-
-        return attributes;
-    }
-
-    public Map<String, String> getAttributes() {
+    public Attributes getAttributes() {
         return attributes;
     }
 
@@ -37,9 +20,9 @@ public abstract class Header {
 
         sb.append(getStatusLine()).append(System.lineSeparator());
 
-        for (Map.Entry<String, String> entry : getAttributes().entrySet()) {
-            sb.append(entry.getKey() + ": " + entry.getValue() + System.lineSeparator());
-        }
+        String attributesString = attributes.toHeaderText();
+
+        sb.append(attributesString + (!attributesString.isEmpty() ? "\r\n" : ""));
 
         sb.append(System.lineSeparator());
 
