@@ -5,6 +5,8 @@ plugins {
 group = 'com.codesquad'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -21,6 +23,11 @@ dependencies {
 
 }
 
+compileJava {
+    options.encoding = "UTF-8"
+}
+
 test {
+    systemProperty "file.encoding", "UTF-8"
     useJUnitPlatform()
 }
