@@ -1,5 +1,6 @@
 package webserver.http.message;
 
+import webserver.Const;
 import webserver.http.Body;
 import webserver.http.header.ResponseHeader;
 
@@ -15,9 +16,9 @@ public class ResponseMessage {
     }
 
     public static ResponseMessage from(String responseMessage) {
-        String[] splittedResponseMessage = responseMessage.split(System.lineSeparator() + System.lineSeparator());
+        String[] splittedResponseMessage = responseMessage.split(Const.CRLF + Const.CRLF);
 
-        StringJoiner body = new StringJoiner(System.lineSeparator() + System.lineSeparator());
+        StringJoiner body = new StringJoiner(Const.CRLF + Const.CRLF);
 
         for (int i = 1; i < splittedResponseMessage.length; i++) {
             body.add(splittedResponseMessage[i]);

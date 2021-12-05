@@ -3,6 +3,7 @@ package webserver.http.message;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import webserver.Const;
 import webserver.http.Body;
 import webserver.http.header.Header;
 import webserver.http.header.ResponseHeader;
@@ -25,25 +26,25 @@ class ResponseMessageTest {
     static Stream<Arguments> getHeader() {
         return Stream.of(
                 Arguments.of(
-                        "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator() +
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                        "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                        "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                        Const.CRLF +
                         "Hello World",
                         ResponseHeader.from(
-                                "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator()
+                                "HTTP/1.1 200 OK" + Const.CRLF +
+                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF
                         )
                 ),
                 Arguments.of(
-                        "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator(),
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                        "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                        "Content-Length: " + "Hello World".getBytes().length + Const.CRLF,
                         ResponseHeader.from(
-                                "HTTP/1.1 200 OK" + System.lineSeparator() +
-                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator()
+                                "HTTP/1.1 200 OK" + Const.CRLF +
+                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF
                         )
                 )
         );
@@ -61,31 +62,31 @@ class ResponseMessageTest {
     static Stream<Arguments> getBody() {
         return Stream.of(
                 Arguments.of(
-                        "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator() +
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                        "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                        "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                        Const.CRLF +
                         "Hello World",
                         Body.from("Hello World")
                 ), Arguments.of(
-                        "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator() +
-                        "Hello World" + System.lineSeparator() +
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                        "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                        "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                        Const.CRLF +
+                        "Hello World" + Const.CRLF +
                         "Bye World",
-                        Body.from("Hello World" + System.lineSeparator() +
+                        Body.from("Hello World" + Const.CRLF +
                                   "Bye World")
                 ), Arguments.of(
-                        "HTTP/1.1 200 OK" + System.lineSeparator() +
-                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
-                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
-                        System.lineSeparator() +
-                        "Hello World" + System.lineSeparator() +
-                        System.lineSeparator() +
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                        "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                        "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                        Const.CRLF +
+                        "Hello World" + Const.CRLF +
+                        Const.CRLF +
                         "Bye World",
-                        Body.from("Hello World" + System.lineSeparator() +
-                                  System.lineSeparator() +
+                        Body.from("Hello World" + Const.CRLF +
+                                  Const.CRLF +
                                   "Bye World")
                 )
         );
