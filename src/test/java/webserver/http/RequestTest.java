@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import webserver.Const;
 import webserver.http.attribute.Attributes;
 import webserver.http.header.RequestHeader;
 import webserver.http.message.GetMessage;
@@ -31,13 +30,13 @@ class RequestTest {
     static Stream<Arguments> from() {
         return Stream.of(
                 Arguments.of(
-                        "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + Const.CRLF +
-                        "Host: localhost:8080" + Const.CRLF +
-                        "Connection: keep-alive" + Const.CRLF +
-                        "Content-Length: 59" + Const.CRLF +
-                        "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
-                        "Accept: */*" + Const.CRLF +
-                        "" + Const.CRLF,
+                        "GET /user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net HTTP/1.1" + System.lineSeparator() +
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 59" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator(),
                         new GetMessage(RequestHeader.of(
                                 Arrays.asList(
                                         "GET",
@@ -53,13 +52,13 @@ class RequestTest {
                                 }})
                         ))
                 ), Arguments.of(
-                        "POST /user/create HTTP/1.1" + Const.CRLF +
-                        "Host: localhost:8080" + Const.CRLF +
-                        "Connection: keep-alive" + Const.CRLF +
-                        "Content-Length: 59" + Const.CRLF +
-                        "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
-                        "Accept: */*" + Const.CRLF +
-                        "" + Const.CRLF +
+                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                        "Host: localhost:8080" + System.lineSeparator() +
+                        "Connection: keep-alive" + System.lineSeparator() +
+                        "Content-Length: 59" + System.lineSeparator() +
+                        "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                        "Accept: */*" + System.lineSeparator() +
+                        "" + System.lineSeparator() +
                         "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                         new PostMessage(
                                 RequestHeader.of(

@@ -46,12 +46,12 @@ public class RequestHandler extends Thread {
             int contentLength = Integer.parseInt(requestHeader.getAttributes().getOrDefault("Content-Length", "0"));
             String requestBody = IOUtils.readData(br, contentLength);
 
-            requestMessages.add(Const.CRLF + requestBody);
+            requestMessages.add(System.lineSeparator() + requestBody);
 
             Request request = Request.from(requestMessages.toString());
 
             // TODO: Default Message를 설정할 수 있을 것 같다.
-            String responseMessage = "HTTP/1.1 404 NotFound" + Const.CRLF + Const.CRLF;
+            String responseMessage = "HTTP/1.1 404 NotFound" + System.lineSeparator() + System.lineSeparator();
 
             String path = request.getPath();
             String extension = request.getPathExtension();
@@ -62,10 +62,10 @@ public class RequestHandler extends Thread {
                 if (htmlFile.exists()) {
                     byte[] body = Files.readAllBytes(htmlFile.toPath());
 
-                    responseMessage = "HTTP/1.1 200 OK" + Const.CRLF +
-                            "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                            "Content-Length: " + body.length + Const.CRLF +
-                            Const.CRLF +
+                    responseMessage = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                            "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                            "Content-Length: " + body.length + System.lineSeparator() +
+                            System.lineSeparator() +
                             new String(body);
                 }
             }
@@ -83,7 +83,7 @@ public class RequestHandler extends Thread {
 
                     DataBase.addUser(newUser);
 
-                    responseMessage = "HTTP/1.1 302 Found" + Const.CRLF +
+                    responseMessage = "HTTP/1.1 302 Found" + System.lineSeparator() +
                             "Location: /index.html";
                     break;
                 }
@@ -117,12 +117,12 @@ public class RequestHandler extends Thread {
                 throw new LoginFailedException();
             }
 
-            return "HTTP/1.1 302 Found" + Const.CRLF +
-                    "Location: /index.html" + Const.CRLF +
+            return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                    "Location: /index.html" + System.lineSeparator() +
                     "Set-Cookie: logined=true; Path=/";
         } catch (LoginFailedException loginFailedException) {
-            return "HTTP/1.1 302 Found" + Const.CRLF +
-                    "Location: /user/login_failed.html" + Const.CRLF +
+            return "HTTP/1.1 302 Found" + System.lineSeparator() +
+                    "Location: /user/login_failed.html" + System.lineSeparator() +
                     "Set-Cookie: logined=false; Path=/";
         }
     }
