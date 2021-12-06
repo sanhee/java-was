@@ -1,5 +1,6 @@
 package webserver.http.attribute;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AttributesTest {
 
@@ -40,12 +43,20 @@ class AttributesTest {
     }
 
     @Test
+    @DisplayName("add 테스트: key의 대소문자 관계 없이 Attributes를 꺼내올 수 있음")
     void add() {
         Attributes attributes = new Attributes();
         attributes.add("key", "value");
+
+        assertAll(
+                () -> assertEquals("value", attributes.get("KEY")),
+                () -> assertEquals("value", attributes.get("key")),
+                () -> assertEquals("value", attributes.get("kEy"))
+        );
     }
 
     @Test
+    @DisplayName("addAll 테스트: key의 대소문자 관계 없이 Attributes를 꺼내올 수 있음")
     void addAll() {
         Attributes attributes = new Attributes();
         Map<String, String> attributeMap = new LinkedHashMap<>();
@@ -55,7 +66,11 @@ class AttributesTest {
         Attributes expectedAttributes = new Attributes();
         expectedAttributes.add("key", "value");
 
-        assertThat(attributes).isEqualTo(expectedAttributes);
+        assertAll(
+                () -> assertEquals(expectedAttributes.get("key"), attributes.get("KEY")),
+                () -> assertEquals(expectedAttributes.get("KEY"), attributes.get("kEY")),
+                () -> assertEquals(expectedAttributes.get("kEy"), attributes.get("key"))
+        );
     }
 
     @Test
