@@ -3,7 +3,6 @@ package webserver.http;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import webserver.Const;
 import webserver.http.message.ResponseMessage;
 
 import java.io.ByteArrayOutputStream;
@@ -27,16 +26,16 @@ class ResponseTest {
     static Stream<Arguments> write() {
         return Stream.of(
                 Arguments.of(
-                        "HTTP/1.1 200 OK" + Const.CRLF +
-                        "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                        "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
-                        Const.CRLF +
+                        "HTTP/1.1 200 OK" + System.lineSeparator() +
+                        "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                        "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                        System.lineSeparator() +
                         "Hello World",
                         new Response(ResponseMessage.from(
-                                "HTTP/1.1 200 OK" + Const.CRLF +
-                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
-                                Const.CRLF +
+                                "HTTP/1.1 200 OK" + System.lineSeparator() +
+                                "Content-Type: text/html;charset=utf-8" + System.lineSeparator() +
+                                "Content-Length: " + "Hello World".getBytes().length + System.lineSeparator() +
+                                System.lineSeparator() +
                                 "Hello World"
                         ))
                 )

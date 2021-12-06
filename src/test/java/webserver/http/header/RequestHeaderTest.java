@@ -3,7 +3,6 @@ package webserver.http.header;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import webserver.Const;
 import webserver.http.attribute.Attributes;
 import webserver.http.statusline.RequestStatusLine;
 
@@ -28,23 +27,23 @@ class RequestHeaderTest {
     static Stream<Arguments> getAttributes() {
         return Stream.of(
                 Arguments.of(
-                        "GET / HTTP/1.1" + Const.CRLF +
-                                "Host: localhost:8080" + Const.CRLF +
-                                "Connection: keep-alive" + Const.CRLF +
-                                "Cache-Control: max-age=0" + Const.CRLF +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + Const.CRLF +
-                                "sec-ch-ua-mobile: ?0" + Const.CRLF +
-                                "Upgrade-Insecure-Requests: 1" + Const.CRLF +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + Const.CRLF +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + Const.CRLF +
-                                "Sec-Fetch-Site: none" + Const.CRLF +
-                                "Sec-Fetch-Mode: navigate" + Const.CRLF +
-                                "Sec-Fetch-User: ?1" + Const.CRLF +
-                                "Sec-Fetch-Dest: document" + Const.CRLF +
-                                "Accept-Encoding: gzip, deflate, br" + Const.CRLF +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + Const.CRLF +
-                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
-                                Const.CRLF,
+                        "GET / HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: none" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + System.lineSeparator() +
+                                System.lineSeparator(),
                         Attributes.from(new LinkedHashMap<String, String>() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -77,32 +76,32 @@ class RequestHeaderTest {
     static Stream<Arguments> getMethod() {
         return Stream.of(
                 Arguments.of(
-                        "GET / HTTP/1.1" + Const.CRLF +
-                                "Host: localhost:8080" + Const.CRLF +
-                                "Connection: keep-alive" + Const.CRLF +
-                                "Cache-Control: max-age=0" + Const.CRLF +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + Const.CRLF +
-                                "sec-ch-ua-mobile: ?0" + Const.CRLF +
-                                "Upgrade-Insecure-Requests: 1" + Const.CRLF +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + Const.CRLF +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + Const.CRLF +
-                                "Sec-Fetch-Site: none" + Const.CRLF +
-                                "Sec-Fetch-Mode: navigate" + Const.CRLF +
-                                "Sec-Fetch-User: ?1" + Const.CRLF +
-                                "Sec-Fetch-Dest: document" + Const.CRLF +
-                                "Accept-Encoding: gzip, deflate, br" + Const.CRLF +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + Const.CRLF +
-                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
-                                Const.CRLF,
+                        "GET / HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: none" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + System.lineSeparator() +
+                                System.lineSeparator(),
                         "GET"
                 ), Arguments.of(
-                        "POST /user/create HTTP/1.1" + Const.CRLF +
-                                "Host: localhost:8080" + Const.CRLF +
-                                "Connection: keep-alive" + Const.CRLF +
-                                "Content-Length: 59" + Const.CRLF +
-                                "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
-                                "Accept: */*" + Const.CRLF +
-                                "" + Const.CRLF +
+                        "POST /user/create HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Content-Length: 59" + System.lineSeparator() +
+                                "Content-Type: application/x-www-form-urlencoded" + System.lineSeparator() +
+                                "Accept: */*" + System.lineSeparator() +
+                                "" + System.lineSeparator() +
                                 "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
                         "POST"
                 )
@@ -120,23 +119,23 @@ class RequestHeaderTest {
 
     static Stream<Arguments> getStatusLineAttributes() {
         return Stream.of(
-                Arguments.of("GET / HTTP/1.1" + Const.CRLF +
-                                "Host: localhost:8080" + Const.CRLF +
-                                "Connection: keep-alive" + Const.CRLF +
-                                "Cache-Control: max-age=0" + Const.CRLF +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + Const.CRLF +
-                                "sec-ch-ua-mobile: ?0" + Const.CRLF +
-                                "Upgrade-Insecure-Requests: 1" + Const.CRLF +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + Const.CRLF +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + Const.CRLF +
-                                "Sec-Fetch-Site: none" + Const.CRLF +
-                                "Sec-Fetch-Mode: navigate" + Const.CRLF +
-                                "Sec-Fetch-User: ?1" + Const.CRLF +
-                                "Sec-Fetch-Dest: document" + Const.CRLF +
-                                "Accept-Encoding: gzip, deflate, br" + Const.CRLF +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + Const.CRLF +
-                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
-                                Const.CRLF,
+                Arguments.of("GET / HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: none" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + System.lineSeparator() +
+                                System.lineSeparator(),
                         new RequestStatusLine(
                                 new HashMap<String, String>() {{
                                     put("method", "GET");
@@ -163,40 +162,40 @@ class RequestHeaderTest {
     static Stream<Arguments> getBytes() {
         return Stream.of(
                 Arguments.of(
-                        "GET / HTTP/1.1" + Const.CRLF +
-                                "Host: localhost:8080" + Const.CRLF +
-                                "Connection: keep-alive" + Const.CRLF +
-                                "Cache-Control: max-age=0" + Const.CRLF +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + Const.CRLF +
-                                "sec-ch-ua-mobile: ?0" + Const.CRLF +
-                                "Upgrade-Insecure-Requests: 1" + Const.CRLF +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + Const.CRLF +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + Const.CRLF +
-                                "Sec-Fetch-Site: none" + Const.CRLF +
-                                "Sec-Fetch-Mode: navigate" + Const.CRLF +
-                                "Sec-Fetch-User: ?1" + Const.CRLF +
-                                "Sec-Fetch-Dest: document" + Const.CRLF +
-                                "Accept-Encoding: gzip, deflate, br" + Const.CRLF +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + Const.CRLF +
-                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
-                                Const.CRLF,
-                        ("GET / HTTP/1.1" + Const.CRLF +
-                                "Host: localhost:8080" + Const.CRLF +
-                                "Connection: keep-alive" + Const.CRLF +
-                                "Cache-Control: max-age=0" + Const.CRLF +
-                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + Const.CRLF +
-                                "sec-ch-ua-mobile: ?0" + Const.CRLF +
-                                "Upgrade-Insecure-Requests: 1" + Const.CRLF +
-                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + Const.CRLF +
-                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + Const.CRLF +
-                                "Sec-Fetch-Site: none" + Const.CRLF +
-                                "Sec-Fetch-Mode: navigate" + Const.CRLF +
-                                "Sec-Fetch-User: ?1" + Const.CRLF +
-                                "Sec-Fetch-Dest: document" + Const.CRLF +
-                                "Accept-Encoding: gzip, deflate, br" + Const.CRLF +
-                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + Const.CRLF +
-                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
-                                Const.CRLF).getBytes(StandardCharsets.UTF_8)
+                        "GET / HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: none" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + System.lineSeparator() +
+                                System.lineSeparator(),
+                        ("GET / HTTP/1.1" + System.lineSeparator() +
+                                "Host: localhost:8080" + System.lineSeparator() +
+                                "Connection: keep-alive" + System.lineSeparator() +
+                                "Cache-Control: max-age=0" + System.lineSeparator() +
+                                "sec-ch-ua: \"Google Chrome\";v=\"89\", \"Chromium\";v=\"89\", \";Not A Brand\";v=\"99\"" + System.lineSeparator() +
+                                "sec-ch-ua-mobile: ?0" + System.lineSeparator() +
+                                "Upgrade-Insecure-Requests: 1" + System.lineSeparator() +
+                                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" + System.lineSeparator() +
+                                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" + System.lineSeparator() +
+                                "Sec-Fetch-Site: none" + System.lineSeparator() +
+                                "Sec-Fetch-Mode: navigate" + System.lineSeparator() +
+                                "Sec-Fetch-User: ?1" + System.lineSeparator() +
+                                "Sec-Fetch-Dest: document" + System.lineSeparator() +
+                                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                                "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + System.lineSeparator() +
+                                "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + System.lineSeparator() +
+                                System.lineSeparator()).getBytes(StandardCharsets.UTF_8)
                 )
         );
     }

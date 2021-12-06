@@ -1,6 +1,5 @@
 package webserver.http.header;
 
-import webserver.Const;
 import webserver.http.attribute.Attributes;
 
 import java.nio.charset.StandardCharsets;
@@ -19,13 +18,13 @@ public abstract class Header {
     public byte[] getBytes() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getStatusLine()).append(Const.CRLF);
+        sb.append(getStatusLine()).append(System.lineSeparator());
 
         String attributesString = attributes.toHeaderText();
 
-        sb.append(attributesString + (!attributesString.isEmpty() ? Const.CRLF : ""));
+        sb.append(attributesString + (!attributesString.isEmpty() ? "\r\n" : ""));
 
-        sb.append(Const.CRLF);
+        sb.append(System.lineSeparator());
 
         return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
