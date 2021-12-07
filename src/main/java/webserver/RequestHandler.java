@@ -32,7 +32,7 @@ public class RequestHandler extends Thread {
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            StringJoiner requestMessages = new StringJoiner(System.lineSeparator());
+            StringJoiner requestMessages = new StringJoiner(Const.CRLF);
 
             String requestMessage = br.readLine();
 
