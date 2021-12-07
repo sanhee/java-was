@@ -1,6 +1,5 @@
 package webserver.http.header;
 
-import util.HttpRequestUtils;
 import webserver.http.attribute.Attributes;
 import webserver.http.statusline.ResponseStatusLine;
 
@@ -20,10 +19,7 @@ public class ResponseHeader extends Header {
     }
 
     public static ResponseHeader from(String headerText) {
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
-        List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
-
-        return ResponseHeader.of(statusLine, Attributes.from(headerText));
+        return ResponseHeader.of(parseStatusLine(headerText), Attributes.from(headerText));
     }
 
     @Override

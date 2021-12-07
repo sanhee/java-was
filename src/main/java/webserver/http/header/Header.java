@@ -1,14 +1,22 @@
 package webserver.http.header;
 
+import util.HttpRequestUtils;
+import webserver.Const;
 import webserver.http.attribute.Attributes;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public abstract class Header {
     private Attributes attributes;
 
     protected Header(Attributes attributes) {
         this.attributes = attributes;
+    }
+
+    protected static List<String> parseStatusLine(String headerText) {
+        String[] splittedHeaderTexts = headerText.split(Const.CRLF);
+        return HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
     }
 
     public Attributes getAttributes() {
@@ -18,13 +26,13 @@ public abstract class Header {
     public byte[] getBytes() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getStatusLine()).append(System.lineSeparator());
+        sb.append(getStatusLine()).append(Const.CRLF);
 
         String attributesString = attributes.toHeaderText();
 
-        sb.append(attributesString + (!attributesString.isEmpty() ? "\r\n" : ""));
+        sb.append(attributesString + (!attributesString.isEmpty() ? Const.CRLF : ""));
 
-        sb.append(System.lineSeparator());
+        sb.append(Const.CRLF);
 
         return sb.toString().getBytes(StandardCharsets.UTF_8);
     }

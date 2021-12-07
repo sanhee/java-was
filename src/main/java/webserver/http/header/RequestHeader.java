@@ -1,6 +1,5 @@
 package webserver.http.header;
 
-import util.HttpRequestUtils;
 import webserver.http.attribute.Attributes;
 import webserver.http.statusline.RequestStatusLine;
 
@@ -19,10 +18,7 @@ public class RequestHeader extends Header {
     }
 
     public static RequestHeader from(String headerText) {
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
-        List<String> statusLine = HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
-
-        return RequestHeader.of(statusLine, Attributes.from(headerText));
+        return RequestHeader.of(parseStatusLine(headerText), Attributes.from(headerText));
     }
 
     public String getPath() {
