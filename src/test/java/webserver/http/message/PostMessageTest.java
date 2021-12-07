@@ -70,7 +70,7 @@ class PostMessageTest {
                              "Accept: */*" + Const.CRLF +
                              "" + Const.CRLF +
                              "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net" + Const.CRLF,
-                             Body.from("userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net" + System.lineSeparator())
+                             Body.from("userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net" + Const.CRLF)
                 ), Arguments.of("POST /user/create HTTP/1.1" + Const.CRLF +
                                 "" + Const.CRLF +
                                 "",
