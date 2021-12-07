@@ -88,7 +88,7 @@ class RequestHandlerTest {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
 
-        assertThat(br.lines().collect(Collectors.joining(System.lineSeparator()))).isEqualTo(expectedResponseMessage);
+        assertThat(br.lines().collect(Collectors.joining(Const.CRLF))).isEqualTo(expectedResponseMessage);
     }
 
     static Stream<Arguments> run() throws IOException {
@@ -104,7 +104,7 @@ class RequestHandlerTest {
                                 "Content-Length: " + INDEX_HTML.length() + Const.CRLF +
                                 "" + Const.CRLF +
                                 Files.lines(INDEX_HTML.toPath())
-                                        .collect(Collectors.joining(System.lineSeparator()))
+                                        .collect(Collectors.joining(Const.CRLF))
                 ), Arguments.arguments(
                         "GET /index2.html HTTP/1.1" + Const.CRLF +
                                 "Host: localhost:8080" + Const.CRLF +
@@ -123,7 +123,7 @@ class RequestHandlerTest {
                                 "Content-Length: " + FORM_HTML.length() + Const.CRLF +
                                 "" + Const.CRLF +
                                 Files.lines(FORM_HTML.toPath())
-                                        .collect(Collectors.joining(System.lineSeparator()))
+                                        .collect(Collectors.joining(Const.CRLF))
                 ), Arguments.arguments(
                         "POST /user/create HTTP/1.1" + Const.CRLF +
                                 "Host: localhost:8080" + Const.CRLF +
@@ -261,7 +261,7 @@ class RequestHandlerTest {
         requestHandler.run();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(browser.getInputStream()));
-        String actualResponseMessage = br.lines().collect(Collectors.joining(System.lineSeparator()));
+        String actualResponseMessage = br.lines().collect(Collectors.joining(Const.CRLF));
 
         // index.html로 이동
         assertThat(actualResponseMessage)
