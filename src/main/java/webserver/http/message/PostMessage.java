@@ -1,6 +1,7 @@
 package webserver.http.message;
 
 import util.HttpRequestUtils;
+import webserver.Const;
 import webserver.http.Body;
 import webserver.http.header.RequestHeader;
 
@@ -19,7 +20,7 @@ public class PostMessage implements RequestMessage {
     }
 
     public static PostMessage from(String postMessage) {
-        String[] splittedPostMessage = postMessage.split(System.lineSeparator() + System.lineSeparator());
+        String[] splittedPostMessage = postMessage.split(Const.CRLF + Const.CRLF);
 
         Body body = Body.from(splittedPostMessage.length != 1 ? splittedPostMessage[1] : "");
 

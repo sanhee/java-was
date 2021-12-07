@@ -1,6 +1,7 @@
 package webserver.http.attribute;
 
 import util.HttpRequestUtils;
+import webserver.Const;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class Attributes {
     public static Attributes from(String headerText) {
         Map<String, String> attributes = new LinkedHashMap<>();
 
-        String[] splittedHeaderTexts = headerText.split(System.lineSeparator());
+        String[] splittedHeaderTexts = headerText.split(Const.CRLF);
         for (String splittedHeaderText : splittedHeaderTexts) {
             HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
 

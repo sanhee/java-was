@@ -20,7 +20,7 @@ Java로 웹 서버를 직접 구현해봅니다.
 
 - [협업 페이지 메인](https://sanhee.notion.site/HTTP-Web-Server-602b6e4517bc4b46b7296877a8a72134)
 
-- [그라운드 룰](https://github.com/sanhee/java-was/wiki/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0---2021.07)
+- [그라운드 룰](https://sanhee.notion.site/b9468e5c4ce2467686a603f8687323a4)
 
 - [데일리 스크럼](https://sanhee.notion.site/8343a2a1dc4e45dc8f47dbe784d63658?v=d1c6694b9e0a4d0cabd8f909629e1f5b)
 
