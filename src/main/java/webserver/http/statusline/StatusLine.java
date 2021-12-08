@@ -13,6 +13,10 @@ public abstract class StatusLine {
         this.statusLineAttributes = Attributes.from(statusLineAttributes);
     }
 
+    public StatusLine(Attributes statusLineAttributes) {
+        this.statusLineAttributes = statusLineAttributes;
+    }
+
     public String getProtocol() {
         return statusLineAttributes.get(PROTOCOL_VERSION_KEY);
     }

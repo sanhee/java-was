@@ -16,42 +16,55 @@ public class Attributes {
     }
 
     public static Attributes from(String headerText) {
-        Map<String, String> attributes = new LinkedHashMap<>();
+        Attributes attributes = new Attributes();
 
         String[] splittedHeaderTexts = headerText.split(Const.CRLF);
         for (String splittedHeaderText : splittedHeaderTexts) {
             HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
 
             if (pair != null) {
-                attributes.put(pair.getKey(), pair.getValue());
+                attributes.add(pair.getKey(), pair.getValue());
             }
         }
 
-        return from(attributes);
+        return attributes;
     }
 
     public Attributes add(String key, String value) {
-        attributes.put(key.toUpperCase(), value);
+        for (String k : attributes.keySet()) {
+            if (k.equalsIgnoreCase(key)) {
+                return this;
+            }
+        }
+
+        attributes.put(key, value);
         return this;
     }
 
     public Attributes addAll(Map<String, String> attributes) {
-        Map<String, String> upperAttributes = new LinkedHashMap<>();
-
         for (String key : attributes.keySet()) {
-            upperAttributes.put(key.toUpperCase(), attributes.get(key));
+            add(key, attributes.get(key));
         }
 
-        this.attributes.putAll(upperAttributes);
         return this;
     }
 
     public String get(String key) {
-        return attributes.get(key.toUpperCase());
+        for (String k : attributes.keySet()) {
+            if (k.equalsIgnoreCase(key)) {
+                return attributes.get(k);
+            }
+        }
+        return null;
     }
 
     public String getOrDefault(String key, String defaultValue) {
-        return attributes.getOrDefault(key.toUpperCase(), defaultValue);
+        for (String k : attributes.keySet()) {
+            if (k.equalsIgnoreCase(key)) {
+                return attributes.get(k);
+            }
+        }
+        return defaultValue;
     }
 
     public String toHeaderText() {
