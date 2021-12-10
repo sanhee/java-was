@@ -30,37 +30,37 @@ public class Attributes {
         return attributes;
     }
 
-    public Attributes add(String key, String value) {
-        for (String k : attributes.keySet()) {
-            if (k.equalsIgnoreCase(key)) {
+    public Attributes add(String targetKey, String value) {
+        for (String currentKey : attributes.keySet()) {
+            if (currentKey.equalsIgnoreCase(targetKey)) {
                 return this;
             }
         }
 
-        attributes.put(key, value);
+        attributes.put(targetKey, value);
         return this;
     }
 
     public Attributes addAll(Map<String, String> attributes) {
-        for (String key : attributes.keySet()) {
-            add(key, attributes.get(key));
+        for (String currentKey : attributes.keySet()) {
+            add(currentKey, attributes.get(currentKey));
         }
 
         return this;
     }
 
-    public String get(String key) {
-        for (String k : attributes.keySet()) {
-            if (k.equalsIgnoreCase(key)) {
-                return attributes.get(k);
+    public String get(String targetKey) {
+        for (String currentKey : attributes.keySet()) {
+            if (currentKey.equalsIgnoreCase(targetKey)) {
+                return attributes.get(currentKey);
             }
         }
         throw new IllegalArgumentException("일치하는 키가 없습니다.");
     }
 
-    public String getOrDefault(String key, String defaultValue) {
+    public String getOrDefault(String targetKey, String defaultValue) {
         try {
-            return get(key);
+            return get(targetKey);
         } catch (IllegalArgumentException e) {
             return defaultValue;
         }
