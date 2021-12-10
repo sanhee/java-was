@@ -4,12 +4,12 @@ import webserver.http.attribute.Attributes;
 
 import java.util.Map;
 
-public abstract class StatusLine {
+public abstract class StartLine {
     protected static final String PROTOCOL_VERSION_KEY = "protocolVersion";
 
     private Attributes statusLineAttributes;
 
-    public StatusLine(Map<String, String> statusLineAttributes) {
+    public StartLine(Map<String, String> statusLineAttributes) {
         this.statusLineAttributes = Attributes.from(statusLineAttributes);
     }
 

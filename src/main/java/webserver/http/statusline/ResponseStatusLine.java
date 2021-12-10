@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-public class ResponseStatusLine extends StatusLine {
+public class ResponseStatusLine extends StartLine {
     private static final String STATUS_CODE_KEY = "statusCode";
     private static final String STATUS_TEXT_KEY = "statusText";
 

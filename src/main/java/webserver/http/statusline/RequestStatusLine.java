@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-public class RequestStatusLine extends StatusLine {
+public class RequestStatusLine extends StartLine {
 
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
