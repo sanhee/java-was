@@ -24,12 +24,12 @@ public class RequestStatusLine extends StartLine {
     }
 
     public String getMethod() {
-        return getStatusLineAttributeBy(METHOD_KEY);
+        return getAttributeBy(METHOD_KEY);
     }
 
     private URI getUri() {
         try {
-            return new URI(getStatusLineAttributeBy(PATH_KEY));
+            return new URI(getAttributeBy(PATH_KEY));
         } catch (URISyntaxException e) {
             throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + getPath(), e);
         }

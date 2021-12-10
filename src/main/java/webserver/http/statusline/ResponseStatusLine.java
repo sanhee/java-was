@@ -24,11 +24,11 @@ public class ResponseStatusLine extends StartLine {
     }
 
     public String getStatusCode() {
-        return getStatusLineAttributeBy(STATUS_CODE_KEY);
+        return getAttributeBy(STATUS_CODE_KEY);
     }
 
     public String getStatusText() {
-        return getStatusLineAttributeBy(STATUS_TEXT_KEY);
+        return getAttributeBy(STATUS_TEXT_KEY);
     }
 
     @Override

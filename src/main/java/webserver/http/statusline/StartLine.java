@@ -7,17 +7,17 @@ import java.util.Map;
 public abstract class StartLine {
     protected static final String PROTOCOL_VERSION_KEY = "protocolVersion";
 
-    private Attributes statusLineAttributes;
+    private Attributes attributes;
 
-    public StartLine(Map<String, String> statusLineAttributes) {
-        this.statusLineAttributes = Attributes.from(statusLineAttributes);
+    public StartLine(Map<String, String> attributes) {
+        this.attributes = Attributes.from(attributes);
     }
 
     public String getProtocol() {
-        return statusLineAttributes.get(PROTOCOL_VERSION_KEY);
+        return attributes.get(PROTOCOL_VERSION_KEY);
     }
 
-    protected String getStatusLineAttributeBy(String key) {
-        return statusLineAttributes.get(key);
+    protected String getAttributeBy(String key) {
+        return attributes.get(key);
     }
 }
