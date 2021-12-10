@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -81,11 +82,25 @@ class AttributesTest {
         assertThat(attributes.get("key")).isEqualTo("value");
     }
 
+    @Test
+    @DisplayName("존재하지 않는 키를 조회하면 예외발생")
+    void getValueWithEmptyKey() {
+        Attributes attributes = new Attributes();
+        assertThatIllegalArgumentException().isThrownBy(() -> attributes.get("emptyKey"));
+    }
+
     @ParameterizedTest
     @MethodSource("getOrDefault")
     void getOrDefault(Attributes attributes, String defaultValue, String key, String expectedValue) {
         String actualValue = attributes.getOrDefault(key, defaultValue);
         assertThat(actualValue).isEqualTo(expectedValue);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 키를 조회하면 주어진 기본값으로 대체")
+    void getDefaultValueWithEmptyKey() {
+        Attributes attributes = new Attributes();
+        assertThat(attributes.getOrDefault("emptyKey", "happy")).isEqualTo("happy");
     }
 
     static Stream<Arguments> getOrDefault() {

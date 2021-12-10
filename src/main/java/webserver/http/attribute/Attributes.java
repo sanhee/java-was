@@ -55,16 +55,15 @@ public class Attributes {
                 return attributes.get(k);
             }
         }
-        return null;
+        throw new IllegalArgumentException("일치하는 키가 없습니다.");
     }
 
     public String getOrDefault(String key, String defaultValue) {
-        for (String k : attributes.keySet()) {
-            if (k.equalsIgnoreCase(key)) {
-                return attributes.get(k);
-            }
+        try {
+            return get(key);
+        } catch (IllegalArgumentException e) {
+            return defaultValue;
         }
-        return defaultValue;
     }
 
     public String toHeaderText() {
