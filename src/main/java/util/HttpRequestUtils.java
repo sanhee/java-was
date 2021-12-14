@@ -54,7 +54,7 @@ public class HttpRequestUtils {
         return getKeyValue(header, ": ");
     }
 
-    public static List<String> parseStatusLine(String statusLine) {
+    public static List<String> parseStartLine(String statusLine) {
         return Arrays.stream(statusLine.split(" "))
                 .collect(Collectors.toList());
     }
