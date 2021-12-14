@@ -110,15 +110,15 @@ class RequestHeaderTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getStatusLineAttributes")
-    void getStatusLineAttributes(String headerText, RequestLine expectedRequestLine) {
+    @MethodSource("getRequestLineAttributes")
+    void getRequestLineAttributes(String headerText, RequestLine expectedRequestLine) {
         assertThat(RequestHeader.from(headerText))
-                .extracting("statusLine")
+                .extracting("requestLine")
                 .usingRecursiveFieldByFieldElementComparator()
                 .contains(expectedRequestLine);
     }
 
-    static Stream<Arguments> getStatusLineAttributes() {
+    static Stream<Arguments> getRequestLineAttributes() {
         return Stream.of(
                 Arguments.of("GET / HTTP/1.1" + Const.CRLF +
                                 "Host: localhost:8080" + Const.CRLF +
