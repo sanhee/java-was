@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import webserver.Const;
 import webserver.http.attribute.Attributes;
-import webserver.http.startline.ResponseStatusLine;
+import webserver.http.startline.StatusLine;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -42,11 +42,11 @@ class ResponseHeaderTest {
 
     @ParameterizedTest
     @MethodSource("getStatusLineAttributes")
-    void getStatusLineAttributes(String headerText, ResponseStatusLine expectedResponseStatusLine) {
+    void getStatusLineAttributes(String headerText, StatusLine expectedStatusLine) {
         assertThat(ResponseHeader.from(headerText))
                 .extracting("statusLine")
                 .usingRecursiveFieldByFieldElementComparator()
-                .contains(expectedResponseStatusLine);
+                .contains(expectedStatusLine);
     }
 
     static Stream<Arguments> getStatusLineAttributes() {
@@ -56,7 +56,7 @@ class ResponseHeaderTest {
                                 "Content-Type: text/html;charset=utf-8" + Const.CRLF +
                                 "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
                                 Const.CRLF,
-                        new ResponseStatusLine(
+                        new StatusLine(
                                 new HashMap() {{
                                     put("protocolVersion", "HTTP/1.1");
                                     put("statusText", "OK");
