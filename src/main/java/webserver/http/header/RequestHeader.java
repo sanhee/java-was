@@ -18,7 +18,7 @@ public class RequestHeader extends Header {
     }
 
     public static RequestHeader from(String headerText) {
-        return RequestHeader.of(parseStatusLine(headerText), Attributes.from(headerText));
+        return RequestHeader.of(parseStartLine(headerText), Attributes.from(headerText));
     }
 
     public String getPath() {

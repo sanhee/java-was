@@ -19,7 +19,7 @@ public class ResponseHeader extends Header {
     }
 
     public static ResponseHeader from(String headerText) {
-        return ResponseHeader.of(parseStatusLine(headerText), Attributes.from(headerText));
+        return ResponseHeader.of(parseStartLine(headerText), Attributes.from(headerText));
     }
 
     @Override
