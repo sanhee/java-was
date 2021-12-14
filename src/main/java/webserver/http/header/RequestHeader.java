@@ -6,11 +6,11 @@ import webserver.http.startline.RequestLine;
 import java.util.List;
 
 public class RequestHeader extends Header {
-    private RequestLine statusLine;
+    private RequestLine requestLine;
 
-    protected RequestHeader(RequestLine statusLine, Attributes attributes) {
+    protected RequestHeader(RequestLine requestLine, Attributes attributes) {
         super(attributes);
-        this.statusLine = statusLine;
+        this.requestLine = requestLine;
     }
 
     public static RequestHeader of(List<String> statusLine, Attributes attributes) {
@@ -22,19 +22,19 @@ public class RequestHeader extends Header {
     }
 
     public String getPath() {
-        return statusLine.getPath();
+        return requestLine.getPath();
     }
 
     public String getMethod() {
-        return statusLine.getMethod();
+        return requestLine.getMethod();
     }
 
     @Override
     protected String getStartLine() {
-        return statusLine.toString();
+        return requestLine.toString();
     }
 
     public String getQueryString() {
-        return statusLine.getQueryString();
+        return requestLine.getQueryString();
     }
 }
