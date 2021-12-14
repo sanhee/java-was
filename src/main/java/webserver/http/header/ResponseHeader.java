@@ -1,7 +1,7 @@
 package webserver.http.header;
 
 import webserver.http.attribute.Attributes;
-import webserver.http.statusline.ResponseStatusLine;
+import webserver.http.startline.ResponseStatusLine;
 
 import java.util.List;
 

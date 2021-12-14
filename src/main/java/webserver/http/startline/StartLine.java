@@ -1,4 +1,4 @@
-package webserver.http.statusline;
+package webserver.http.startline;
 
 import webserver.http.attribute.Attributes;
 

@@ -1,4 +1,4 @@
-package webserver.http.statusline;
+package webserver.http.startline;
 
 import java.net.URI;
 import java.net.URISyntaxException;

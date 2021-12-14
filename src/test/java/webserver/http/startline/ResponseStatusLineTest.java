@@ -1,4 +1,4 @@
-package webserver.http.statusline;
+package webserver.http.startline;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import webserver.Const;
 import webserver.http.attribute.Attributes;
-import webserver.http.statusline.ResponseStatusLine;
+import webserver.http.startline.ResponseStatusLine;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
