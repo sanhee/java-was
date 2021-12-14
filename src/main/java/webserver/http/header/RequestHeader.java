@@ -1,20 +1,20 @@
 package webserver.http.header;
 
 import webserver.http.attribute.Attributes;
-import webserver.http.startline.RequestStatusLine;
+import webserver.http.startline.RequestLine;
 
 import java.util.List;
 
 public class RequestHeader extends Header {
-    private RequestStatusLine statusLine;
+    private RequestLine statusLine;
 
-    protected RequestHeader(RequestStatusLine statusLine, Attributes attributes) {
+    protected RequestHeader(RequestLine statusLine, Attributes attributes) {
         super(attributes);
         this.statusLine = statusLine;
     }
 
     public static RequestHeader of(List<String> statusLine, Attributes attributes) {
-        return new RequestHeader(RequestStatusLine.from(statusLine), attributes);
+        return new RequestHeader(RequestLine.from(statusLine), attributes);
     }
 
     public static RequestHeader from(String headerText) {

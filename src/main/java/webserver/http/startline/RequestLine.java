@@ -4,23 +4,23 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-public class RequestStatusLine extends StartLine {
+public class RequestLine extends StartLine {
 
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
 
-    public RequestStatusLine(Map<String, String> statusLineAttributes) {
+    public RequestLine(Map<String, String> statusLineAttributes) {
         super(statusLineAttributes);
     }
 
-    public static RequestStatusLine from(List<String> statusLine) {
+    public static RequestLine from(List<String> statusLine) {
         Map<String, String> statusLineAttributes = new HashMap<>();
 
         statusLineAttributes.put(METHOD_KEY, statusLine.get(0));
         statusLineAttributes.put(PATH_KEY, statusLine.get(1));
         statusLineAttributes.put(PROTOCOL_VERSION_KEY, statusLine.get(2));
 
-        return new RequestStatusLine(statusLineAttributes);
+        return new RequestLine(statusLineAttributes);
     }
 
     public String getMethod() {
