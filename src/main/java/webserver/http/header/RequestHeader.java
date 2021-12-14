@@ -30,7 +30,7 @@ public class RequestHeader extends Header {
     }
 
     @Override
-    protected String getStatusLine() {
+    protected String getStartLine() {
         return statusLine.toString();
     }
 
