@@ -1,4 +1,4 @@
-package webserver.http.statusline;
+package webserver.http.startline;
 
 import webserver.http.attribute.Attributes;
 
@@ -8,23 +8,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class RequestStatusLine extends StartLine {
+public class RequestLine extends StartLine {
 
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
 
-    public RequestStatusLine(Attributes statusLineAttributes) {
+    public RequestLine(Attributes statusLineAttributes) {
         super(statusLineAttributes);
     }
 
-    public static RequestStatusLine from(List<String> statusLine) {
+    public static RequestLine from(List<String> statusLine) {
         Attributes statusLineAttributes = new Attributes();
 
         statusLineAttributes.add(METHOD_KEY, statusLine.get(0));
         statusLineAttributes.add(PATH_KEY, statusLine.get(1));
         statusLineAttributes.add(PROTOCOL_VERSION_KEY, statusLine.get(2));
 
-        return new RequestStatusLine(statusLineAttributes);
+        return new RequestLine(statusLineAttributes);
     }
 
     public String getMethod() {

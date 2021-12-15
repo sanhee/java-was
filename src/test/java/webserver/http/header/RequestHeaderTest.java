@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import webserver.Const;
 import webserver.http.attribute.Attributes;
-import webserver.http.statusline.RequestStatusLine;
+import webserver.http.startline.RequestLine;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -110,16 +110,15 @@ class RequestHeaderTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getStatusLineAttributes")
-    void getStatusLineAttributes(String headerText, RequestStatusLine expectedRequestStatusLine) {
+    @MethodSource("getRequestLineAttributes")
+    void getRequestLineAttributes(String headerText, RequestLine expectedRequestLine) {
         assertThat(RequestHeader.from(headerText))
-                .extracting("statusLine")
+                .extracting("requestLine")
                 .usingRecursiveFieldByFieldElementComparator()
-                .contains(expectedRequestStatusLine);
-
+                .contains(expectedRequestLine);
     }
 
-    static Stream<Arguments> getStatusLineAttributes() {
+    static Stream<Arguments> getRequestLineAttributes() {
         return Stream.of(
                 Arguments.of("GET / HTTP/1.1" + Const.CRLF +
                                 "Host: localhost:8080" + Const.CRLF +
@@ -138,7 +137,7 @@ class RequestHeaderTest {
                                 "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7" + Const.CRLF +
                                 "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
                                 Const.CRLF,
-                        new RequestStatusLine(
+                        new RequestLine(
                                 Attributes.from(new HashMap<String, String>() {{
                                     put("method", "GET");
                                     put("path", "/");
@@ -204,7 +203,7 @@ class RequestHeaderTest {
 
     @ParameterizedTest
     @MethodSource("getPath")
-    void getPath(String desc, RequestStatusLine statusLine, String expectedPath) {
+    void getPath(String desc, RequestLine statusLine, String expectedPath) {
         RequestHeader requestHeader = new RequestHeader(statusLine, Attributes.from(new HashMap<>()));
 
         String actualPath = requestHeader.getPath();
@@ -217,7 +216,7 @@ class RequestHeaderTest {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 GET 메세지",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new Attributes() {{
                                     add("path", "/user/create");
                                     add("method", "GET");
@@ -228,7 +227,7 @@ class RequestHeaderTest {
                 ),
                 Arguments.of(
                         "쿼리스트링이 포함된 GET 메세지 path를 출력할때도 쿼리스트링이 포함되지 않아야 함",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new Attributes() {{
                                     add("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
                                     add("method", "GET");

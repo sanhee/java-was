@@ -1,4 +1,4 @@
-package webserver.http.statusline;
+package webserver.http.startline;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,12 +10,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ResponseStatusLineTest {
+class StatusLineTest {
 
     @ParameterizedTest
     @MethodSource("getStatusCode")
-    void getStatusCode(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusCode) {
-        assertThat(responseStatusLineAttributes.getStatusCode())
+    void getStatusCode(String desc, StatusLine statusLineAttributes, String expectedStatusCode) {
+        assertThat(statusLineAttributes.getStatusCode())
                 .as("status line에서 status code 가져오기 : %s", desc)
                 .isEqualTo(expectedStatusCode);
     }
@@ -24,7 +24,7 @@ class ResponseStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "200 OK",
-                        new ResponseStatusLine(
+                        new StatusLine(
                                 Attributes.from(new HashMap<String, String>() {{
                                     put("protocolVersion", "HTTP/1.1");
                                     put("statusCode", "200");
@@ -38,8 +38,8 @@ class ResponseStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("getStatusText")
-    void getStatusText(String desc, ResponseStatusLine responseStatusLineAttributes, String expectedStatusText) {
-        assertThat(responseStatusLineAttributes.getStatusText())
+    void getStatusText(String desc, StatusLine statusLineAttributes, String expectedStatusText) {
+        assertThat(statusLineAttributes.getStatusText())
                 .as("status line에서 status text 가져오기 : %s", desc)
                 .isEqualTo(expectedStatusText);
     }
@@ -48,7 +48,7 @@ class ResponseStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "200 OK",
-                        new ResponseStatusLine(
+                        new StatusLine(
                                 Attributes.from(new HashMap<String, String>() {{
                                     put("protocolVersion", "HTTP/1.1");
                                     put("statusCode", "200");
@@ -62,8 +62,8 @@ class ResponseStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("getProtocol")
-    void getProtocol(String desc, ResponseStatusLine responseStatusLine, String expectedMethod) {
-        assertThat(responseStatusLine.getProtocol())
+    void getProtocol(String desc, StatusLine statusLine, String expectedMethod) {
+        assertThat(statusLine.getProtocol())
                 .as("status line에서 protocol 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
@@ -72,7 +72,7 @@ class ResponseStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1",
-                        new ResponseStatusLine(
+                        new StatusLine(
                                 Attributes.from(new HashMap<String, String>() {{
                                     put("protocolVersion", "HTTP/1.1");
                                     put("statusCode", "200");

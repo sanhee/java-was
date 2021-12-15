@@ -137,7 +137,7 @@ class HttpRequestUtilsTest {
     @ParameterizedTest
     @MethodSource
     void parseStatusLine(String statusLine, List<String> expectedParsedStatusLine) {
-        assertThat(HttpRequestUtils.parseStatusLine(statusLine)).isEqualTo(expectedParsedStatusLine);
+        assertThat(HttpRequestUtils.parseStartLine(statusLine)).isEqualTo(expectedParsedStatusLine);
     }
 
     static Stream<Arguments> parseStatusLine() {

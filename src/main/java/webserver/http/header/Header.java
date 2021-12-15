@@ -14,9 +14,9 @@ public abstract class Header {
         this.attributes = attributes;
     }
 
-    protected static List<String> parseStatusLine(String headerText) {
+    protected static List<String> parseStartLine(String headerText) {
         String[] splittedHeaderTexts = headerText.split(Const.CRLF);
-        return HttpRequestUtils.parseStatusLine(splittedHeaderTexts[0]);
+        return HttpRequestUtils.parseStartLine(splittedHeaderTexts[0]);
     }
 
     public Attributes getAttributes() {
@@ -26,7 +26,7 @@ public abstract class Header {
     public byte[] getBytes() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getStatusLine()).append(Const.CRLF);
+        sb.append(getStartLine()).append(Const.CRLF);
 
         String attributesString = attributes.toHeaderText();
 
@@ -37,5 +37,5 @@ public abstract class Header {
         return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 
-    protected abstract String getStatusLine();
+    protected abstract String getStartLine();
 }
