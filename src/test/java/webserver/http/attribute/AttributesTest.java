@@ -13,8 +13,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AttributesTest {
 
@@ -43,22 +41,42 @@ class AttributesTest {
         assertThat(actualAttributes).isEqualTo(expectedAttributes);
     }
 
-    @Test
+
+    @ParameterizedTest
     @DisplayName("add 테스트: key의 대소문자 관계 없이 Attributes를 꺼내올 수 있음")
-    void add() {
+    @MethodSource("add")
+    void add(String expectedValue, String actualValue) {
+        assertThat(actualValue).isEqualTo(expectedValue);
+    }
+
+    static Stream<Arguments> add() {
         Attributes attributes = new Attributes();
         attributes.add("key", "value");
 
-        assertAll(
-                () -> assertEquals("value", attributes.get("KEY")),
-                () -> assertEquals("value", attributes.get("key")),
-                () -> assertEquals("value", attributes.get("kEy"))
+        return Stream.of(
+                Arguments.of(
+                        "value",
+                        attributes.get("KEY")
+                ),
+                Arguments.of(
+                        "value",
+                        attributes.get("key")
+                ),
+                Arguments.of(
+                        "value",
+                        attributes.get("kEy")
+                )
         );
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("addAll 테스트: key의 대소문자 관계 없이 Attributes를 꺼내올 수 있음")
-    void addAll() {
+    @MethodSource("addAll")
+    void addAll(String expectedValue, String actualValue) {
+        assertThat(actualValue).isEqualTo(expectedValue);
+    }
+
+    static Stream<Arguments> addAll() {
         Attributes attributes = new Attributes();
         Map<String, String> attributeMap = new LinkedHashMap<>();
         attributeMap.put("key", "value");
@@ -67,10 +85,19 @@ class AttributesTest {
         Attributes expectedAttributes = new Attributes();
         expectedAttributes.add("key", "value");
 
-        assertAll(
-                () -> assertEquals(expectedAttributes.get("key"), attributes.get("KEY")),
-                () -> assertEquals(expectedAttributes.get("KEY"), attributes.get("kEY")),
-                () -> assertEquals(expectedAttributes.get("kEy"), attributes.get("key"))
+        return Stream.of(
+                Arguments.of(
+                        expectedAttributes.get("key"),
+                        attributes.get("KEY")
+                ),
+                Arguments.of(
+                        expectedAttributes.get("KEY"),
+                        attributes.get("kEY")
+                ),
+                Arguments.of(
+                        expectedAttributes.get("kEy"),
+                        attributes.get("kEy")
+                )
         );
     }
 
