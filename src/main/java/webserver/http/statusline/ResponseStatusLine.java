@@ -1,24 +1,24 @@
 package webserver.http.statusline;
 
-import java.util.HashMap;
+import webserver.http.attribute.Attributes;
+
 import java.util.List;
-import java.util.Map;
 import java.util.StringJoiner;
 
 public class ResponseStatusLine extends StartLine {
     private static final String STATUS_CODE_KEY = "statusCode";
     private static final String STATUS_TEXT_KEY = "statusText";
 
-    public ResponseStatusLine(Map<String, String> statusLineAttributes) {
+    public ResponseStatusLine(Attributes statusLineAttributes) {
         super(statusLineAttributes);
     }
 
     public static ResponseStatusLine from(List<String> statusLine) {
-        Map<String, String> statusLineAttributes = new HashMap<>();
+        Attributes statusLineAttributes = new Attributes();
 
-        statusLineAttributes.put(PROTOCOL_VERSION_KEY, statusLine.get(0));
-        statusLineAttributes.put(STATUS_CODE_KEY, statusLine.get(1));
-        statusLineAttributes.put(STATUS_TEXT_KEY, statusLine.get(2));
+        statusLineAttributes.add(PROTOCOL_VERSION_KEY, statusLine.get(0));
+        statusLineAttributes.add(STATUS_CODE_KEY, statusLine.get(1));
+        statusLineAttributes.add(STATUS_TEXT_KEY, statusLine.get(2));
 
         return new ResponseStatusLine(statusLineAttributes);
     }
