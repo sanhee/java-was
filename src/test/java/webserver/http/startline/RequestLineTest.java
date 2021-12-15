@@ -1,4 +1,4 @@
-package webserver.http.statusline;
+package webserver.http.startline;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestStatusLineTest {
+class RequestLineTest {
 
     @ParameterizedTest
     @MethodSource("getMethod")
-    void getMethod(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
-        assertThat(requestStatusLine.getMethod())
+    void getMethod(String desc, RequestLine requestLine, String expectedMethod) {
+        assertThat(requestLine.getMethod())
                 .as("status line에서 method 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
@@ -23,7 +23,7 @@ class RequestStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "GET 메소드",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
@@ -37,8 +37,8 @@ class RequestStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("getPath")
-    void getPath(String desc, RequestStatusLine requestStatusLine, String expectedPath) {
-        assertThat(requestStatusLine.getPath())
+    void getPath(String desc, RequestLine requestLine, String expectedPath) {
+        assertThat(requestLine.getPath())
                 .as("status line에서 path 가져오기 : %s", desc)
                 .isEqualTo(expectedPath);
     }
@@ -47,7 +47,7 @@ class RequestStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 path",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
@@ -57,7 +57,7 @@ class RequestStatusLineTest {
                         "/user/create"
                 ), Arguments.of(
                         "쿼리스트링이 있는 path",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
                                     put("method", "GET");
@@ -71,8 +71,8 @@ class RequestStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("getProtocol")
-    void getProtocol(String desc, RequestStatusLine requestStatusLine, String expectedMethod) {
-        assertThat(requestStatusLine.getProtocol())
+    void getProtocol(String desc, RequestLine requestLine, String expectedMethod) {
+        assertThat(requestLine.getProtocol())
                 .as("status line에서 protocol 가져오기 : %s", desc)
                 .isEqualTo(expectedMethod);
     }
@@ -81,7 +81,7 @@ class RequestStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "HTTP/1.1",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
@@ -95,8 +95,8 @@ class RequestStatusLineTest {
 
     @ParameterizedTest
     @MethodSource("getQueryString")
-    void getQueryString(String desc, RequestStatusLine requestStatusLine, String expectedQueryString) {
-        assertThat(requestStatusLine.getQueryString())
+    void getQueryString(String desc, RequestLine requestLine, String expectedQueryString) {
+        assertThat(requestLine.getQueryString())
                 .as("status line에서 쿼리스트링 가져오기 : %s", desc)
                 .isEqualTo(expectedQueryString);
     }
@@ -105,7 +105,7 @@ class RequestStatusLineTest {
         return Stream.of(
                 Arguments.of(
                         "쿼리스트링이 없는 path",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create");
                                     put("method", "GET");
@@ -115,7 +115,7 @@ class RequestStatusLineTest {
                         ""
                 ), Arguments.of(
                         "쿼리스트링이 있는 path",
-                        new RequestStatusLine(
+                        new RequestLine(
                                 new HashMap<String, String>() {{
                                     put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
                                     put("method", "GET");

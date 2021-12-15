@@ -1,40 +1,40 @@
 package webserver.http.header;
 
 import webserver.http.attribute.Attributes;
-import webserver.http.statusline.RequestStatusLine;
+import webserver.http.startline.RequestLine;
 
 import java.util.List;
 
 public class RequestHeader extends Header {
-    private RequestStatusLine statusLine;
+    private RequestLine requestLine;
 
-    protected RequestHeader(RequestStatusLine statusLine, Attributes attributes) {
+    protected RequestHeader(RequestLine requestLine, Attributes attributes) {
         super(attributes);
-        this.statusLine = statusLine;
+        this.requestLine = requestLine;
     }
 
     public static RequestHeader of(List<String> statusLine, Attributes attributes) {
-        return new RequestHeader(RequestStatusLine.from(statusLine), attributes);
+        return new RequestHeader(RequestLine.from(statusLine), attributes);
     }
 
     public static RequestHeader from(String headerText) {
-        return RequestHeader.of(parseStatusLine(headerText), Attributes.from(headerText));
+        return RequestHeader.of(parseStartLine(headerText), Attributes.from(headerText));
     }
 
     public String getPath() {
-        return statusLine.getPath();
+        return requestLine.getPath();
     }
 
     public String getMethod() {
-        return statusLine.getMethod();
+        return requestLine.getMethod();
     }
 
     @Override
-    protected String getStatusLine() {
-        return statusLine.toString();
+    protected String getStartLine() {
+        return requestLine.toString();
     }
 
     public String getQueryString() {
-        return statusLine.getQueryString();
+        return requestLine.getQueryString();
     }
 }
