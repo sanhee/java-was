@@ -9,21 +9,13 @@ public class StatusLine extends StartLine {
     private static final String STATUS_CODE_KEY = "statusCode";
     private static final String STATUS_TEXT_KEY = "statusText";
 
-<<<<<<<< HEAD:src/main/java/webserver/http/statusline/ResponseStatusLine.java
-    public ResponseStatusLine(Attributes statusLineAttributes) {
-        super(statusLineAttributes);
-    }
 
-    public static ResponseStatusLine from(List<String> statusLine) {
-        Attributes statusLineAttributes = new Attributes();
-========
-    public StatusLine(Map<String, String> statusLineAttributes) {
+    public StatusLine(Attributes statusLineAttributes) {
         super(statusLineAttributes);
     }
 
     public static StatusLine from(List<String> statusLine) {
-        Map<String, String> statusLineAttributes = new HashMap<>();
->>>>>>>> freddie-noel:src/main/java/webserver/http/startline/StatusLine.java
+        Attributes statusLineAttributes = new Attributes();
 
         statusLineAttributes.add(PROTOCOL_VERSION_KEY, statusLine.get(0));
         statusLineAttributes.add(STATUS_CODE_KEY, statusLine.get(1));
