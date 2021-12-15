@@ -5,7 +5,6 @@ import webserver.http.attribute.Attributes;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -13,10 +12,6 @@ public class RequestStatusLine extends StatusLine {
 
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
-
-    public RequestStatusLine(Map<String, String> statusLineAttributes) {
-        super(statusLineAttributes);
-    }
 
     public RequestStatusLine(Attributes statusLineAttributes) {
         super(statusLineAttributes);

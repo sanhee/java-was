@@ -116,6 +116,7 @@ class RequestHeaderTest {
                 .extracting("statusLine")
                 .usingRecursiveFieldByFieldElementComparator()
                 .contains(expectedRequestStatusLine);
+
     }
 
     static Stream<Arguments> getStatusLineAttributes() {
@@ -138,11 +139,11 @@ class RequestHeaderTest {
                                 "Cookie: Idea-1c77831=5ced54c8-cabd-4355-ae5a-97b17f9d7443" + Const.CRLF +
                                 Const.CRLF,
                         new RequestStatusLine(
-                                new HashMap<String, String>() {{
+                                Attributes.from(new HashMap<String, String>() {{
                                     put("method", "GET");
                                     put("path", "/");
                                     put("protocolVersion", "HTTP/1.1");
-                                }}
+                                }})
                         )
                 )
         );
@@ -217,10 +218,10 @@ class RequestHeaderTest {
                 Arguments.of(
                         "쿼리스트링이 없는 GET 메세지",
                         new RequestStatusLine(
-                                new HashMap() {{
-                                    put("path", "/user/create");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
+                                new Attributes() {{
+                                    add("path", "/user/create");
+                                    add("method", "GET");
+                                    add("protocolVersion", "HTTP/1.1");
                                 }}
                         ),
                         "/user/create"
@@ -228,10 +229,10 @@ class RequestHeaderTest {
                 Arguments.of(
                         "쿼리스트링이 포함된 GET 메세지 path를 출력할때도 쿼리스트링이 포함되지 않아야 함",
                         new RequestStatusLine(
-                                new HashMap() {{
-                                    put("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
-                                    put("method", "GET");
-                                    put("protocolVersion", "HTTP/1.1");
+                                new Attributes() {{
+                                    add("path", "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
+                                    add("method", "GET");
+                                    add("protocolVersion", "HTTP/1.1");
                                 }}
                         ),
                         "/user/create"
