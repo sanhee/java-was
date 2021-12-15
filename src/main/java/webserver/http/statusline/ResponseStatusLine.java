@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-public class ResponseStatusLine extends StatusLine {
+public class ResponseStatusLine extends StartLine {
     private static final String STATUS_CODE_KEY = "statusCode";
     private static final String STATUS_TEXT_KEY = "statusText";
 
@@ -24,11 +24,11 @@ public class ResponseStatusLine extends StatusLine {
     }
 
     public String getStatusCode() {
-        return getStatusLineAttributeBy(STATUS_CODE_KEY);
+        return getAttributeBy(STATUS_CODE_KEY);
     }
 
     public String getStatusText() {
-        return getStatusLineAttributeBy(STATUS_TEXT_KEY);
+        return getAttributeBy(STATUS_TEXT_KEY);
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class RequestStatusLine extends StatusLine {
+public class RequestStatusLine extends StartLine {
 
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
@@ -28,12 +28,12 @@ public class RequestStatusLine extends StatusLine {
     }
 
     public String getMethod() {
-        return getStatusLineAttributeBy(METHOD_KEY);
+        return getAttributeBy(METHOD_KEY);
     }
 
     private URI getUri() {
         try {
-            return new URI(getStatusLineAttributeBy(PATH_KEY));
+            return new URI(getAttributeBy(PATH_KEY));
         } catch (URISyntaxException e) {
             throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + getPath(), e);
         }
