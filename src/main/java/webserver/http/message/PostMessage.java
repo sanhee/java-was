@@ -49,4 +49,9 @@ public class PostMessage implements RequestMessage {
     public String getPath() {
         return requestLine.getPath();
     }
+
+    @Override
+    public RequestLine getRequestLine() {
+        return requestLine;
+    }
 }

@@ -30,4 +30,6 @@ public interface RequestMessage {
     Map<String, String> getParameters();
 
     String getPath();
+
+    RequestLine getRequestLine();
 }

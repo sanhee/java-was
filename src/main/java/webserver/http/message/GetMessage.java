@@ -35,7 +35,8 @@ public class GetMessage implements RequestMessage {
         return requestLine.getPath();
     }
 
-    public RequestLine getStartLine() {
+    @Override
+    public RequestLine getRequestLine() {
         return requestLine;
     }
 

@@ -6,7 +6,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import webserver.Const;
 import webserver.http.Body;
-import webserver.http.attribute.Attributes;
 import webserver.http.header.RequestHeader;
 import webserver.http.startline.RequestLine;
 
@@ -161,6 +160,44 @@ class PostMessageTest {
                             put("name", "박재성");
                             put("email", "javajigi@slipp.net");
                         }}
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getRequestLine")
+    void getRequestLine(PostMessage postMessage, RequestLine expectedRequestLine) {
+        Assertions.assertThat(postMessage)
+                .extracting("requestLine")
+                .usingRecursiveFieldByFieldElementComparator()
+                .contains(expectedRequestLine);
+    }
+
+    static Stream<Arguments> getRequestLine() {
+        return Stream.of(
+                Arguments.of(
+                        new PostMessage(
+                                RequestLine.from(Arrays.asList(
+                                        "POST",
+                                        "/user/create",
+                                        "HTTP/1.1"
+                                )),
+                                RequestHeader.from(
+                                        "POST /user/create HTTP/1.1" + Const.CRLF +
+                                                "Host: localhost:8080" + Const.CRLF +
+                                                "Connection: keep-alive" + Const.CRLF +
+                                                "Content-Length: 59" + Const.CRLF +
+                                                "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
+                                                "Accept: */*" + Const.CRLF),
+                                Body.from("userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net")
+                        ),
+                        new RequestLine(
+                                new HashMap<String, String>() {{
+                                    put("method", "POST");
+                                    put("path", "/user/create");
+                                    put("protocolVersion", "HTTP/1.1");
+                                }}
+                        )
                 )
         );
     }

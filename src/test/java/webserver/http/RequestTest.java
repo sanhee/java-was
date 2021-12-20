@@ -48,11 +48,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -78,11 +73,6 @@ class RequestTest {
                                         "HTTP/1.1"
                                 )),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "POST",
-                                                "/user/create",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -119,11 +109,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -145,11 +130,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -186,11 +166,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create.html",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -212,11 +187,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create.html/",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -238,11 +208,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create.html?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -264,11 +229,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create.html?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net/",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -290,11 +250,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -316,11 +271,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -342,11 +292,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");
@@ -368,11 +313,6 @@ class RequestTest {
                                         )
                                 ),
                                 RequestHeader.of(
-                                        Arrays.asList(
-                                                "GET",
-                                                "/user/create?userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
-                                                "HTTP/1.1"
-                                        ),
                                         Attributes.from(new HashMap() {{
                                             put("Host", "localhost:8080");
                                             put("Connection", "keep-alive");

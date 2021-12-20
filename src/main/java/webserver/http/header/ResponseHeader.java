@@ -1,8 +1,10 @@
 package webserver.http.header;
 
+import webserver.Const;
 import webserver.http.attribute.Attributes;
 import webserver.http.startline.StatusLine;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ResponseHeader extends Header {
@@ -22,8 +24,21 @@ public class ResponseHeader extends Header {
         return ResponseHeader.of(parseStartLine(headerText), Attributes.from(headerText));
     }
 
-    @Override
     protected String getStartLine() {
         return statusLine.toString();
+    }
+
+    public byte[] getBytes() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(getStartLine()).append(Const.CRLF);
+
+        String attributesString = getAttributes().toHeaderText();
+
+        sb.append(attributesString + (!attributesString.isEmpty() ? Const.CRLF : ""));
+
+        sb.append(Const.CRLF);
+
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 }

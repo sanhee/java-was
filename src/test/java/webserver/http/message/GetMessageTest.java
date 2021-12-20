@@ -1,5 +1,6 @@
 package webserver.http.message;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -155,6 +156,43 @@ class GetMessageTest {
                                 )
                         ),
                         "/user/create"
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getRequestLine")
+    void getRequestLine(GetMessage getMessage, RequestLine expectedRequestLine) {
+        Assertions.assertThat(getMessage)
+                .extracting("requestLine")
+                .usingRecursiveFieldByFieldElementComparator()
+                .contains(expectedRequestLine);
+    }
+
+    static Stream<Arguments> getRequestLine() {
+        return Stream.of(
+                Arguments.of(
+                        new GetMessage(
+                                RequestLine.from(Arrays.asList(
+                                        "GET",
+                                        "/",
+                                        "HTTP/1.1"
+                                )),
+                                RequestHeader.from(
+                                        "GET /user/create HTTP/1.1" + Const.CRLF +
+                                                "Host: localhost:8080" + Const.CRLF +
+                                                "Connection: keep-alive" + Const.CRLF +
+                                                "Content-Length: 59" + Const.CRLF +
+                                                "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
+                                                "Accept: */*" + Const.CRLF)
+                        ),
+                        new RequestLine(
+                                new HashMap<String, String>() {{
+                                    put("method", "GET");
+                                    put("path", "/");
+                                    put("protocolVersion", "HTTP/1.1");
+                                }}
+                        )
                 )
         );
     }
