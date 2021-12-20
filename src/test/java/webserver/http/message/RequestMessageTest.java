@@ -61,22 +61,26 @@ class RequestMessageTest {
         return Stream.of(
                 Arguments.of(
                         "POST /user/create HTTP/1.1" + Const.CRLF +
-                        "Host: localhost:8080" + Const.CRLF +
-                        "Connection: keep-alive" + Const.CRLF +
-                        "Content-Length: 59" + Const.CRLF +
-                        "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
-                        "Accept: */*" + Const.CRLF +
-                        "" + Const.CRLF +
-                        "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
-                        PostMessage.from(
-                                "POST /user/create HTTP/1.1" + Const.CRLF +
                                 "Host: localhost:8080" + Const.CRLF +
                                 "Connection: keep-alive" + Const.CRLF +
                                 "Content-Length: 59" + Const.CRLF +
                                 "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
                                 "Accept: */*" + Const.CRLF +
                                 "" + Const.CRLF +
-                                "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net"
+                                "userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net",
+                        new PostMessage(
+                                RequestLine.from(Arrays.asList(
+                                        "POST",
+                                        "/user/create",
+                                        "HTTP/1.1"
+                                )),
+                                RequestHeader.from("POST /user/create HTTP/1.1" + Const.CRLF +
+                                        "Host: localhost:8080" + Const.CRLF +
+                                        "Connection: keep-alive" + Const.CRLF +
+                                        "Content-Length: 59" + Const.CRLF +
+                                        "Content-Type: application/x-www-form-urlencoded" + Const.CRLF +
+                                        "Accept: */*"),
+                                Body.from("userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net")
                         )
                 )
         );

@@ -15,8 +15,9 @@ public interface RequestMessage {
         RequestLine requestLine = RequestLine.from(parseStartLine(splitMessage[0]));
         RequestHeader header = RequestHeader.from(splitMessage[0]);
 
-        if (header.getMethod().equalsIgnoreCase("post")) {
-            return PostMessage.from(message);
+        if (requestLine.getMethod().equalsIgnoreCase("post")) {
+            Body body = Body.from(splitMessage[1]);
+            return new PostMessage(requestLine, header, body);
         }
 
         return new GetMessage(requestLine, header);
