@@ -31,7 +31,7 @@ public class RequestLine extends StartLine {
         try {
             return new URI(getAttributeBy(PATH_KEY));
         } catch (URISyntaxException e) {
-            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + getPath(), e);
+            throw new IllegalStateException("Request의 Path가 올바르지 않음. path : " + getAttributeBy(PATH_KEY), e);
         }
     }
 
