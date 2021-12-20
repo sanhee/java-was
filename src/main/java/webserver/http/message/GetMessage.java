@@ -2,18 +2,17 @@ package webserver.http.message;
 
 import util.HttpRequestUtils;
 import webserver.http.header.RequestHeader;
+import webserver.http.startline.RequestLine;
 
 import java.util.Map;
 
 public class GetMessage implements RequestMessage {
+    private RequestLine requestLine;
     private RequestHeader header;
 
-    public GetMessage(RequestHeader header) {
+    public GetMessage(RequestLine requestLine, RequestHeader header) {
+        this.requestLine = requestLine;
         this.header = header;
-    }
-
-    public static GetMessage from(String getMessage) {
-        return new GetMessage(RequestHeader.from(getMessage));
     }
 
     @Override
@@ -23,11 +22,24 @@ public class GetMessage implements RequestMessage {
 
     @Override
     public String getMethod() {
-        return header.getMethod();
+        return requestLine.getMethod();
     }
 
     @Override
     public Map<String, String> getParameters() {
-        return HttpRequestUtils.parseQueryString(header.getQueryString());
+        return HttpRequestUtils.parseQueryString(getQueryString());
+    }
+
+    @Override
+    public String getPath() {
+        return requestLine.getPath();
+    }
+
+    public RequestLine getStartLine() {
+        return requestLine;
+    }
+
+    public String getQueryString() {
+        return requestLine.getQueryString();
     }
 }

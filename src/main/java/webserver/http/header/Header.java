@@ -14,7 +14,7 @@ public abstract class Header {
         this.attributes = attributes;
     }
 
-    protected static List<String> parseStartLine(String headerText) {
+    public static List<String> parseStartLine(String headerText) {
         String[] splittedHeaderTexts = headerText.split(Const.CRLF);
         return HttpRequestUtils.parseStartLine(splittedHeaderTexts[0]);
     }

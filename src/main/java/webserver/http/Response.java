@@ -19,6 +19,8 @@ public class Response {
 
     public void write(OutputStream outputStream) throws IOException {
         DataOutputStream dos = new DataOutputStream(outputStream);
+        // TODO: message.getBytes() 와 같이 수정 가능
+        // byte[] status = responseMessage.get
         byte[] header = responseMessage.getHeader().getBytes();
         byte[] body = responseMessage.getBody().getBytes();
 

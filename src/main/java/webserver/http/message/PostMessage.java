@@ -50,4 +50,9 @@ public class PostMessage implements RequestMessage {
             throw new IllegalStateException("인코딩 오류", e);
         }
     }
+
+    @Override
+    public String getPath() {
+        return header.getPath();
+    }
 }
