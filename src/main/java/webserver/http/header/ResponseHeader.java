@@ -31,8 +31,6 @@ public class ResponseHeader extends Header {
     public byte[] getBytes() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getStartLine()).append(Const.CRLF);
-
         String attributesString = getAttributes().toHeaderText();
 
         sb.append(attributesString + (!attributesString.isEmpty() ? Const.CRLF : ""));

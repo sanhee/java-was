@@ -28,12 +28,12 @@ class ResponseHeaderTest {
                 Arguments.of(
                         "HTTP/1.1 200 OK" + Const.CRLF +
                                 "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF,
                         Attributes.from(
                                 new LinkedHashMap<String, String>() {{
                                     put("Content-Type", "text/html;charset=utf-8");
-                                    put("Content-Length", String.valueOf("Hello World".getBytes().length));
+                                    put("Content-Length", String.valueOf("Hello World" .getBytes().length));
                                 }}
                         )
                 )
@@ -54,7 +54,7 @@ class ResponseHeaderTest {
                 Arguments.of(
                         "HTTP/1.1 200 OK" + Const.CRLF +
                                 "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF,
                         new StatusLine(
                                 new HashMap() {{
@@ -83,11 +83,10 @@ class ResponseHeaderTest {
                 Arguments.of(
                         "HTTP/1.1 200 OK" + Const.CRLF +
                                 "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF,
-                        ("HTTP/1.1 200 OK" + Const.CRLF +
-                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                        ("Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF).getBytes(StandardCharsets.UTF_8)
                 )
         );
