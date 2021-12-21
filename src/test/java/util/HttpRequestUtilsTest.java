@@ -4,6 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import util.HttpRequestUtils.Pair;
+import webserver.Const;
 
 import java.util.Arrays;
 import java.util.List;
@@ -145,6 +146,27 @@ class HttpRequestUtilsTest {
                 Arguments.of(
                         "GET /user/create HTTP/1.1",
                         Arrays.asList("GET", "/user/create", "HTTP/1.1")
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("extractStartLineFrom")
+    void extractStartLineFrom(String headerText, List<String> expectedParsedStatusLine) {
+        assertThat(HttpRequestUtils.extractStartLineFrom(headerText)).isEqualTo(expectedParsedStatusLine);
+    }
+
+    static Stream<Arguments> extractStartLineFrom() {
+        return Stream.of(
+                Arguments.of(
+                        "GET /user/create HTTP/1.1",
+                        Arrays.asList("GET", "/user/create", "HTTP/1.1")
+                ),
+                Arguments.of(
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length,
+                        Arrays.asList("HTTP/1.1", "200", "OK")
                 )
         );
     }

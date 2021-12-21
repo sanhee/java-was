@@ -2,6 +2,7 @@ package util;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
+import webserver.Const;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,11 @@ public class HttpRequestUtils {
     public static List<String> parseStartLine(String statusLine) {
         return Arrays.stream(statusLine.split(" "))
                 .collect(Collectors.toList());
+    }
+
+    public static List<String> extractStartLineFrom(String headerText) {
+        String[] splittedHeaderTexts = headerText.split(Const.CRLF);
+        return parseStartLine(splittedHeaderTexts[0]);
     }
 
     public static class Pair {

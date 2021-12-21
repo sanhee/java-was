@@ -7,12 +7,13 @@ import webserver.http.startline.RequestLine;
 
 import java.util.Map;
 
-import static webserver.http.header.Header.parseStartLine;
+import static util.HttpRequestUtils.extractStartLineFrom;
+
 
 public interface RequestMessage {
     static RequestMessage from(String message) {
         String[] splitMessage = message.split(Const.CRLF + Const.CRLF);
-        RequestLine requestLine = RequestLine.from(parseStartLine(splitMessage[0]));
+        RequestLine requestLine = RequestLine.from(extractStartLineFrom(splitMessage[0]));
         RequestHeader header = RequestHeader.from(splitMessage[0]);
 
         if (requestLine.getMethod().equalsIgnoreCase("post")) {

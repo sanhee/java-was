@@ -7,7 +7,7 @@ import webserver.http.startline.StatusLine;
 
 import java.util.StringJoiner;
 
-import static webserver.http.header.Header.parseStartLine;
+import static util.HttpRequestUtils.extractStartLineFrom;
 
 public class ResponseMessage {
 
@@ -23,7 +23,7 @@ public class ResponseMessage {
 
     public static ResponseMessage from(String responseMessage) {
         String[] splittedResponseMessage = responseMessage.split(Const.CRLF + Const.CRLF);
-        StatusLine statusLine = StatusLine.from(parseStartLine(splittedResponseMessage[0]));
+        StatusLine statusLine = StatusLine.from(extractStartLineFrom(splittedResponseMessage[0]));
 
         StringJoiner body = new StringJoiner(Const.CRLF + Const.CRLF);
 
