@@ -41,33 +41,6 @@ class ResponseHeaderTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getStatusLineAttributes")
-    void getStatusLineAttributes(String headerText, StatusLine expectedStatusLine) {
-        assertThat(ResponseHeader.from(headerText))
-                .extracting("statusLine")
-                .usingRecursiveFieldByFieldElementComparator()
-                .contains(expectedStatusLine);
-    }
-
-    static Stream<Arguments> getStatusLineAttributes() {
-        return Stream.of(
-                Arguments.of(
-                        "HTTP/1.1 200 OK" + Const.CRLF +
-                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
-                                Const.CRLF,
-                        new StatusLine(
-                                new HashMap() {{
-                                    put("protocolVersion", "HTTP/1.1");
-                                    put("statusText", "OK");
-                                    put("statusCode", "200");
-                                }}
-                        )
-                )
-        );
-    }
-
-    @ParameterizedTest
     @MethodSource("getBytes")
     void getBytes(String headerText, byte[] expectedHeaderByte) {
         byte[] headerByte = ResponseHeader.from(headerText).getBytes();

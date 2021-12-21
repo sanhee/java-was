@@ -1,5 +1,6 @@
 package webserver.http.message;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -7,7 +8,9 @@ import webserver.Const;
 import webserver.http.Body;
 import webserver.http.header.Header;
 import webserver.http.header.ResponseHeader;
+import webserver.http.startline.StatusLine;
 
+import java.util.HashMap;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -88,6 +91,33 @@ class ResponseMessageTest {
                         Body.from("Hello World" + Const.CRLF +
                                   Const.CRLF +
                                   "Bye World")
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getStatusLine")
+    void getStatusLine(String responseText, StatusLine expectedStatusLine) {
+        Assertions.assertThat(ResponseMessage.from(responseText))
+                .extracting("statusLine")
+                .usingRecursiveFieldByFieldElementComparator()
+                .contains(expectedStatusLine);
+    }
+
+    static Stream<Arguments> getStatusLine() {
+        return Stream.of(
+                Arguments.of(
+                        "HTTP/1.1 200 OK" + Const.CRLF +
+                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
+                                Const.CRLF,
+                        new StatusLine(
+                                new HashMap() {{
+                                    put("protocolVersion", "HTTP/1.1");
+                                    put("statusText", "OK");
+                                    put("statusCode", "200");
+                                }}
+                        )
                 )
         );
     }
