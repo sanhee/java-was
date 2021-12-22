@@ -1,24 +1,28 @@
 package webserver.http.startline;
 
+import webserver.http.attribute.Attributes;
+
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class RequestLine extends StartLine {
 
     private static final String METHOD_KEY = "method";
     private static final String PATH_KEY = "path";
 
-    public RequestLine(Map<String, String> statusLineAttributes) {
+    public RequestLine(Attributes statusLineAttributes) {
         super(statusLineAttributes);
     }
 
     public static RequestLine from(List<String> statusLine) {
-        Map<String, String> statusLineAttributes = new HashMap<>();
+        Attributes statusLineAttributes = new Attributes();
 
-        statusLineAttributes.put(METHOD_KEY, statusLine.get(0));
-        statusLineAttributes.put(PATH_KEY, statusLine.get(1));
-        statusLineAttributes.put(PROTOCOL_VERSION_KEY, statusLine.get(2));
+        statusLineAttributes.add(METHOD_KEY, statusLine.get(0));
+        statusLineAttributes.add(PATH_KEY, statusLine.get(1));
+        statusLineAttributes.add(PROTOCOL_VERSION_KEY, statusLine.get(2));
 
         return new RequestLine(statusLineAttributes);
     }

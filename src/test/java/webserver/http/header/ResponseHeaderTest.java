@@ -57,11 +57,11 @@ class ResponseHeaderTest {
                                 "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
                                 Const.CRLF,
                         new StatusLine(
-                                new HashMap() {{
+                                Attributes.from(new HashMap<String, String>() {{
                                     put("protocolVersion", "HTTP/1.1");
                                     put("statusText", "OK");
                                     put("statusCode", "200");
-                                }}
+                                }})
                         )
                 )
         );

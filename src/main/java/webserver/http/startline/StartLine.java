@@ -2,15 +2,13 @@ package webserver.http.startline;
 
 import webserver.http.attribute.Attributes;
 
-import java.util.Map;
-
 public abstract class StartLine {
     protected static final String PROTOCOL_VERSION_KEY = "protocolVersion";
 
     private Attributes attributes;
 
-    public StartLine(Map<String, String> attributes) {
-        this.attributes = Attributes.from(attributes);
+    public StartLine(Attributes attributes) {
+        this.attributes = attributes;
     }
 
     public String getProtocol() {

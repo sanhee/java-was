@@ -3,10 +3,7 @@ package webserver.http.attribute;
 import util.HttpRequestUtils;
 import webserver.Const;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class Attributes {
     private final Map<String, String> attributes = new LinkedHashMap<>();
@@ -16,36 +13,52 @@ public class Attributes {
     }
 
     public static Attributes from(String headerText) {
-        Map<String, String> attributes = new LinkedHashMap<>();
+        Attributes attributes = new Attributes();
 
         String[] splittedHeaderTexts = headerText.split(Const.CRLF);
         for (String splittedHeaderText : splittedHeaderTexts) {
             HttpRequestUtils.Pair pair = HttpRequestUtils.parseHeader(splittedHeaderText);
 
             if (pair != null) {
-                attributes.put(pair.getKey(), pair.getValue());
+                attributes.add(pair.getKey(), pair.getValue());
             }
         }
 
-        return from(attributes);
+        return attributes;
     }
 
-    public Attributes add(String key, String value) {
-        attributes.put(key, value);
+    public Attributes add(String targetKey, String value) {
+        for (String currentKey : attributes.keySet()) {
+            if (currentKey.equalsIgnoreCase(targetKey)) {
+                return this;
+            }
+        }
+
+        attributes.put(targetKey, value);
         return this;
     }
 
     public Attributes addAll(Map<String, String> attributes) {
-        this.attributes.putAll(attributes);
+        for (String currentKey : attributes.keySet()) {
+            add(currentKey, attributes.get(currentKey));
+        }
+
         return this;
     }
 
-    public String get(String key) {
-        return attributes.get(key);
+    public String get(String targetKey) {
+        return getOrDefault(targetKey, null);
     }
 
-    public String getOrDefault(String key, String defaultValue) {
-        return attributes.getOrDefault(key, defaultValue);
+    public String getOrDefault(String targetKey, String defaultValue) {
+
+        for (String currentKey : attributes.keySet()) {
+            if (currentKey.equalsIgnoreCase(targetKey)) {
+                return attributes.get(currentKey);
+            }
+        }
+
+        return defaultValue;
     }
 
     public String toHeaderText() {
@@ -68,6 +81,11 @@ public class Attributes {
     @Override
     public int hashCode() {
         return Objects.hash(attributes);
+    }
+
+
+    public int size(){
+        return attributes.size();
     }
 
 }
