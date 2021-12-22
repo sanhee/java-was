@@ -51,15 +51,14 @@ public class Attributes {
     }
 
     public String getOrDefault(String targetKey, String defaultValue) {
-        String findValue = null;
 
         for (String currentKey : attributes.keySet()) {
             if (currentKey.equalsIgnoreCase(targetKey)) {
-                findValue = attributes.get(currentKey);
+                return attributes.get(currentKey);
             }
         }
 
-        return findValue != null ? findValue : defaultValue;
+        return defaultValue;
     }
 
     public String toHeaderText() {
