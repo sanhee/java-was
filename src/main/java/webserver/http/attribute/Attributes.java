@@ -3,10 +3,7 @@ package webserver.http.attribute;
 import util.HttpRequestUtils;
 import webserver.Const;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class Attributes {
     private final Map<String, String> attributes = new LinkedHashMap<>();
@@ -50,20 +47,19 @@ public class Attributes {
     }
 
     public String get(String targetKey) {
-        for (String currentKey : attributes.keySet()) {
-            if (currentKey.equalsIgnoreCase(targetKey)) {
-                return attributes.get(currentKey);
-            }
-        }
-        throw new IllegalArgumentException("일치하는 키가 없습니다.");
+        return getOrDefault(targetKey, null);
     }
 
     public String getOrDefault(String targetKey, String defaultValue) {
-        try {
-            return get(targetKey);
-        } catch (IllegalArgumentException e) {
-            return defaultValue;
+        String findValue = null;
+
+        for (String currentKey : attributes.keySet()) {
+            if (currentKey.equalsIgnoreCase(targetKey)) {
+                findValue = attributes.get(currentKey);
+            }
         }
+
+        return findValue != null ? findValue : defaultValue;
     }
 
     public String toHeaderText() {

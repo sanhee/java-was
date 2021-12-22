@@ -110,10 +110,10 @@ class AttributesTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 키를 조회하면 예외발생")
+    @DisplayName("존재하지 않는 키를 조회하면 null")
     void getValueWithEmptyKey() {
         Attributes attributes = new Attributes();
-        assertThatIllegalArgumentException().isThrownBy(() -> attributes.get("emptyKey"));
+        assertThat(attributes.get("null")).isNull();
     }
 
     @ParameterizedTest
