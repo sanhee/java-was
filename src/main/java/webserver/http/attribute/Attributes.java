@@ -83,4 +83,9 @@ public class Attributes {
         return Objects.hash(attributes);
     }
 
+
+    public int size(){
+        return attributes.size();
+    }
+
 }

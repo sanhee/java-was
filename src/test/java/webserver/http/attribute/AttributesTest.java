@@ -1,5 +1,6 @@
 package webserver.http.attribute;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class AttributesTest {
 
@@ -154,6 +156,21 @@ class AttributesTest {
         attributes.add("key2", "value2");
 
         assertThat(attributes.toHeaderText()).isEqualTo("key1: value1\r\nkey2: value2");
+
+    }
+
+    @Test
+    @DisplayName("value가 null인 key")
+    void isNullWhenNullValue(){
+        Attributes attributes = new Attributes();
+        attributes.add("null", null);
+        attributes.add("null2", null);
+
+        assertAll(
+                ()-> assertThat(attributes.size()).isEqualTo(2),
+                ()-> assertThat(attributes.get("null")).isNull(),
+                ()-> assertThat(attributes.get("null2")).isNull()
+        );
 
     }
 }
