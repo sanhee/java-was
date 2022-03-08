@@ -1,9 +1,9 @@
 package webserver.http.message;
 
 import util.HttpRequestUtils;
-import webserver.Const;
 import webserver.http.Body;
 import webserver.http.header.RequestHeader;
+import webserver.http.startline.RequestLine;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -11,20 +11,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class PostMessage implements RequestMessage {
+    private RequestLine requestLine;
     private RequestHeader header;
     private Body body;
 
-    public PostMessage(RequestHeader header, Body body) {
+    public PostMessage(RequestLine requestLine, RequestHeader header, Body body) {
+        this.requestLine = requestLine;
         this.header = header;
         this.body = body;
-    }
-
-    public static PostMessage from(String postMessage) {
-        String[] splittedPostMessage = postMessage.split(Const.CRLF + Const.CRLF);
-
-        Body body = Body.from(splittedPostMessage.length != 1 ? splittedPostMessage[1] : "");
-
-        return new PostMessage(RequestHeader.from(splittedPostMessage[0]), body);
     }
 
     @Override
@@ -38,7 +32,7 @@ public class PostMessage implements RequestMessage {
 
     @Override
     public String getMethod() {
-        return header.getMethod();
+        return requestLine.getMethod();
     }
 
     @Override
@@ -49,5 +43,15 @@ public class PostMessage implements RequestMessage {
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("인코딩 오류", e);
         }
+    }
+
+    @Override
+    public String getPath() {
+        return requestLine.getPath();
+    }
+
+    @Override
+    public RequestLine getRequestLine() {
+        return requestLine;
     }
 }

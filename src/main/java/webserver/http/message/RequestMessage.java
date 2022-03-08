@@ -1,19 +1,27 @@
 package webserver.http.message;
 
 import webserver.Const;
+import webserver.http.Body;
 import webserver.http.header.RequestHeader;
+import webserver.http.startline.RequestLine;
 
 import java.util.Map;
 
+import static util.HttpRequestUtils.extractStartLineFrom;
+
+
 public interface RequestMessage {
     static RequestMessage from(String message) {
-        RequestHeader header = RequestHeader.from(message.split(Const.CRLF)[0]);
+        String[] splitMessage = message.split(Const.CRLF + Const.CRLF);
+        RequestLine requestLine = RequestLine.from(extractStartLineFrom(splitMessage[0]));
+        RequestHeader header = RequestHeader.from(splitMessage[0]);
 
-        if (header.getMethod().equalsIgnoreCase("post")) {
-            return PostMessage.from(message);
+        if (requestLine.getMethod().equalsIgnoreCase("post")) {
+            Body body = Body.from(splitMessage[1]);
+            return new PostMessage(requestLine, header, body);
         }
 
-        return GetMessage.from(message);
+        return new GetMessage(requestLine, header);
     }
 
     RequestHeader getHeader();
@@ -22,7 +30,7 @@ public interface RequestMessage {
 
     Map<String, String> getParameters();
 
-    default String getPath() {
-        return getHeader().getPath();
-    }
+    String getPath();
+
+    RequestLine getRequestLine();
 }

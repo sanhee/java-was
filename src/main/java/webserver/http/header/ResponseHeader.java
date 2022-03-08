@@ -1,29 +1,33 @@
 package webserver.http.header;
 
+import webserver.Const;
 import webserver.http.attribute.Attributes;
-import webserver.http.startline.StatusLine;
 
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 public class ResponseHeader extends Header {
 
-    private StatusLine statusLine;
-
-    protected ResponseHeader(StatusLine statusLine, Attributes attributes) {
+    protected ResponseHeader(Attributes attributes) {
         super(attributes);
-        this.statusLine = statusLine;
     }
 
-    public static ResponseHeader of(List<String> statusLine, Attributes attributes) {
-        return new ResponseHeader(StatusLine.from(statusLine), attributes);
+    public static ResponseHeader from(Attributes attributes) {
+        return new ResponseHeader(attributes);
     }
 
     public static ResponseHeader from(String headerText) {
-        return ResponseHeader.of(parseStartLine(headerText), Attributes.from(headerText));
+        return ResponseHeader.from(Attributes.from(headerText));
     }
 
-    @Override
-    protected String getStartLine() {
-        return statusLine.toString();
+    public byte[] getBytes() {
+        StringBuilder sb = new StringBuilder();
+
+        String attributesString = getAttributes().toHeaderText();
+
+        sb.append(attributesString + (!attributesString.isEmpty() ? Const.CRLF : ""));
+
+        sb.append(Const.CRLF);
+
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 }

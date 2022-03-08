@@ -28,39 +28,12 @@ class ResponseHeaderTest {
                 Arguments.of(
                         "HTTP/1.1 200 OK" + Const.CRLF +
                                 "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF,
                         Attributes.from(
                                 new LinkedHashMap<String, String>() {{
                                     put("Content-Type", "text/html;charset=utf-8");
-                                    put("Content-Length", String.valueOf("Hello World".getBytes().length));
-                                }}
-                        )
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("getStatusLineAttributes")
-    void getStatusLineAttributes(String headerText, StatusLine expectedStatusLine) {
-        assertThat(ResponseHeader.from(headerText))
-                .extracting("statusLine")
-                .usingRecursiveFieldByFieldElementComparator()
-                .contains(expectedStatusLine);
-    }
-
-    static Stream<Arguments> getStatusLineAttributes() {
-        return Stream.of(
-                Arguments.of(
-                        "HTTP/1.1 200 OK" + Const.CRLF +
-                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
-                                Const.CRLF,
-                        new StatusLine(
-                                new HashMap() {{
-                                    put("protocolVersion", "HTTP/1.1");
-                                    put("statusText", "OK");
-                                    put("statusCode", "200");
+                                    put("Content-Length", String.valueOf("Hello World" .getBytes().length));
                                 }}
                         )
                 )
@@ -83,11 +56,10 @@ class ResponseHeaderTest {
                 Arguments.of(
                         "HTTP/1.1 200 OK" + Const.CRLF +
                                 "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF,
-                        ("HTTP/1.1 200 OK" + Const.CRLF +
-                                "Content-Type: text/html;charset=utf-8" + Const.CRLF +
-                                "Content-Length: " + "Hello World".getBytes().length + Const.CRLF +
+                        ("Content-Type: text/html;charset=utf-8" + Const.CRLF +
+                                "Content-Length: " + "Hello World" .getBytes().length + Const.CRLF +
                                 Const.CRLF).getBytes(StandardCharsets.UTF_8)
                 )
         );
