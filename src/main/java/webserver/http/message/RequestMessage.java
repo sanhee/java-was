@@ -24,4 +24,8 @@ public interface RequestMessage {
     default String getPath() {
         return getHeader().getPath();
     }
+
+    default Map<String, String> getCookies(){
+        return getHeader().getCookies();
+    }
 }

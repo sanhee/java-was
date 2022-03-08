@@ -2,6 +2,8 @@ package webserver.http;
 
 import webserver.http.message.RequestMessage;
 
+import java.util.Map;
+
 public class Request {
     private RequestMessage requestMessage;
 
@@ -40,4 +42,9 @@ public class Request {
 
         return extension;
     }
+
+    public Map<String, String> getCookies() {
+        return requestMessage.getCookies();
+    }
+
 }
